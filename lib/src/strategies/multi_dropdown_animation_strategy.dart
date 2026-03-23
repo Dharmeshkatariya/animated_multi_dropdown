@@ -749,7 +749,7 @@ class MultiNeonDropdownStrategy<T>
                   boxShadow: [
                     BoxShadow(
                       color: config.glowColor.withOpacity(
-                        glowAnimation.value * (config.glowIntensity ?? 0.8),
+                        glowAnimation.value * (config.glowIntensity ),
                       ),
                       blurRadius: 15 * glowAnimation.value,
                       spreadRadius: 2 * glowAnimation.value,
@@ -855,7 +855,7 @@ class MultiNeonDropdownStrategy<T>
                       ),
                     ),
                   )
-                      .toList(),
+                      ,
                 ],
               ),
             ),
@@ -1385,8 +1385,7 @@ class FloatingCardsMultiDropdownStrategy<T>
                                       elevation: elevation ?? 4,
                                       shape: RoundedRectangleBorder(
                                         borderRadius:
-                                        config.dropdownBorderRadius ??
-                                            BorderRadius.circular(8),
+                                        config.dropdownBorderRadius,
                                         side: BorderSide(
                                           color:
                                           isSelected
@@ -1407,8 +1406,7 @@ class FloatingCardsMultiDropdownStrategy<T>
                                           }
                                         },
                                         borderRadius:
-                                        config.dropdownBorderRadius ??
-                                            BorderRadius.circular(8),
+                                        config.dropdownBorderRadius,
                                         child: Padding(
                                           padding:
                                           itemPadding ?? config.itemPadding,
@@ -1663,7 +1661,7 @@ class MorphingMultiDropdownStrategy<T>
               sizeFactor: heightAnimation,
               child: ClipRRect(
                 borderRadius:
-                config.dropdownBorderRadius ?? BorderRadius.circular(12),
+                config.dropdownBorderRadius,
                 child: Container(
                   constraints: BoxConstraints(
                     maxHeight: maxDropdownHeight ?? config.maxDropdownHeight,
@@ -2497,8 +2495,7 @@ class FoldableMultiDropdownStrategy<T>
                                 index == items.length - 1
                                     ? BorderRadius.only(
                                   bottomLeft:
-                                  (config.dropdownBorderRadius
-                                  as BorderRadius)
+                                  (config.dropdownBorderRadius)
                                       .bottomLeft,
                                   bottomRight:
                                   config
@@ -3166,7 +3163,7 @@ class HolographicFanMultiDropdownStrategy<T>
                                       ),
                                     ),
                                   );
-                                }).toList(),
+                                }),
                               ],
                             ),
                           ),
@@ -3689,8 +3686,7 @@ class CosmicRippleMultiDropdownStrategy<T>
                   ),
                   child: ClipRRect(
                     borderRadius:
-                    config.dropdownBorderRadius ??
-                        BorderRadius.circular(12),
+                    config.dropdownBorderRadius,
                     child: BackdropFilter(
                       filter: ImageFilter.blur(
                         sigmaX: 5 + (5 * rippleAnimation.value),
@@ -3703,8 +3699,7 @@ class CosmicRippleMultiDropdownStrategy<T>
                           dropdownBackgroundColor ??
                               Colors.black.withOpacity(0.5),
                           borderRadius:
-                          config.dropdownBorderRadius ??
-                              BorderRadius.circular(12),
+                          config.dropdownBorderRadius,
                           border: Border.all(
                             color: color.withOpacity(0.3),
                             width: 1,
@@ -3801,7 +3796,7 @@ class CosmicRippleMultiDropdownStrategy<T>
                                   ),
                                 ),
                               );
-                            }).toList(),
+                            }),
                           ],
                         ),
                       ),
@@ -4216,7 +4211,7 @@ class NeonPulseMultiDropdownStrategy<T>
       ),
     );
 
-    final effectiveHighlightColor = config.highlightColor ?? Colors.cyan;
+    final effectiveHighlightColor = config.highlightColor;
     final textGlow = <Shadow>[
       Shadow(color: effectiveHighlightColor, blurRadius: 10),
       Shadow(color: effectiveHighlightColor, blurRadius: 20),
@@ -4228,7 +4223,7 @@ class NeonPulseMultiDropdownStrategy<T>
         final selectedItems = value is List<T> ? value : [];
         if (selectedItems.isEmpty) {
           return DefaultTextStyle.merge(
-            style: (hintStyle ?? config.hintStyle)?.copyWith(shadows: textGlow),
+            style: (hintStyle ?? config.hintStyle).copyWith(shadows: textGlow),
             child: hint ?? const Text('Select...'),
           );
         }
@@ -4265,13 +4260,13 @@ class NeonPulseMultiDropdownStrategy<T>
       } else {
         return value != null
             ? DefaultTextStyle.merge(
-          style: (selectedItemStyle ?? config.selectedItemStyle)?.copyWith(
+          style: (selectedItemStyle ?? config.selectedItemStyle).copyWith(
             shadows: textGlow,
           ),
           child: itemBuilder(value as T),
         )
             : DefaultTextStyle.merge(
-          style: (hintStyle ?? config.hintStyle)?.copyWith(
+          style: (hintStyle ?? config.hintStyle).copyWith(
             shadows: textGlow,
           ),
           child: hint ?? const Text('Select...'),
@@ -4307,7 +4302,7 @@ class NeonPulseMultiDropdownStrategy<T>
                       blurRadius: 20 * pulseAnimation.value,
                       spreadRadius: 2,
                     ),
-                    ...(shadows ?? config.shadows ?? []),
+                    ...(shadows ?? config.shadows),
                   ],
                 ),
                 child: ClipRRect(
@@ -4480,19 +4475,12 @@ class NeonPulseMultiDropdownStrategy<T>
                                                       .selectedItemStyle
                                                   : itemStyle ??
                                                   config.itemStyle)
-                                                  ?.copyWith(
+                                                  .copyWith(
                                                 shadows:
                                                 isSelected
                                                     ? textGlow
                                                     : null,
-                                              ) ??
-                                                  TextStyle(
-                                                    color: Colors.white,
-                                                    shadows:
-                                                    isSelected
-                                                        ? textGlow
-                                                        : null,
-                                                  ),
+                                              ),
                                               child: itemBuilder(item),
                                             ),
                                           ),
@@ -4577,18 +4565,17 @@ class GlassMorphismMultiDropdownStrategy<T>
       end: 1.0,
     ).animate(CurvedAnimation(parent: controller, curve: config.curve));
 
-    final effectiveHighlightColor = config.highlightColor ?? Colors.white;
+    final effectiveHighlightColor = config.highlightColor;
     final color =
         dropdownBackgroundColor ??
-            config.backgroundColor ??
-            Colors.white.withOpacity(0.2);
+            config.backgroundColor;
 
     Widget buildDisplayValue() {
       if (config.selectionMode == SelectionMode.multiple) {
         final selectedItems = value is List<T> ? value : [];
         if (selectedItems.isEmpty) {
           return DefaultTextStyle.merge(
-            style: (hintStyle ?? config.hintStyle)?.copyWith(
+            style: (hintStyle ?? config.hintStyle).copyWith(
               color: effectiveHighlightColor.withOpacity(0.9),
             ),
             child: hint ?? const Text('Select...'),
@@ -4629,13 +4616,13 @@ class GlassMorphismMultiDropdownStrategy<T>
       } else {
         return value != null
             ? DefaultTextStyle.merge(
-          style: (selectedItemStyle ?? config.selectedItemStyle)?.copyWith(
+          style: (selectedItemStyle ?? config.selectedItemStyle).copyWith(
             color: effectiveHighlightColor.withOpacity(0.9),
           ),
           child: itemBuilder(value as T),
         )
             : DefaultTextStyle.merge(
-          style: (hintStyle ?? config.hintStyle)?.copyWith(
+          style: (hintStyle ?? config.hintStyle).copyWith(
             color: effectiveHighlightColor.withOpacity(0.9),
           ),
           child: hint ?? const Text('Select...'),
@@ -4824,15 +4811,11 @@ class GlassMorphismMultiDropdownStrategy<T>
                                                     .selectedItemStyle
                                                 : itemStyle ??
                                                 config.itemStyle)
-                                                ?.copyWith(
+                                                .copyWith(
                                               color:
                                               effectiveHighlightColor
                                                   .withOpacity(0.9),
-                                            ) ??
-                                                TextStyle(
-                                                  color: effectiveHighlightColor
-                                                      .withOpacity(0.9),
-                                                ),
+                                            ),
                                             child: itemBuilder(item),
                                           ),
                                         ),
@@ -4923,7 +4906,7 @@ class LiquidSwipeMultiDropdownStrategy<T>
         final selectedItems = value is List<T> ? value : [];
         if (selectedItems.isEmpty) {
           return DefaultTextStyle.merge(
-            style: (hintStyle ?? config.hintStyle)?.copyWith(
+            style: (hintStyle ?? config.hintStyle).copyWith(
               color: swipeAnimation.value > 0.5 ? Colors.white : Colors.black,
             ),
             child: hint ?? const Text('Select...'),
@@ -4970,13 +4953,13 @@ class LiquidSwipeMultiDropdownStrategy<T>
       } else {
         return value != null
             ? DefaultTextStyle.merge(
-          style: (selectedItemStyle ?? config.selectedItemStyle)?.copyWith(
+          style: (selectedItemStyle ?? config.selectedItemStyle).copyWith(
             color: swipeAnimation.value > 0.5 ? Colors.white : Colors.black,
           ),
           child: itemBuilder(value as T),
         )
             : DefaultTextStyle.merge(
-          style: (hintStyle ?? config.hintStyle)?.copyWith(
+          style: (hintStyle ?? config.hintStyle).copyWith(
             color: swipeAnimation.value > 0.5 ? Colors.white : Colors.black,
           ),
           child: hint ?? const Text('Select...'),
@@ -5294,11 +5277,11 @@ class CyberpunkMultiDropdownStrategy<T>
       ),
     );
 
-    final color = config.highlightColor ?? Colors.pink;
+    final color = config.highlightColor;
     const neonBlue = Colors.cyanAccent;
     final textGlow = <Shadow>[
       Shadow(color: color, blurRadius: 10),
-      Shadow(color: neonBlue, blurRadius: 5),
+      const Shadow(color: neonBlue, blurRadius: 5),
     ];
 
     Widget buildDisplayValue() {
@@ -5306,7 +5289,7 @@ class CyberpunkMultiDropdownStrategy<T>
         final selectedItems = value is List<T> ? value : [];
         if (selectedItems.isEmpty) {
           return DefaultTextStyle.merge(
-            style: (hintStyle ?? config.hintStyle)?.copyWith(
+            style: (hintStyle ?? config.hintStyle).copyWith(
               color: Colors.white,
               shadows: textGlow,
               fontSize: 16,
@@ -5353,7 +5336,7 @@ class CyberpunkMultiDropdownStrategy<T>
       } else {
         return value != null
             ? DefaultTextStyle.merge(
-          style: (selectedItemStyle ?? config.selectedItemStyle)?.copyWith(
+          style: (selectedItemStyle ?? config.selectedItemStyle).copyWith(
             color: Colors.white,
             shadows: textGlow,
             fontSize: 16,
@@ -5362,7 +5345,7 @@ class CyberpunkMultiDropdownStrategy<T>
           child: itemBuilder(value as T),
         )
             : DefaultTextStyle.merge(
-          style: (hintStyle ?? config.hintStyle)?.copyWith(
+          style: (hintStyle ?? config.hintStyle).copyWith(
             color: Colors.white,
             shadows: textGlow,
             fontSize: 16,
@@ -5574,7 +5557,7 @@ class CyberpunkMultiDropdownStrategy<T>
                                                           : itemStyle ??
                                                           config
                                                               .itemStyle)
-                                                          ?.copyWith(
+                                                          .copyWith(
                                                         color:
                                                         Colors
                                                             .white,
@@ -5582,14 +5565,7 @@ class CyberpunkMultiDropdownStrategy<T>
                                                         isSelected
                                                             ? textGlow
                                                             : null,
-                                                      ) ??
-                                                          TextStyle(
-                                                            color: Colors.white,
-                                                            shadows:
-                                                            isSelected
-                                                                ? textGlow
-                                                                : null,
-                                                          ),
+                                                      ),
                                                       child: itemBuilder(item),
                                                     ),
                                                   ),
@@ -5677,7 +5653,7 @@ class MorphingGlassMultiDropdownStrategy<T>
       ),
     );
 
-    final accentColor = config.highlightColor ?? Theme.of(context).primaryColor;
+    final accentColor = config.highlightColor;
     final gradientColors = [
       accentColor.withOpacity(0.15),
       accentColor.withOpacity(0.05),
@@ -5688,7 +5664,7 @@ class MorphingGlassMultiDropdownStrategy<T>
         final selectedItems = value is List<T> ? value : [];
         if (selectedItems.isEmpty) {
           return DefaultTextStyle.merge(
-            style: (hintStyle ?? config.hintStyle)?.copyWith(
+            style: (hintStyle ?? config.hintStyle).copyWith(
               color: Colors.white.withOpacity(0.9),
               fontSize: 16,
               fontWeight: FontWeight.w500,
@@ -5734,7 +5710,7 @@ class MorphingGlassMultiDropdownStrategy<T>
       } else {
         return value != null
             ? DefaultTextStyle.merge(
-          style: (selectedItemStyle ?? config.selectedItemStyle)?.copyWith(
+          style: (selectedItemStyle ?? config.selectedItemStyle).copyWith(
             color: Colors.white.withOpacity(0.9),
             fontSize: 16,
             fontWeight: FontWeight.w500,
@@ -5742,7 +5718,7 @@ class MorphingGlassMultiDropdownStrategy<T>
           child: itemBuilder(value as T),
         )
             : DefaultTextStyle.merge(
-          style: (hintStyle ?? config.hintStyle)?.copyWith(
+          style: (hintStyle ?? config.hintStyle).copyWith(
             color: Colors.white.withOpacity(0.9),
             fontSize: 16,
             fontWeight: FontWeight.w500,
@@ -5950,16 +5926,12 @@ class MorphingGlassMultiDropdownStrategy<T>
                                                       : itemStyle ??
                                                       config
                                                           .itemStyle)
-                                                      ?.copyWith(
+                                                      .copyWith(
                                                     color: Colors.white
                                                         .withOpacity(
                                                       0.9,
                                                     ),
-                                                  ) ??
-                                                      TextStyle(
-                                                        color: Colors.white
-                                                            .withOpacity(0.9),
-                                                      ),
+                                                  ),
                                                   child: itemBuilder(item),
                                                 ),
                                               ),
@@ -6046,7 +6018,7 @@ class HologramMultiDropdownStrategy<T>
       ),
     );
 
-    final effectiveHighlightColor = config.highlightColor ?? Colors.cyanAccent;
+    final effectiveHighlightColor = config.highlightColor;
     final hologramColors = [
       effectiveHighlightColor.withOpacity(0.8),
       effectiveHighlightColor.withOpacity(0.3),
@@ -6058,7 +6030,7 @@ class HologramMultiDropdownStrategy<T>
         final selectedItems = value is List<T> ? value : [];
         if (selectedItems.isEmpty) {
           return DefaultTextStyle.merge(
-            style: (hintStyle ?? config.hintStyle)?.copyWith(
+            style: (hintStyle ?? config.hintStyle).copyWith(
               color: Colors.white,
               shadows: [Shadow(color: effectiveHighlightColor, blurRadius: 10)],
             ),
@@ -6109,7 +6081,7 @@ class HologramMultiDropdownStrategy<T>
       } else {
         return value != null
             ? DefaultTextStyle.merge(
-          style: (selectedItemStyle ?? config.selectedItemStyle)?.copyWith(
+          style: (selectedItemStyle ?? config.selectedItemStyle).copyWith(
             color: Colors.white,
             shadows: [
               Shadow(color: effectiveHighlightColor, blurRadius: 10),
@@ -6118,7 +6090,7 @@ class HologramMultiDropdownStrategy<T>
           child: itemBuilder(value as T),
         )
             : DefaultTextStyle.merge(
-          style: (hintStyle ?? config.hintStyle)?.copyWith(
+          style: (hintStyle ?? config.hintStyle).copyWith(
             color: Colors.white,
             shadows: [
               Shadow(color: effectiveHighlightColor, blurRadius: 10),
@@ -6360,16 +6332,11 @@ class HologramMultiDropdownStrategy<T>
                                                                 config.selectedItemStyle
                                                                 : itemStyle ??
                                                                 config.itemStyle)
-                                                                ?.copyWith(
+                                                                .copyWith(
                                                               color:
                                                               Colors
                                                                   .white,
-                                                            ) ??
-                                                                TextStyle(
-                                                                  color:
-                                                                  Colors
-                                                                      .white,
-                                                                ),
+                                                            ),
                                                             child: itemBuilder(
                                                               item,
                                                             ),
@@ -6463,7 +6430,7 @@ class LiquidMetalMultiDropdownStrategy<T>
       ),
     );
 
-    final effectiveHighlightColor = config.highlightColor ?? Colors.blueGrey;
+    final effectiveHighlightColor = config.highlightColor;
     final metalGradient = LinearGradient(
       colors: [
         effectiveHighlightColor,
@@ -6482,7 +6449,7 @@ class LiquidMetalMultiDropdownStrategy<T>
         final selectedItems = value is List<T> ? value : [];
         if (selectedItems.isEmpty) {
           return DefaultTextStyle.merge(
-            style: (hintStyle ?? config.hintStyle)?.copyWith(
+            style: (hintStyle ?? config.hintStyle).copyWith(
               color: Colors.white,
               fontWeight: FontWeight.w500,
               shadows: [
@@ -6520,7 +6487,7 @@ class LiquidMetalMultiDropdownStrategy<T>
               ),
               deleteIcon:
               config.chipDeleteIcon ??
-                  Icon(Icons.close, color: Colors.white),
+                  const Icon(Icons.close, color: Colors.white),
               onDeleted: () {
                 onChanged(item);
                 if (config.enableHapticFeedback) {
@@ -6533,7 +6500,7 @@ class LiquidMetalMultiDropdownStrategy<T>
       } else {
         return value != null
             ? DefaultTextStyle.merge(
-          style: (selectedItemStyle ?? config.selectedItemStyle)?.copyWith(
+          style: (selectedItemStyle ?? config.selectedItemStyle).copyWith(
             color: Colors.white,
             fontWeight: FontWeight.w500,
             shadows: [
@@ -6543,7 +6510,7 @@ class LiquidMetalMultiDropdownStrategy<T>
           child: itemBuilder(value as T),
         )
             : DefaultTextStyle.merge(
-          style: (hintStyle ?? config.hintStyle)?.copyWith(
+          style: (hintStyle ?? config.hintStyle).copyWith(
             color: Colors.white,
             fontWeight: FontWeight.w500,
             shadows: [
@@ -6737,14 +6704,11 @@ class LiquidMetalMultiDropdownStrategy<T>
                                                           : itemStyle ??
                                                           config
                                                               .itemStyle)
-                                                          ?.copyWith(
+                                                          .copyWith(
                                                         color:
                                                         Colors
                                                             .white,
-                                                      ) ??
-                                                          TextStyle(
-                                                            color: Colors.white,
-                                                          ),
+                                                      ),
                                                       child: itemBuilder(item),
                                                     ),
                                                   ),
@@ -6833,7 +6797,7 @@ class GradientWaveMultiDropdownStrategy<T>
     );
 
     final effectiveHighlightColor =
-        config.highlightColor ?? Theme.of(context).primaryColor;
+        config.highlightColor;
     final colors = [
       effectiveHighlightColor,
       Colors.deepPurpleAccent,
@@ -6845,7 +6809,7 @@ class GradientWaveMultiDropdownStrategy<T>
         final selectedItems = value is List<T> ? value : [];
         if (selectedItems.isEmpty) {
           return DefaultTextStyle.merge(
-            style: (hintStyle ?? config.hintStyle)?.copyWith(
+            style: (hintStyle ?? config.hintStyle).copyWith(
               color: Colors.white,
               fontSize: 16,
               fontWeight: FontWeight.w500,
@@ -6890,7 +6854,7 @@ class GradientWaveMultiDropdownStrategy<T>
       } else {
         return value != null
             ? DefaultTextStyle.merge(
-          style: (selectedItemStyle ?? config.selectedItemStyle)?.copyWith(
+          style: (selectedItemStyle ?? config.selectedItemStyle).copyWith(
             color: Colors.white,
             fontSize: 16,
             fontWeight: FontWeight.w500,
@@ -6898,7 +6862,7 @@ class GradientWaveMultiDropdownStrategy<T>
           child: itemBuilder(value as T),
         )
             : DefaultTextStyle.merge(
-          style: (hintStyle ?? config.hintStyle)?.copyWith(
+          style: (hintStyle ?? config.hintStyle).copyWith(
             color: Colors.white,
             fontSize: 16,
             fontWeight: FontWeight.w500,
@@ -7123,14 +7087,11 @@ class GradientWaveMultiDropdownStrategy<T>
                                                           : itemStyle ??
                                                           config
                                                               .itemStyle)
-                                                          ?.copyWith(
+                                                          .copyWith(
                                                         color:
                                                         Colors
                                                             .white,
-                                                      ) ??
-                                                          const TextStyle(
-                                                            color: Colors.white,
-                                                          ),
+                                                      ),
                                                       child: itemBuilder(item),
                                                     ),
                                                   ),
@@ -7210,11 +7171,11 @@ class CyberNeonMultiDropdownStrategy<T>
       CurvedAnimation(parent: controller, curve: Curves.easeInOutCubic),
     );
 
-    final effectiveHighlightColor = config.highlightColor ?? Colors.pinkAccent;
+    final effectiveHighlightColor = config.highlightColor;
     const neonBlue = Colors.cyanAccent;
     final textGlow = [
       Shadow(color: effectiveHighlightColor, blurRadius: 10),
-      Shadow(color: neonBlue, blurRadius: 5),
+      const Shadow(color: neonBlue, blurRadius: 5),
     ];
 
     Widget buildDisplayValue() {
@@ -7222,7 +7183,7 @@ class CyberNeonMultiDropdownStrategy<T>
         final selectedItems = value is List<T> ? value : [];
         if (selectedItems.isEmpty) {
           return DefaultTextStyle.merge(
-            style: (hintStyle ?? config.hintStyle)?.copyWith(
+            style: (hintStyle ?? config.hintStyle).copyWith(
               color: Colors.white,
               fontSize: 16,
               fontWeight: FontWeight.w500,
@@ -7275,7 +7236,7 @@ class CyberNeonMultiDropdownStrategy<T>
       } else {
         return value != null
             ? DefaultTextStyle.merge(
-          style: (selectedItemStyle ?? config.selectedItemStyle)?.copyWith(
+          style: (selectedItemStyle ?? config.selectedItemStyle).copyWith(
             color: Colors.white,
             fontSize: 16,
             fontWeight: FontWeight.w500,
@@ -7284,7 +7245,7 @@ class CyberNeonMultiDropdownStrategy<T>
           child: itemBuilder(value as T),
         )
             : DefaultTextStyle.merge(
-          style: (hintStyle ?? config.hintStyle)?.copyWith(
+          style: (hintStyle ?? config.hintStyle).copyWith(
             color: Colors.white,
             fontSize: 16,
             fontWeight: FontWeight.w500,
@@ -7516,7 +7477,7 @@ class CyberNeonMultiDropdownStrategy<T>
                                                               : itemStyle ??
                                                               config
                                                                   .itemStyle)
-                                                              ?.copyWith(
+                                                              .copyWith(
                                                             color:
                                                             Colors
                                                                 .white,
@@ -7524,16 +7485,7 @@ class CyberNeonMultiDropdownStrategy<T>
                                                             isSelected
                                                                 ? textGlow
                                                                 : null,
-                                                          ) ??
-                                                              TextStyle(
-                                                                color:
-                                                                Colors
-                                                                    .white,
-                                                                shadows:
-                                                                isSelected
-                                                                    ? textGlow
-                                                                    : null,
-                                                              ),
+                                                          ),
                                                           child: itemBuilder(
                                                             item,
                                                           ),
@@ -7621,7 +7573,7 @@ class FloatingGlassMultiDropdownStrategy<T>
     );
 
     final effectiveHighlightColor =
-        config.highlightColor ?? Theme.of(context).primaryColor;
+        config.highlightColor;
     final glassColor = effectiveHighlightColor.withOpacity(0.15);
 
     Widget buildDisplayValue() {
@@ -7629,7 +7581,7 @@ class FloatingGlassMultiDropdownStrategy<T>
         final selectedItems = value is List<T> ? value : [];
         if (selectedItems.isEmpty) {
           return DefaultTextStyle.merge(
-            style: (hintStyle ?? config.hintStyle)?.copyWith(
+            style: (hintStyle ?? config.hintStyle).copyWith(
               color: Colors.white.withOpacity(0.95),
               fontSize: 16,
               fontWeight: FontWeight.w500,
@@ -7674,7 +7626,7 @@ class FloatingGlassMultiDropdownStrategy<T>
       } else {
         return value != null
             ? DefaultTextStyle.merge(
-          style: (selectedItemStyle ?? config.selectedItemStyle)?.copyWith(
+          style: (selectedItemStyle ?? config.selectedItemStyle).copyWith(
             color: Colors.white.withOpacity(0.95),
             fontSize: 16,
             fontWeight: FontWeight.w500,
@@ -7682,7 +7634,7 @@ class FloatingGlassMultiDropdownStrategy<T>
           child: itemBuilder(value as T),
         )
             : DefaultTextStyle.merge(
-          style: (hintStyle ?? config.hintStyle)?.copyWith(
+          style: (hintStyle ?? config.hintStyle).copyWith(
             color: Colors.white.withOpacity(0.95),
             fontSize: 16,
             fontWeight: FontWeight.w500,
@@ -7936,19 +7888,13 @@ class FloatingGlassMultiDropdownStrategy<T>
                                                         : itemStyle ??
                                                         config
                                                             .itemStyle)
-                                                        ?.copyWith(
+                                                        .copyWith(
                                                       color: Colors
                                                           .white
                                                           .withOpacity(
                                                         0.95,
                                                       ),
-                                                    ) ??
-                                                        TextStyle(
-                                                          color: Colors.white
-                                                              .withOpacity(
-                                                            0.95,
-                                                          ),
-                                                        ),
+                                                    ),
                                                     child: itemBuilder(item),
                                                   ),
                                                 ),
@@ -8025,7 +7971,7 @@ class LiquidSmoothMultiDropdownStrategy<T>
     required Widget Function(MultiDropDownConfig) buildSearchField,
   }) {
     final effectiveHighlightColor =
-        config.highlightColor ?? Theme.of(context).primaryColor;
+        config.highlightColor;
     final dropdownAnim = CurvedAnimation(
       parent: controller,
       curve: Curves.fastEaseInToSlowEaseOut,
@@ -8036,7 +7982,7 @@ class LiquidSmoothMultiDropdownStrategy<T>
         final selectedItems = value is List<T> ? value : [];
         if (selectedItems.isEmpty) {
           return DefaultTextStyle.merge(
-            style: (hintStyle ?? config.hintStyle)?.copyWith(
+            style: (hintStyle ?? config.hintStyle).copyWith(
               color: Colors.white.withOpacity(0.95),
               fontSize: 16,
               fontWeight: FontWeight.w500,
@@ -8081,7 +8027,7 @@ class LiquidSmoothMultiDropdownStrategy<T>
       } else {
         return value != null
             ? DefaultTextStyle.merge(
-          style: (selectedItemStyle ?? config.selectedItemStyle)?.copyWith(
+          style: (selectedItemStyle ?? config.selectedItemStyle).copyWith(
             color: Colors.white.withOpacity(0.95),
             fontSize: 16,
             fontWeight: FontWeight.w500,
@@ -8089,7 +8035,7 @@ class LiquidSmoothMultiDropdownStrategy<T>
           child: itemBuilder(value as T),
         )
             : DefaultTextStyle.merge(
-          style: (hintStyle ?? config.hintStyle)?.copyWith(
+          style: (hintStyle ?? config.hintStyle).copyWith(
             color: Colors.white.withOpacity(0.95),
             fontSize: 16,
             fontWeight: FontWeight.w500,
@@ -8349,20 +8295,13 @@ class LiquidSmoothMultiDropdownStrategy<T>
                                                             : itemStyle ??
                                                             config
                                                                 .itemStyle)
-                                                            ?.copyWith(
+                                                            .copyWith(
                                                           color: Colors
                                                               .white
                                                               .withOpacity(
                                                             0.95,
                                                           ),
-                                                        ) ??
-                                                            TextStyle(
-                                                              color: Colors
-                                                                  .white
-                                                                  .withOpacity(
-                                                                0.95,
-                                                              ),
-                                                            ),
+                                                        ),
                                                         child: itemBuilder(
                                                           item,
                                                         ),
