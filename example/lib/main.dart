@@ -12,17 +12,61 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Animated Multi Dropdown Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        useMaterial3: true,
         brightness: Brightness.light,
-      ),
-      darkTheme: ThemeData(
-        primarySwatch: Colors.blue,
         useMaterial3: true,
-        brightness: Brightness.dark,
+        colorScheme: const ColorScheme.light(
+          primary: Color(0xFF6366F1),
+          secondary: Color(0xFF8B5CF6),
+          tertiary: Color(0xFFEC4899),
+          surface: Color(0xFFF8FAFC),
+          background: Color(0xFFF1F5F9),
+          error: Color(0xFFEF4444),
+          onPrimary: Colors.white,
+          onSecondary: Colors.white,
+          onBackground: Color(0xFF0F172A),
+          onSurface: Color(0xFF1E293B),
+        ),
+        appBarTheme: const AppBarTheme(
+          elevation: 0,
+          centerTitle: false,
+          backgroundColor: Colors.transparent,
+          titleTextStyle: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.w600,
+            color: Color(0xFF0F172A),
+            letterSpacing: -0.5,
+          ),
+        ),
+
+        inputDecorationTheme: InputDecorationTheme(
+          filled: true,
+          fillColor: Colors.white,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(16),
+            borderSide: BorderSide.none,
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(16),
+            borderSide: BorderSide(color: Colors.grey.shade200),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(16),
+            borderSide: const BorderSide(color: Color(0xFF6366F1), width: 2),
+          ),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            elevation: 0,
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+        ),
       ),
-      themeMode: ThemeMode.system,
       home: const HomePage(),
     );
   }
@@ -40,23 +84,43 @@ class _HomePageState extends State<HomePage> {
   Map<DropdownAnimationType, dynamic> selectedValues = {};
   Map<DropdownAnimationType, List<String>> selectedMultipleValues = {};
 
-  // Sample data
-  final List<String> fruits = [
-    '🍎 Apple', '🍌 Banana', '🍊 Orange', '🥭 Mango',
-    '🍇 Grapes', '🍓 Strawberry', '🫐 Blueberry', '🍒 Cherry',
-    '🍍 Pineapple', '🍉 Watermelon', '🍑 Peach', '🍐 Pear'
+  // Complex example values
+  Map<String, dynamic>? selectedComplexValue;
+  List<String> selectedAdvancedSearch = [];
+  List<String> selectedFullFeatured = [];
+
+  // Sample data with icons and colors
+  final List<Map<String, dynamic>> fruits = [
+    {'name': 'Apple', 'icon': '🍎', 'color': 0xFFEF4444},
+    {'name': 'Banana', 'icon': '🍌', 'color': 0xFFEAB308},
+    {'name': 'Orange', 'icon': '🍊', 'color': 0xFFF97316},
+    {'name': 'Mango', 'icon': '🥭', 'color': 0xFFEAB308},
+    {'name': 'Grapes', 'icon': '🍇', 'color': 0xFFA855F7},
+    {'name': 'Strawberry', 'icon': '🍓', 'color': 0xFFEC4899},
+    {'name': 'Blueberry', 'icon': '🫐', 'color': 0xFF3B82F6},
+    {'name': 'Cherry', 'icon': '🍒', 'color': 0xFFEF4444},
   ];
 
-  final List<String> countries = [
-    '🇺🇸 United States', '🇬🇧 United Kingdom', '🇨🇦 Canada', '🇦🇺 Australia',
-    '🇩🇪 Germany', '🇫🇷 France', '🇯🇵 Japan', '🇧🇷 Brazil',
-    '🇮🇳 India', '🇨🇳 China', '🇿🇦 South Africa', '🇪🇬 Egypt'
+  final List<Map<String, dynamic>> countries = [
+    {'name': 'United States', 'flag': '🇺🇸', 'code': 'US'},
+    {'name': 'United Kingdom', 'flag': '🇬🇧', 'code': 'UK'},
+    {'name': 'Canada', 'flag': '🇨🇦', 'code': 'CA'},
+    {'name': 'Australia', 'flag': '🇦🇺', 'code': 'AU'},
+    {'name': 'Germany', 'flag': '🇩🇪', 'code': 'DE'},
+    {'name': 'France', 'flag': '🇫🇷', 'code': 'FR'},
+    {'name': 'Japan', 'flag': '🇯🇵', 'code': 'JP'},
+    {'name': 'India', 'flag': '🇮🇳', 'code': 'IN'},
   ];
 
-  final List<String> programmingLanguages = [
-    '🐍 Python', '🦀 Rust', '⚡ JavaScript', '🎯 Dart',
-    '☕ Java', '🔷 C#', '💎 Ruby', '🐘 PHP',
-    '🏃‍♂️ Go', '🦊 Kotlin', '🍎 Swift', '📱 Kotlin Multiplatform'
+  final List<Map<String, dynamic>> programmingLanguages = [
+    {'name': 'Python', 'icon': '🐍', 'color': 0xFF3B82F6},
+    {'name': 'Rust', 'icon': '🦀', 'color': 0xFFF97316},
+    {'name': 'JavaScript', 'icon': '⚡', 'color': 0xFFEAB308},
+    {'name': 'Dart', 'icon': '🎯', 'color': 0xFF06B6D4},
+    {'name': 'Java', 'icon': '☕', 'color': 0xFFEF4444},
+    {'name': 'C#', 'icon': '🔷', 'color': 0xFF8B5CF6},
+    {'name': 'Go', 'icon': '🏃‍♂️', 'color': 0xFF10B981},
+    {'name': 'Kotlin', 'icon': '🦊', 'color': 0xFFEC4899},
   ];
 
   final List<String> categories = [
@@ -65,184 +129,320 @@ class _HomePageState extends State<HomePage> {
   ];
 
   final List<Map<String, dynamic>> complexItems = [
-    {'name': 'John Doe', 'role': 'Developer', 'avatar': '👨‍💻'},
-    {'name': 'Jane Smith', 'role': 'Designer', 'avatar': '👩‍🎨'},
-    {'name': 'Bob Johnson', 'role': 'Manager', 'avatar': '👨‍💼'},
-    {'name': 'Alice Brown', 'role': 'Developer', 'avatar': '👩‍💻'},
-    {'name': 'Charlie Wilson', 'role': 'Tester', 'avatar': '🧪'},
+    {'name': 'John Doe', 'role': 'Lead Developer', 'avatar': '👨‍💻', 'color': 0xFF6366F1},
+    {'name': 'Jane Smith', 'role': 'Creative Director', 'avatar': '👩‍🎨', 'color': 0xFFEC4899},
+    {'name': 'Bob Johnson', 'role': 'Product Manager', 'avatar': '👨‍💼', 'color': 0xFF10B981},
+    {'name': 'Alice Brown', 'role': 'Senior Developer', 'avatar': '👩‍💻', 'color': 0xFF8B5CF6},
+    {'name': 'Charlie Wilson', 'role': 'QA Lead', 'avatar': '🧪', 'color': 0xFFF97316},
   ];
 
   @override
   void initState() {
     super.initState();
-    // Initialize selected values
     for (var type in DropdownAnimationType.values) {
       selectedValues[type] = null;
       selectedMultipleValues[type] = [];
     }
   }
 
+  void _resetAllSelections() {
+    setState(() {
+      for (var type in DropdownAnimationType.values) {
+        selectedValues[type] = null;
+        selectedMultipleValues[type] = [];
+      }
+      selectedComplexValue = null;
+      selectedAdvancedSearch = [];
+      selectedFullFeatured = [];
+    });
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: const Text('All selections reset!'),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        margin: const EdgeInsets.all(16),
+        duration: const Duration(seconds: 2),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Animated Multi Dropdown - Complete Demo'),
-        backgroundColor: Theme.of(context).primaryColor,
-        elevation: 0,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: () {
-              setState(() {
-                for (var type in DropdownAnimationType.values) {
-                  selectedValues[type] = null;
-                  selectedMultipleValues[type] = [];
-                }
-              });
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('All selections reset!')),
-              );
-            },
-            tooltip: 'Reset all selections',
+      backgroundColor: colorScheme.background,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(80),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.05),
+                blurRadius: 20,
+                offset: const Offset(0, 2),
+              ),
+            ],
           ),
-        ],
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              child: Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [colorScheme.primary, colorScheme.secondary],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: const Icon(Icons.animation, color: Colors.white, size: 24),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Animated Multi Dropdown',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF0F172A),
+                          ),
+                        ),
+                        Text(
+                          '25+ Premium Animation Styles',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey[600],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: colorScheme.primary.withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(Icons.star, size: 14, color: colorScheme.primary),
+                        const SizedBox(width: 4),
+                        Text(
+                          'v1.0.0',
+                          style: TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w500,
+                            color: colorScheme.primary,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  GestureDetector(
+                    onTap: _resetAllSelections,
+                    child: Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade100,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: const Icon(Icons.refresh, size: 20, color: Color(0xFF64748B)),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header Section
-            _buildHeader(context),
-            const SizedBox(height: 24),
-
-            // All Animation Types
-            _buildAnimationSection(
-              title: '✨ Glass & Modern Animations',
-              subtitle: 'Sleek, modern effects with blur and transparency',
-              children: [
-                _buildGlassAnimation(),
-                _buildLiquidAnimation(),
-                _buildNeonAnimation(),
-                _buildGlassMorphismAnimation(),
-                _buildFloatingGlassAnimation(),
-              ],
-            ),
-
+            // Hero Header
+            _buildHeroHeader(),
             const SizedBox(height: 32),
 
-            _buildAnimationSection(
-              title: '🎨 Creative & Artistic Animations',
-              subtitle: 'Unique, eye-catching animation styles',
-              children: [
-                _buildMorphingAnimation(),
-                _buildGradientWaveAnimation(),
-                _buildFluidWaveAnimation(),
-                _buildLiquidSmoothAnimation(),
-                _buildLiquidSwipeAnimation(),
-              ],
-            ),
-
+            // Quick Stats
+            _buildQuickStats(),
             const SizedBox(height: 32),
 
-            _buildAnimationSection(
-              title: '🚀 Futuristic & Sci-Fi Animations',
-              subtitle: 'Cyberpunk, hologram, and neon effects',
-              children: [
-                _buildCyberpunkAnimation(),
-                _buildHologramAnimation(),
-                _buildCosmicRippleAnimation(),
-                _buildGravityWellAnimation(),
-                _buildNeonPulseAnimation(),
-                _buildCyberNeonAnimation(),
-              ],
-            ),
-
+            // Glass & Modern Animations
+            _buildSectionHeader('Glass & Modern', Icons.blur_on, [const Color(0xFF6366F1), const Color(0xFF8B5CF6)]),
+            const SizedBox(height: 16),
+            _buildGlassAnimation(),
+            const SizedBox(height: 16),
+            _buildLiquidAnimation(),
+            const SizedBox(height: 16),
+            _buildNeonAnimation(),
+            const SizedBox(height: 16),
+            _buildGlassMorphismAnimation(),
+            const SizedBox(height: 16),
+            _buildFloatingGlassAnimation(),
             const SizedBox(height: 32),
 
-            _buildAnimationSection(
-              title: '💫 Interactive & Engaging Animations',
-              subtitle: 'Bouncy, staggered, and playful effects',
-              children: [
-                _buildBouncy3DAnimation(),
-                _buildFloatingCardAnimation(),
-                _buildStaggeredAnimation(),
-                _buildFoldableAnimation(),
-                _buildMolecularAnimation(),
-              ],
-            ),
-
+            // Creative & Artistic Animations
+            _buildSectionHeader('Creative & Artistic', Icons.palette, [const Color(0xFFEC4899), const Color(0xFFF97316)]),
+            const SizedBox(height: 16),
+            _buildMorphingAnimation(),
+            const SizedBox(height: 16),
+            _buildGradientWaveAnimation(),
+            const SizedBox(height: 16),
+            _buildFluidWaveAnimation(),
+            const SizedBox(height: 16),
+            _buildLiquidSmoothAnimation(),
+            const SizedBox(height: 16),
+            _buildLiquidSwipeAnimation(),
             const SizedBox(height: 32),
 
-            _buildAnimationSection(
-              title: '✨ Special & Premium Animations',
-              subtitle: 'Advanced effects for premium experiences',
-              children: [
-                _buildHolographicFanAnimation(),
-                _buildLiquidMetalAnimation(),
-                _buildMorphingGlassAnimation(),
-                _buildStaggeredVerticalAnimation(),
-              ],
-            ),
-
+            // Futuristic & Sci-Fi Animations
+            _buildSectionHeader('Futuristic & Sci-Fi', Icons.science, [const Color(0xFF06B6D4), const Color(0xFF8B5CF6)]),
+            const SizedBox(height: 16),
+            _buildCyberpunkAnimation(),
+            const SizedBox(height: 16),
+            _buildHologramAnimation(),
+            const SizedBox(height: 16),
+            _buildCosmicRippleAnimation(),
+            const SizedBox(height: 16),
+            _buildGravityWellAnimation(),
+            const SizedBox(height: 16),
+            _buildNeonPulseAnimation(),
+            const SizedBox(height: 16),
+            _buildCyberNeonAnimation(),
             const SizedBox(height: 32),
 
-            // Complex Examples
+            // Interactive & Engaging Animations
+            _buildSectionHeader('Interactive & Engaging', Icons.touch_app, [const Color(0xFF10B981), const Color(0xFF3B82F6)]),
+            const SizedBox(height: 16),
+            _buildBouncy3DAnimation(),
+            const SizedBox(height: 16),
+            _buildFloatingCardAnimation(),
+            const SizedBox(height: 16),
+            _buildStaggeredAnimation(),
+            const SizedBox(height: 16),
+            _buildFoldableAnimation(),
+            const SizedBox(height: 16),
+            _buildMolecularAnimation(),
+            const SizedBox(height: 32),
+
+            // Premium & Exclusive Animations
+            _buildSectionHeader('Premium & Exclusive', Icons.diamond, [const Color(0xFFF59E0B), const Color(0xFFEF4444)]),
+            const SizedBox(height: 16),
+            _buildHolographicFanAnimation(),
+            const SizedBox(height: 16),
+            _buildLiquidMetalAnimation(),
+            const SizedBox(height: 16),
+            _buildMorphingGlassAnimation(),
+            const SizedBox(height: 16),
+            _buildStaggeredVerticalAnimation(),
+            const SizedBox(height: 32),
+
+            // Advanced Examples
+            _buildSectionHeader('Advanced Examples', Icons.auto_awesome, [const Color(0xFF6366F1), const Color(0xFF8B5CF6)]),
+            const SizedBox(height: 16),
             _buildComplexExamplesSection(),
+            const SizedBox(height: 32),
 
-            const SizedBox(height: 24),
-
-            // Selected Values Summary
+            // Summary
             _buildSelectedValuesSummary(),
+            const SizedBox(height: 24),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildHeader(BuildContext context) {
+  Widget _buildHeroHeader() {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Container(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(32),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [
-            Theme.of(context).primaryColor,
-            Theme.of(context).primaryColor.withOpacity(0.7),
-          ],
+          colors: [colorScheme.primary, colorScheme.secondary],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(32),
+        boxShadow: [
+          BoxShadow(
+            color: colorScheme.primary.withValues(alpha: 0.3),
+            blurRadius: 30,
+            offset: const Offset(0, 10),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Animated Multi Dropdown',
-            style: TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'Experience 25+ stunning animation styles with full customization',
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.white.withOpacity(0.9),
-            ),
-          ),
-          const SizedBox(height: 16),
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
+          Row(
             children: [
-              _buildChip('25+ Animations', Icons.animation),
-              _buildChip('Single/Multi', Icons.checklist),
-              _buildChip('Search', Icons.search),
-              _buildChip('Chips', Icons.child_care),
-              _buildChip('Haptic', Icons.vibration),
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.white.withValues(alpha: 0.2),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: const Icon(Icons.rocket_launch, color: Colors.white, size: 28),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'EXPERIENCE THE MAGIC',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white70,
+                        letterSpacing: 1,
+                      ),
+                    ),
+                    const Text(
+                      '25+ Stunning Animations',
+                      style: TextStyle(
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        letterSpacing: -0.5,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 24),
+          Text(
+            'Premium dropdown widget with glass morphism, liquid effects, neon glow, cyberpunk, and more. Fully customizable and performance-optimized.',
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.white.withValues(alpha: 0.9),
+              height: 1.5,
+            ),
+          ),
+          const SizedBox(height: 24),
+          Wrap(
+            spacing: 12,
+            runSpacing: 12,
+            children: [
+              _buildFeatureChip(Icons.animation, '25+ Animations'),
+              _buildFeatureChip(Icons.checklist, 'Single/Multi'),
+              _buildFeatureChip(Icons.search, 'Search'),
+              _buildFeatureChip(Icons.thermostat, 'Chips'),
+              _buildFeatureChip(Icons.vibration, 'Haptic'),
+              _buildFeatureChip(Icons.palette, 'Customizable'),
             ],
           ),
         ],
@@ -250,50 +450,218 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildChip(String label, IconData icon) {
+  Widget _buildFeatureChip(IconData icon, String label) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.2),
+        color: Colors.white.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(20),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 16, color: Colors.white),
-          const SizedBox(width: 4),
-          Text(label, style: const TextStyle(color: Colors.white, fontSize: 12)),
+          Icon(icon, size: 14, color: Colors.white),
+          const SizedBox(width: 6),
+          Text(label, style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w500)),
         ],
       ),
     );
   }
 
-  Widget _buildAnimationSection({
-    required String title,
-    required String subtitle,
-    required List<Widget> children,
-  }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+  Widget _buildQuickStats() {
+    int totalSelections = 0;
+    for (var value in selectedValues.values) {
+      if (value != null && value is! List) totalSelections++;
+    }
+    for (var value in selectedMultipleValues.values) {
+      if (value.isNotEmpty) totalSelections += value.length;
+    }
+    if (selectedComplexValue != null) totalSelections++;
+    totalSelections += selectedAdvancedSearch.length;
+    totalSelections += selectedFullFeatured.length;
+
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.05),
+            blurRadius: 20,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              children: [
+                Text(
+                  '$totalSelections',
+                  style: const TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF6366F1),
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  'Total Selections',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey[600],
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(width: 1, height: 40, color: Colors.grey[200]),
+          Expanded(
+            child: Column(
+              children: [
+                Text(
+                  '${DropdownAnimationType.values.length}',
+                  style: const TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF8B5CF6),
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  'Animation Types',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey[600],
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(width: 1, height: 40, color: Colors.grey[200]),
+          Expanded(
+            child: Column(
+              children: [
+                const Text(
+                  '⭐ 5.0',
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFFF59E0B),
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  'Premium Rating',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey[600],
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSectionHeader(String title, IconData icon, List<Color> gradientColors) {
+    return Row(
       children: [
+        Container(
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: gradientColors,
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: BorderRadius.circular(14),
+          ),
+          child: Icon(icon, color: Colors.white, size: 20),
+        ),
+        const SizedBox(width: 12),
         Text(
           title,
           style: const TextStyle(
             fontSize: 22,
             fontWeight: FontWeight.bold,
+            color: Color(0xFF0F172A),
           ),
         ),
-        const SizedBox(height: 4),
-        Text(
-          subtitle,
-          style: TextStyle(
-            fontSize: 14,
-            color: Colors.grey[600],
-          ),
-        ),
-        const SizedBox(height: 16),
-        ...children,
       ],
+    );
+  }
+
+  Widget _buildDropdownCard({
+    required String title,
+    required String description,
+    required IconData icon,
+    required List<Color> gradientColors,
+    required Widget dropdown,
+  }) {
+    return Card(
+      margin: EdgeInsets.zero,
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+        side: BorderSide(color: Colors.grey.shade100, width: 1),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: gradientColors,
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                  child: Icon(icon, size: 20, color: Colors.white),
+                ),
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF0F172A),
+                        ),
+                      ),
+                      Text(
+                        description,
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey[600],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+            dropdown,
+          ],
+        ),
+      ),
     );
   }
 
@@ -302,9 +670,10 @@ class _HomePageState extends State<HomePage> {
   Widget _buildGlassAnimation() {
     return _buildDropdownCard(
       title: 'Glass Animation',
-      description: 'Glass morphism with blur and transparency effects',
+      description: 'Premium glass morphism with blur',
       icon: Icons.blur_on,
-      dropdown: CustomAnimatedMultiDropDown<String>(
+      gradientColors: [const Color(0xFF6366F1), const Color(0xFF8B5CF6)],
+      dropdown: CustomAnimatedMultiDropDown<Map<String, dynamic>>(
         animationType: DropdownAnimationType.glass,
         items: fruits,
         value: selectedValues[DropdownAnimationType.glass],
@@ -313,12 +682,23 @@ class _HomePageState extends State<HomePage> {
             selectedValues[DropdownAnimationType.glass] = value;
           });
         },
-        itemBuilder: (item) => Text(item),
+        itemBuilder: (item) => Row(
+          children: [
+            Text(item['icon'], style: const TextStyle(fontSize: 20)),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                item['name'],
+                style: const TextStyle(fontWeight: FontWeight.w500),
+              ),
+            ),
+          ],
+        ),
         hint: const Text('Select a fruit'),
         config: const MultiDropDownConfig(
-          highlightColor: Colors.blue,
-          blurIntensity: 10,
-          borderRadius: BorderRadius.all(Radius.circular(12)),
+          highlightColor: Color(0xFF6366F1),
+          blurIntensity: 12,
+          borderRadius: BorderRadius.all(Radius.circular(16)),
           backgroundColor: Colors.white,
         ),
       ),
@@ -328,9 +708,10 @@ class _HomePageState extends State<HomePage> {
   Widget _buildLiquidAnimation() {
     return _buildDropdownCard(
       title: 'Liquid Animation',
-      description: 'Smooth liquid wave effect with gradient colors',
+      description: 'Smooth liquid wave effect',
       icon: Icons.waves,
-      dropdown: CustomAnimatedMultiDropDown<String>(
+      gradientColors: [const Color(0xFF06B6D4), const Color(0xFF3B82F6)],
+      dropdown: CustomAnimatedMultiDropDown<Map<String, dynamic>>(
         animationType: DropdownAnimationType.liquid,
         items: countries,
         value: selectedMultipleValues[DropdownAnimationType.liquid],
@@ -339,14 +720,25 @@ class _HomePageState extends State<HomePage> {
             selectedMultipleValues[DropdownAnimationType.liquid] = value;
           });
         },
-        itemBuilder: (item) => Text(item),
+        itemBuilder: (item) => Row(
+          children: [
+            Text(item['flag'], style: const TextStyle(fontSize: 24)),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                item['name'],
+                style: const TextStyle(fontWeight: FontWeight.w500),
+              ),
+            ),
+          ],
+        ),
         hint: const Text('Select countries'),
         config: const MultiDropDownConfig(
           selectionMode: SelectionMode.multiple,
           showSelectedItemsAsChips: true,
           enableSearch: true,
-          highlightColor: Colors.teal,
-          gradientColors: [Colors.teal, Colors.cyan],
+          highlightColor: Color(0xFF06B6D4),
+          gradientColors: [Color(0xFF06B6D4), Color(0xFF3B82F6)],
           searchHintText: 'Search countries...',
         ),
       ),
@@ -358,7 +750,8 @@ class _HomePageState extends State<HomePage> {
       title: 'Neon Animation',
       description: 'Pulsing neon glow effect',
       icon: Icons.bolt,
-      dropdown: CustomAnimatedMultiDropDown<String>(
+      gradientColors: [const Color(0xFFEC4899), const Color(0xFFF97316)],
+      dropdown: CustomAnimatedMultiDropDown<Map<String, dynamic>>(
         animationType: DropdownAnimationType.neon,
         items: programmingLanguages,
         value: selectedValues[DropdownAnimationType.neon],
@@ -367,13 +760,24 @@ class _HomePageState extends State<HomePage> {
             selectedValues[DropdownAnimationType.neon] = value;
           });
         },
-        itemBuilder: (item) => Text(item, style: const TextStyle(fontWeight: FontWeight.bold)),
+        itemBuilder: (item) => Row(
+          children: [
+            Text(item['icon'], style: const TextStyle(fontSize: 20)),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                item['name'],
+                style: const TextStyle(fontWeight: FontWeight.w500),
+              ),
+            ),
+          ],
+        ),
         hint: const Text('Select language'),
         config: const MultiDropDownConfig(
-          highlightColor: Colors.pink,
-          glowColor: Colors.pink,
+          highlightColor: Color(0xFFEC4899),
+          glowColor: Color(0xFFEC4899),
           glowIntensity: 1.2,
-          borderRadius: BorderRadius.all(Radius.circular(8)),
+          borderRadius: BorderRadius.all(Radius.circular(12)),
         ),
       ),
     );
@@ -384,7 +788,8 @@ class _HomePageState extends State<HomePage> {
       title: 'Glass Morphism',
       description: 'Advanced glass effect with enhanced blur',
       icon: Icons.lens_blur,
-      dropdown: CustomAnimatedMultiDropDown<String>(
+      gradientColors: [const Color(0xFF8B5CF6), const Color(0xFF6366F1)],
+      dropdown: CustomAnimatedMultiDropDown<Map<String, dynamic>>(
         animationType: DropdownAnimationType.glassMorphism,
         items: fruits.sublist(0, 6),
         value: selectedMultipleValues[DropdownAnimationType.glassMorphism],
@@ -393,13 +798,24 @@ class _HomePageState extends State<HomePage> {
             selectedMultipleValues[DropdownAnimationType.glassMorphism] = value;
           });
         },
-        itemBuilder: (item) => Text(item),
+        itemBuilder: (item) => Row(
+          children: [
+            Text(item['icon'], style: const TextStyle(fontSize: 20)),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                item['name'],
+                style: const TextStyle(fontWeight: FontWeight.w500),
+              ),
+            ),
+          ],
+        ),
         hint: const Text('Select fruits'),
         config: const MultiDropDownConfig(
           selectionMode: SelectionMode.multiple,
           showSelectedItemsAsChips: true,
           blurIntensity: 15,
-          highlightColor: Colors.purple,
+          highlightColor: Color(0xFF8B5CF6),
           backgroundColor: Color(0x33FFFFFF),
         ),
       ),
@@ -411,6 +827,7 @@ class _HomePageState extends State<HomePage> {
       title: 'Floating Glass',
       description: 'Floating glass panels with elevation',
       icon: Icons.pan_tool,
+      gradientColors: [const Color(0xFF10B981), const Color(0xFF3B82F6)],
       dropdown: CustomAnimatedMultiDropDown<String>(
         animationType: DropdownAnimationType.floatingGlass,
         items: categories,
@@ -420,10 +837,10 @@ class _HomePageState extends State<HomePage> {
             selectedValues[DropdownAnimationType.floatingGlass] = value;
           });
         },
-        itemBuilder: (item) => Text(item),
+        itemBuilder: (item) => Text(item, style: const TextStyle(fontWeight: FontWeight.w500)),
         hint: const Text('Select category'),
         config: const MultiDropDownConfig(
-          highlightColor: Colors.indigo,
+          highlightColor: Color(0xFF10B981),
           elevation: 8,
           borderRadius: BorderRadius.all(Radius.circular(16)),
         ),
@@ -438,7 +855,8 @@ class _HomePageState extends State<HomePage> {
       title: 'Morphing Animation',
       description: 'Smooth shape morphing transitions',
       icon: Icons.transform,
-      dropdown: CustomAnimatedMultiDropDown<String>(
+      gradientColors: [const Color(0xFFF97316), const Color(0xFFEF4444)],
+      dropdown: CustomAnimatedMultiDropDown<Map<String, dynamic>>(
         animationType: DropdownAnimationType.morphing,
         items: fruits,
         value: selectedValues[DropdownAnimationType.morphing],
@@ -447,10 +865,21 @@ class _HomePageState extends State<HomePage> {
             selectedValues[DropdownAnimationType.morphing] = value;
           });
         },
-        itemBuilder: (item) => Text(item),
+        itemBuilder: (item) => Row(
+          children: [
+            Text(item['icon'], style: const TextStyle(fontSize: 20)),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                item['name'],
+                style: const TextStyle(fontWeight: FontWeight.w500),
+              ),
+            ),
+          ],
+        ),
         hint: const Text('Select a fruit'),
         config: const MultiDropDownConfig(
-          highlightColor: Colors.orange,
+          highlightColor: Color(0xFFF97316),
           borderRadius: BorderRadius.all(Radius.circular(20)),
         ),
       ),
@@ -462,7 +891,8 @@ class _HomePageState extends State<HomePage> {
       title: 'Gradient Wave',
       description: 'Animated gradient wave patterns',
       icon: Icons.gradient,
-      dropdown: CustomAnimatedMultiDropDown<String>(
+      gradientColors: [const Color(0xFFEF4444), const Color(0xFFF59E0B)],
+      dropdown: CustomAnimatedMultiDropDown<Map<String, dynamic>>(
         animationType: DropdownAnimationType.gradientWave,
         items: fruits,
         value: selectedMultipleValues[DropdownAnimationType.gradientWave],
@@ -471,13 +901,24 @@ class _HomePageState extends State<HomePage> {
             selectedMultipleValues[DropdownAnimationType.gradientWave] = value;
           });
         },
-        itemBuilder: (item) => Text(item),
+        itemBuilder: (item) => Row(
+          children: [
+            Text(item['icon'], style: const TextStyle(fontSize: 20)),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                item['name'],
+                style: const TextStyle(fontWeight: FontWeight.w500),
+              ),
+            ),
+          ],
+        ),
         hint: const Text('Select fruits'),
         config: const MultiDropDownConfig(
           selectionMode: SelectionMode.multiple,
-          gradientColors: [Colors.red, Colors.orange, Colors.yellow],
+          gradientColors: [Color(0xFFEF4444), Color(0xFFF59E0B), Color(0xFFEAB308)],
           showSelectedItemsAsChips: true,
-          highlightColor: Colors.orange,
+          highlightColor: Color(0xFFF59E0B),
         ),
       ),
     );
@@ -488,7 +929,8 @@ class _HomePageState extends State<HomePage> {
       title: 'Fluid Wave',
       description: 'Fluid wave ripple effects',
       icon: Icons.water_damage,
-      dropdown: CustomAnimatedMultiDropDown<String>(
+      gradientColors: [const Color(0xFF06B6D4), const Color(0xFF3B82F6)],
+      dropdown: CustomAnimatedMultiDropDown<Map<String, dynamic>>(
         animationType: DropdownAnimationType.fluidWave,
         items: programmingLanguages,
         value: selectedValues[DropdownAnimationType.fluidWave],
@@ -497,10 +939,21 @@ class _HomePageState extends State<HomePage> {
             selectedValues[DropdownAnimationType.fluidWave] = value;
           });
         },
-        itemBuilder: (item) => Text(item),
+        itemBuilder: (item) => Row(
+          children: [
+            Text(item['icon'], style: const TextStyle(fontSize: 20)),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                item['name'],
+                style: const TextStyle(fontWeight: FontWeight.w500),
+              ),
+            ),
+          ],
+        ),
         hint: const Text('Select language'),
         config: const MultiDropDownConfig(
-          highlightColor: Colors.cyan,
+          highlightColor: Color(0xFF06B6D4),
           blurIntensity: 8,
         ),
       ),
@@ -511,8 +964,9 @@ class _HomePageState extends State<HomePage> {
     return _buildDropdownCard(
       title: 'Liquid Smooth',
       description: 'Ultra-smooth liquid transitions',
-      icon: Icons.shield_moon_outlined,
-      dropdown: CustomAnimatedMultiDropDown<String>(
+      icon: Icons.medication_liquid_outlined,
+      gradientColors: [const Color(0xFF8B5CF6), const Color(0xFF6366F1)],
+      dropdown: CustomAnimatedMultiDropDown<Map<String, dynamic>>(
         animationType: DropdownAnimationType.liquidSmooth,
         items: countries,
         value: selectedMultipleValues[DropdownAnimationType.liquidSmooth],
@@ -521,13 +975,24 @@ class _HomePageState extends State<HomePage> {
             selectedMultipleValues[DropdownAnimationType.liquidSmooth] = value;
           });
         },
-        itemBuilder: (item) => Text(item),
+        itemBuilder: (item) => Row(
+          children: [
+            Text(item['flag'], style: const TextStyle(fontSize: 24)),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                item['name'],
+                style: const TextStyle(fontWeight: FontWeight.w500),
+              ),
+            ),
+          ],
+        ),
         hint: const Text('Select countries'),
         config: const MultiDropDownConfig(
           selectionMode: SelectionMode.multiple,
           showSelectedItemsAsChips: true,
           enableSearch: true,
-          highlightColor: Colors.blueGrey,
+          highlightColor: Color(0xFF8B5CF6),
         ),
       ),
     );
@@ -538,6 +1003,7 @@ class _HomePageState extends State<HomePage> {
       title: 'Liquid Swipe',
       description: 'Swipe-based liquid transition',
       icon: Icons.swipe,
+      gradientColors: [const Color(0xFFEC4899), const Color(0xFFF97316)],
       dropdown: CustomAnimatedMultiDropDown<String>(
         animationType: DropdownAnimationType.liquidSwipe,
         items: categories,
@@ -547,10 +1013,10 @@ class _HomePageState extends State<HomePage> {
             selectedValues[DropdownAnimationType.liquidSwipe] = value;
           });
         },
-        itemBuilder: (item) => Text(item),
+        itemBuilder: (item) => Text(item, style: const TextStyle(fontWeight: FontWeight.w500)),
         hint: const Text('Select category'),
         config: const MultiDropDownConfig(
-          highlightColor: Colors.deepPurple,
+          highlightColor: Color(0xFFEC4899),
         ),
       ),
     );
@@ -562,8 +1028,9 @@ class _HomePageState extends State<HomePage> {
     return _buildDropdownCard(
       title: 'Cyberpunk',
       description: 'Glitch effects with neon grid',
-      icon: Icons.cabin,
-      dropdown: CustomAnimatedMultiDropDown<String>(
+      icon: Icons.punch_clock,
+      gradientColors: [const Color(0xFFEC4899), const Color(0xFF06B6D4)],
+      dropdown: CustomAnimatedMultiDropDown<Map<String, dynamic>>(
         animationType: DropdownAnimationType.cyberpunk,
         items: programmingLanguages,
         value: selectedValues[DropdownAnimationType.cyberpunk],
@@ -572,11 +1039,22 @@ class _HomePageState extends State<HomePage> {
             selectedValues[DropdownAnimationType.cyberpunk] = value;
           });
         },
-        itemBuilder: (item) => Text(item, style: const TextStyle(fontFamily: 'monospace')),
+        itemBuilder: (item) => Row(
+          children: [
+            Text(item['icon'], style: const TextStyle(fontSize: 20)),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                item['name'],
+                style: const TextStyle(fontWeight: FontWeight.w500),
+              ),
+            ),
+          ],
+        ),
         hint: const Text('Select language'),
         config: const MultiDropDownConfig(
-          highlightColor: Colors.pinkAccent,
-          glowColor: Colors.cyanAccent,
+          highlightColor: Color(0xFFEC4899),
+          glowColor: Color(0xFF06B6D4),
           glowIntensity: 1.5,
         ),
       ),
@@ -588,7 +1066,8 @@ class _HomePageState extends State<HomePage> {
       title: 'Hologram',
       description: 'Holographic scan line effect',
       icon: Icons.view_in_ar,
-      dropdown: CustomAnimatedMultiDropDown<String>(
+      gradientColors: [const Color(0xFF8B5CF6), const Color(0xFF06B6D4)],
+      dropdown: CustomAnimatedMultiDropDown<Map<String, dynamic>>(
         animationType: DropdownAnimationType.hologram,
         items: fruits,
         value: selectedMultipleValues[DropdownAnimationType.hologram],
@@ -597,12 +1076,23 @@ class _HomePageState extends State<HomePage> {
             selectedMultipleValues[DropdownAnimationType.hologram] = value;
           });
         },
-        itemBuilder: (item) => Text(item),
+        itemBuilder: (item) => Row(
+          children: [
+            Text(item['icon'], style: const TextStyle(fontSize: 20)),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                item['name'],
+                style: const TextStyle(fontWeight: FontWeight.w500),
+              ),
+            ),
+          ],
+        ),
         hint: const Text('Select fruits'),
         config: const MultiDropDownConfig(
           selectionMode: SelectionMode.multiple,
           showSelectedItemsAsChips: true,
-          highlightColor: Colors.cyanAccent,
+          highlightColor: Color(0xFF06B6D4),
         ),
       ),
     );
@@ -613,7 +1103,8 @@ class _HomePageState extends State<HomePage> {
       title: 'Cosmic Ripple',
       description: 'Expanding cosmic ripple waves',
       icon: Icons.circle,
-      dropdown: CustomAnimatedMultiDropDown<String>(
+      gradientColors: [const Color(0xFF8B5CF6), const Color(0xFF6366F1)],
+      dropdown: CustomAnimatedMultiDropDown<Map<String, dynamic>>(
         animationType: DropdownAnimationType.cosmicRipple,
         items: countries,
         value: selectedValues[DropdownAnimationType.cosmicRipple],
@@ -622,11 +1113,22 @@ class _HomePageState extends State<HomePage> {
             selectedValues[DropdownAnimationType.cosmicRipple] = value;
           });
         },
-        itemBuilder: (item) => Text(item),
+        itemBuilder: (item) => Row(
+          children: [
+            Text(item['flag'], style: const TextStyle(fontSize: 24)),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                item['name'],
+                style: const TextStyle(fontWeight: FontWeight.w500),
+              ),
+            ),
+          ],
+        ),
         hint: const Text('Select country'),
         config: const MultiDropDownConfig(
-          highlightColor: Colors.purple,
-          glowColor: Colors.indigo,
+          highlightColor: Color(0xFF8B5CF6),
+          glowColor: Color(0xFF6366F1),
         ),
       ),
     );
@@ -636,8 +1138,9 @@ class _HomePageState extends State<HomePage> {
     return _buildDropdownCard(
       title: 'Gravity Well',
       description: 'Distortion effect like a gravity well',
-      icon: Icons.content_paste_search_outlined,
-      dropdown: CustomAnimatedMultiDropDown<String>(
+      icon: Icons.wheelchair_pickup,
+      gradientColors: [const Color(0xFF6366F1), const Color(0xFF8B5CF6)],
+      dropdown: CustomAnimatedMultiDropDown<Map<String, dynamic>>(
         animationType: DropdownAnimationType.gravityWell,
         items: programmingLanguages,
         value: selectedValues[DropdownAnimationType.gravityWell],
@@ -646,10 +1149,21 @@ class _HomePageState extends State<HomePage> {
             selectedValues[DropdownAnimationType.gravityWell] = value;
           });
         },
-        itemBuilder: (item) => Text(item),
+        itemBuilder: (item) => Row(
+          children: [
+            Text(item['icon'], style: const TextStyle(fontSize: 20)),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                item['name'],
+                style: const TextStyle(fontWeight: FontWeight.w500),
+              ),
+            ),
+          ],
+        ),
         hint: const Text('Select language'),
         config: const MultiDropDownConfig(
-          highlightColor: Colors.deepPurple,
+          highlightColor: Color(0xFF6366F1),
           depth: 10,
         ),
       ),
@@ -661,6 +1175,7 @@ class _HomePageState extends State<HomePage> {
       title: 'Neon Pulse',
       description: 'Heartbeat-like neon pulsing',
       icon: Icons.favorite,
+      gradientColors: [const Color(0xFFEF4444), const Color(0xFFEC4899)],
       dropdown: CustomAnimatedMultiDropDown<String>(
         animationType: DropdownAnimationType.neonPulse,
         items: categories,
@@ -670,12 +1185,12 @@ class _HomePageState extends State<HomePage> {
             selectedMultipleValues[DropdownAnimationType.neonPulse] = value;
           });
         },
-        itemBuilder: (item) => Text(item),
+        itemBuilder: (item) => Text(item, style: const TextStyle(fontWeight: FontWeight.w500)),
         hint: const Text('Select categories'),
         config: const MultiDropDownConfig(
           selectionMode: SelectionMode.multiple,
-          highlightColor: Colors.red,
-          glowColor: Colors.red,
+          highlightColor: Color(0xFFEF4444),
+          glowColor: Color(0xFFEF4444),
           glowIntensity: 1.3,
         ),
       ),
@@ -687,7 +1202,8 @@ class _HomePageState extends State<HomePage> {
       title: 'Cyber Neon',
       description: 'Cyberpunk neon grid effect',
       icon: Icons.grid_on,
-      dropdown: CustomAnimatedMultiDropDown<String>(
+      gradientColors: [const Color(0xFF10B981), const Color(0xFF3B82F6)],
+      dropdown: CustomAnimatedMultiDropDown<Map<String, dynamic>>(
         animationType: DropdownAnimationType.cyberNeon,
         items: fruits,
         value: selectedValues[DropdownAnimationType.cyberNeon],
@@ -696,11 +1212,22 @@ class _HomePageState extends State<HomePage> {
             selectedValues[DropdownAnimationType.cyberNeon] = value;
           });
         },
-        itemBuilder: (item) => Text(item),
+        itemBuilder: (item) => Row(
+          children: [
+            Text(item['icon'], style: const TextStyle(fontSize: 20)),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                item['name'],
+                style: const TextStyle(fontWeight: FontWeight.w500),
+              ),
+            ),
+          ],
+        ),
         hint: const Text('Select fruit'),
         config: const MultiDropDownConfig(
-          highlightColor: Colors.lime,
-          glowColor: Colors.green,
+          highlightColor: Color(0xFF10B981),
+          glowColor: Color(0xFF3B82F6),
         ),
       ),
     );
@@ -713,7 +1240,8 @@ class _HomePageState extends State<HomePage> {
       title: 'Bouncy 3D',
       description: '3D bounce effect with depth',
       icon: Icons.three_p,
-      dropdown: CustomAnimatedMultiDropDown<String>(
+      gradientColors: [const Color(0xFFF59E0B), const Color(0xFFEF4444)],
+      dropdown: CustomAnimatedMultiDropDown<Map<String, dynamic>>(
         animationType: DropdownAnimationType.bouncy3d,
         items: fruits,
         value: selectedValues[DropdownAnimationType.bouncy3d],
@@ -722,10 +1250,21 @@ class _HomePageState extends State<HomePage> {
             selectedValues[DropdownAnimationType.bouncy3d] = value;
           });
         },
-        itemBuilder: (item) => Text(item),
+        itemBuilder: (item) => Row(
+          children: [
+            Text(item['icon'], style: const TextStyle(fontSize: 20)),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                item['name'],
+                style: const TextStyle(fontWeight: FontWeight.w500),
+              ),
+            ),
+          ],
+        ),
         hint: const Text('Select fruit'),
         config: const MultiDropDownConfig(
-          highlightColor: Colors.amber,
+          highlightColor: Color(0xFFF59E0B),
           depth: 8,
         ),
       ),
@@ -737,7 +1276,8 @@ class _HomePageState extends State<HomePage> {
       title: 'Floating Cards',
       description: 'Cards that float up with staggered animation',
       icon: Icons.credit_card,
-      dropdown: CustomAnimatedMultiDropDown<String>(
+      gradientColors: [const Color(0xFF6366F1), const Color(0xFF8B5CF6)],
+      dropdown: CustomAnimatedMultiDropDown<Map<String, dynamic>>(
         animationType: DropdownAnimationType.floatingCard,
         items: programmingLanguages,
         value: selectedMultipleValues[DropdownAnimationType.floatingCard],
@@ -746,7 +1286,18 @@ class _HomePageState extends State<HomePage> {
             selectedMultipleValues[DropdownAnimationType.floatingCard] = value;
           });
         },
-        itemBuilder: (item) => Text(item),
+        itemBuilder: (item) => Row(
+          children: [
+            Text(item['icon'], style: const TextStyle(fontSize: 20)),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                item['name'],
+                style: const TextStyle(fontWeight: FontWeight.w500),
+              ),
+            ),
+          ],
+        ),
         hint: const Text('Select languages'),
         config: const MultiDropDownConfig(
           selectionMode: SelectionMode.multiple,
@@ -762,7 +1313,8 @@ class _HomePageState extends State<HomePage> {
       title: 'Staggered',
       description: 'Staggered item appearance',
       icon: Icons.view_agenda,
-      dropdown: CustomAnimatedMultiDropDown<String>(
+      gradientColors: [const Color(0xFF8B5CF6), const Color(0xFF6366F1)],
+      dropdown: CustomAnimatedMultiDropDown<Map<String, dynamic>>(
         animationType: DropdownAnimationType.staggered,
         items: countries,
         value: selectedValues[DropdownAnimationType.staggered],
@@ -771,10 +1323,21 @@ class _HomePageState extends State<HomePage> {
             selectedValues[DropdownAnimationType.staggered] = value;
           });
         },
-        itemBuilder: (item) => Text(item),
+        itemBuilder: (item) => Row(
+          children: [
+            Text(item['flag'], style: const TextStyle(fontSize: 24)),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                item['name'],
+                style: const TextStyle(fontWeight: FontWeight.w500),
+              ),
+            ),
+          ],
+        ),
         hint: const Text('Select country'),
         config: const MultiDropDownConfig(
-          highlightColor: Colors.brown,
+          highlightColor: Color(0xFF8B5CF6),
         ),
       ),
     );
@@ -785,6 +1348,7 @@ class _HomePageState extends State<HomePage> {
       title: 'Foldable',
       description: 'Paper-like folding animation',
       icon: Icons.folder,
+      gradientColors: [const Color(0xFF10B981), const Color(0xFF3B82F6)],
       dropdown: CustomAnimatedMultiDropDown<String>(
         animationType: DropdownAnimationType.foldable,
         items: categories,
@@ -794,7 +1358,7 @@ class _HomePageState extends State<HomePage> {
             selectedMultipleValues[DropdownAnimationType.foldable] = value;
           });
         },
-        itemBuilder: (item) => Text(item),
+        itemBuilder: (item) => Text(item, style: const TextStyle(fontWeight: FontWeight.w500)),
         hint: const Text('Select categories'),
         config: const MultiDropDownConfig(
           selectionMode: SelectionMode.multiple,
@@ -808,7 +1372,8 @@ class _HomePageState extends State<HomePage> {
       title: 'Molecular',
       description: 'Molecular bonding animation',
       icon: Icons.bubble_chart,
-      dropdown: CustomAnimatedMultiDropDown<String>(
+      gradientColors: [const Color(0xFF06B6D4), const Color(0xFF3B82F6)],
+      dropdown: CustomAnimatedMultiDropDown<Map<String, dynamic>>(
         animationType: DropdownAnimationType.molecular,
         items: fruits,
         value: selectedValues[DropdownAnimationType.molecular],
@@ -817,23 +1382,35 @@ class _HomePageState extends State<HomePage> {
             selectedValues[DropdownAnimationType.molecular] = value;
           });
         },
-        itemBuilder: (item) => Text(item),
+        itemBuilder: (item) => Row(
+          children: [
+            Text(item['icon'], style: const TextStyle(fontSize: 20)),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                item['name'],
+                style: const TextStyle(fontWeight: FontWeight.w500),
+              ),
+            ),
+          ],
+        ),
         hint: const Text('Select fruit'),
         config: const MultiDropDownConfig(
-          highlightColor: Colors.lightBlue,
+          highlightColor: Color(0xFF06B6D4),
         ),
       ),
     );
   }
 
-  // ==================== SPECIAL & PREMIUM ANIMATIONS ====================
+  // ==================== PREMIUM & EXCLUSIVE ANIMATIONS ====================
 
   Widget _buildHolographicFanAnimation() {
     return _buildDropdownCard(
       title: 'Holographic Fan',
       description: 'Fan spread with holographic effect',
       icon: Icons.filter_b_and_w,
-      dropdown: CustomAnimatedMultiDropDown<String>(
+      gradientColors: [const Color(0xFFEC4899), const Color(0xFFF97316)],
+      dropdown: CustomAnimatedMultiDropDown<Map<String, dynamic>>(
         animationType: DropdownAnimationType.holographicFan,
         items: programmingLanguages,
         value: selectedValues[DropdownAnimationType.holographicFan],
@@ -842,10 +1419,21 @@ class _HomePageState extends State<HomePage> {
             selectedValues[DropdownAnimationType.holographicFan] = value;
           });
         },
-        itemBuilder: (item) => Text(item),
+        itemBuilder: (item) => Row(
+          children: [
+            Text(item['icon'], style: const TextStyle(fontSize: 20)),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                item['name'],
+                style: const TextStyle(fontWeight: FontWeight.w500),
+              ),
+            ),
+          ],
+        ),
         hint: const Text('Select language'),
         config: const MultiDropDownConfig(
-          highlightColor: Colors.purpleAccent,
+          highlightColor: Color(0xFFEC4899),
         ),
       ),
     );
@@ -856,7 +1444,8 @@ class _HomePageState extends State<HomePage> {
       title: 'Liquid Metal',
       description: 'Premium liquid metal effect',
       icon: Icons.water,
-      dropdown: CustomAnimatedMultiDropDown<String>(
+      gradientColors: [const Color(0xFF64748B), const Color(0xFF94A3B8)],
+      dropdown: CustomAnimatedMultiDropDown<Map<String, dynamic>>(
         animationType: DropdownAnimationType.liquidMetal,
         items: countries,
         value: selectedMultipleValues[DropdownAnimationType.liquidMetal],
@@ -865,13 +1454,24 @@ class _HomePageState extends State<HomePage> {
             selectedMultipleValues[DropdownAnimationType.liquidMetal] = value;
           });
         },
-        itemBuilder: (item) => Text(item),
+        itemBuilder: (item) => Row(
+          children: [
+            Text(item['flag'], style: const TextStyle(fontSize: 24)),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                item['name'],
+                style: const TextStyle(fontWeight: FontWeight.w500),
+              ),
+            ),
+          ],
+        ),
         hint: const Text('Select countries'),
         config: const MultiDropDownConfig(
           selectionMode: SelectionMode.multiple,
           showSelectedItemsAsChips: true,
-          highlightColor: Colors.grey,
-          gradientColors: [Colors.grey, Colors.white70],
+          highlightColor: Color(0xFF64748B),
+          gradientColors: [Color(0xFF64748B), Color(0xFF94A3B8)],
         ),
       ),
     );
@@ -882,7 +1482,8 @@ class _HomePageState extends State<HomePage> {
       title: 'Morphing Glass',
       description: 'Morphing shapes with glass effect',
       icon: Icons.animation,
-      dropdown: CustomAnimatedMultiDropDown<String>(
+      gradientColors: [const Color(0xFF6366F1), const Color(0xFF8B5CF6)],
+      dropdown: CustomAnimatedMultiDropDown<Map<String, dynamic>>(
         animationType: DropdownAnimationType.morphingGlass,
         items: fruits,
         value: selectedValues[DropdownAnimationType.morphingGlass],
@@ -891,10 +1492,21 @@ class _HomePageState extends State<HomePage> {
             selectedValues[DropdownAnimationType.morphingGlass] = value;
           });
         },
-        itemBuilder: (item) => Text(item),
+        itemBuilder: (item) => Row(
+          children: [
+            Text(item['icon'], style: const TextStyle(fontSize: 20)),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                item['name'],
+                style: const TextStyle(fontWeight: FontWeight.w500),
+              ),
+            ),
+          ],
+        ),
         hint: const Text('Select fruit'),
         config: const MultiDropDownConfig(
-          highlightColor: Colors.tealAccent,
+          highlightColor: Color(0xFF6366F1),
           blurIntensity: 12,
         ),
       ),
@@ -906,6 +1518,7 @@ class _HomePageState extends State<HomePage> {
       title: 'Staggered Vertical',
       description: 'Vertical staggered drop animation',
       icon: Icons.vertical_align_bottom,
+      gradientColors: [const Color(0xFF10B981), const Color(0xFF3B82F6)],
       dropdown: CustomAnimatedMultiDropDown<String>(
         animationType: DropdownAnimationType.staggeredVerticalDropItem,
         items: categories,
@@ -915,7 +1528,7 @@ class _HomePageState extends State<HomePage> {
             selectedMultipleValues[DropdownAnimationType.staggeredVerticalDropItem] = value;
           });
         },
-        itemBuilder: (item) => Text(item),
+        itemBuilder: (item) => Text(item, style: const TextStyle(fontWeight: FontWeight.w500)),
         hint: const Text('Select categories'),
         config: const MultiDropDownConfig(
           selectionMode: SelectionMode.multiple,
@@ -925,112 +1538,132 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // ==================== COMPLEX EXAMPLES ====================
+  // ==================== ADVANCED EXAMPLES ====================
 
   Widget _buildComplexExamplesSection() {
-    // Add these to your state for complex examples
-    Map<String, dynamic>? _selectedComplexValue;
-    List<String> _selectedAdvancedSearch = [];
-    List<String> _selectedFullFeatured = [];
-
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 16),
-        const Text(
-          '🎯 Complex Examples',
-          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          'Custom items, complex data structures, and advanced configurations',
-          style: TextStyle(fontSize: 14, color: Colors.grey[600]),
-        ),
-        const SizedBox(height: 16),
-
-        // Custom Complex Items
         _buildDropdownCard(
-          title: 'Custom Complex Items',
-          description: 'Display custom widgets with avatars and roles',
+          title: 'Team Members',
+          description: 'Custom widgets with avatars and roles',
           icon: Icons.people,
+          gradientColors: [const Color(0xFF6366F1), const Color(0xFF8B5CF6)],
           dropdown: CustomAnimatedMultiDropDown<Map<String, dynamic>>(
             animationType: DropdownAnimationType.glass,
             items: complexItems,
-            value: _selectedComplexValue,
+            value: selectedComplexValue,
             onChanged: (value) {
               setState(() {
-                _selectedComplexValue = value;
+                selectedComplexValue = value;
               });
             },
             itemBuilder: (item) => Row(
               children: [
-                Text(item['avatar'], style: const TextStyle(fontSize: 24)),
-                const SizedBox(width: 12),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(item['name'], style: const TextStyle(fontWeight: FontWeight.bold)),
-                    Text(item['role'], style: const TextStyle(fontSize: 12)),
-                  ],
+                Container(
+                  width: 44,
+                  height: 44,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [Color(item['color']), Color(item['color']).withValues(alpha: 0.7)],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                  child: Center(
+                    child: Text(item['avatar'], style: const TextStyle(fontSize: 24)),
+                  ),
+                ),
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        item['name'],
+                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                      ),
+                      Text(
+                        item['role'],
+                        style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
-            hint: const Text('Select a team member'),
+            hint: const Text('Select team member'),
             config: const MultiDropDownConfig(
-              highlightColor: Colors.blue,
-              borderRadius: BorderRadius.all(Radius.circular(12)),
+              highlightColor: Color(0xFF6366F1),
+              borderRadius: BorderRadius.all(Radius.circular(16)),
             ),
           ),
         ),
-
         const SizedBox(height: 16),
-
-        // Search with Custom Filter
         _buildDropdownCard(
           title: 'Advanced Search',
-          description: 'Search with custom filtering and highlighting',
+          description: 'Search with custom filtering',
           icon: Icons.search_rounded,
-          dropdown: CustomAnimatedMultiDropDown<String>(
+          gradientColors: [const Color(0xFF06B6D4), const Color(0xFF3B82F6)],
+          dropdown: CustomAnimatedMultiDropDown<Map<String, dynamic>>(
             animationType: DropdownAnimationType.liquidSmooth,
             items: programmingLanguages,
-            value: _selectedAdvancedSearch,
+            value: selectedAdvancedSearch,
             onChanged: (value) {
               setState(() {
-                _selectedAdvancedSearch = value;
+                selectedAdvancedSearch = value;
               });
             },
-            itemBuilder: (item) => Text(item),
-            hint: const Text('Search and select languages'),
+            itemBuilder: (item) => Row(
+              children: [
+                Text(item['icon'], style: const TextStyle(fontSize: 20)),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    item['name'],
+                    style: const TextStyle(fontWeight: FontWeight.w500),
+                  ),
+                ),
+              ],
+            ),
+            hint: const Text('Search languages'),
             config: const MultiDropDownConfig(
               selectionMode: SelectionMode.multiple,
               enableSearch: true,
               showSelectedItemsAsChips: true,
               searchHintText: 'Search by language name...',
-              highlightColor: Colors.deepOrange,
-              searchBackgroundColor: Colors.white,
-              searchCursorColor: Colors.deepOrange,
+              highlightColor: Color(0xFF06B6D4),
             ),
           ),
         ),
-
         const SizedBox(height: 16),
-
-        // Full Featured Dropdown
         _buildDropdownCard(
-          title: 'Full Featured Dropdown',
-          description: 'All features combined: search, chips, haptic feedback',
+          title: 'Full Featured',
+          description: 'All features combined',
           icon: Icons.star,
-          dropdown: CustomAnimatedMultiDropDown<String>(
+          gradientColors: [const Color(0xFFF59E0B), const Color(0xFFEF4444)],
+          dropdown: CustomAnimatedMultiDropDown<Map<String, dynamic>>(
             animationType: DropdownAnimationType.cyberpunk,
             items: fruits,
-            value: _selectedFullFeatured,
+            value: selectedFullFeatured,
             onChanged: (value) {
               setState(() {
-                _selectedFullFeatured = value;
+                selectedFullFeatured = value;
               });
             },
-            itemBuilder: (item) => Text(item),
-            hint: const Text('Select fruits (try search!)'),
+            itemBuilder: (item) => Row(
+              children: [
+                Text(item['icon'], style: const TextStyle(fontSize: 20)),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    item['name'],
+                    style: const TextStyle(fontWeight: FontWeight.w500),
+                  ),
+                ),
+              ],
+            ),
+            hint: const Text('Select fruits'),
             config: const MultiDropDownConfig(
               selectionMode: SelectionMode.multiple,
               enableSearch: true,
@@ -1038,19 +1671,15 @@ class _HomePageState extends State<HomePage> {
               enableHapticFeedback: true,
               showCheckmark: true,
               searchHintText: 'Search fruits...',
-              highlightColor: Colors.purple,
-              glowColor: Colors.purple,
+              highlightColor: Color(0xFFF59E0B),
+              glowColor: Color(0xFFEF4444),
               glowIntensity: 0.8,
-              chipSpacing: 8,
-              chipRunSpacing: 8,
             ),
           ),
         ),
       ],
     );
   }
-
-  // ==================== SELECTED VALUES SUMMARY ====================
 
   Widget _buildSelectedValuesSummary() {
     int totalSelections = 0;
@@ -1060,17 +1689,20 @@ class _HomePageState extends State<HomePage> {
     for (var value in selectedMultipleValues.values) {
       if (value.isNotEmpty) totalSelections += value.length;
     }
+    if (selectedComplexValue != null) totalSelections++;
+    totalSelections += selectedAdvancedSearch.length;
+    totalSelections += selectedFullFeatured.length;
 
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Theme.of(context).brightness == Brightness.light
-            ? Colors.grey[100]
-            : Colors.grey[900],
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: Theme.of(context).primaryColor.withOpacity(0.3),
+        gradient: LinearGradient(
+          colors: [Colors.grey.shade50, Colors.white],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
         ),
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: Colors.grey.shade200),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1078,24 +1710,37 @@ class _HomePageState extends State<HomePage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                '📊 Selected Values Summary',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF6366F1).withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: const Icon(Icons.summarize, color: Color(0xFF6366F1), size: 20),
+                  ),
+                  const SizedBox(width: 12),
+                  const Text(
+                    'Selection Summary',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF0F172A)),
+                  ),
+                ],
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
+                  color: const Color(0xFF6366F1),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
-                  '$totalSelections selections',
-                  style: const TextStyle(color: Colors.white, fontSize: 12),
+                  '$totalSelections items',
+                  style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w500),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 16),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
@@ -1105,6 +1750,9 @@ class _HomePageState extends State<HomePage> {
                 _buildSummaryChip('Neon', selectedValues[DropdownAnimationType.neon]),
                 _buildSummaryChip('Cyberpunk', selectedValues[DropdownAnimationType.cyberpunk]),
                 _buildSummaryChip('Hologram', selectedMultipleValues[DropdownAnimationType.hologram]),
+                _buildSummaryChip('Team', selectedComplexValue),
+                _buildSummaryChip('Search', selectedAdvancedSearch),
+                _buildSummaryChip('Featured', selectedFullFeatured),
               ],
             ),
           ),
@@ -1119,95 +1767,42 @@ class _HomePageState extends State<HomePage> {
       displayValue = 'None';
     } else if (value is List) {
       displayValue = value.isEmpty ? 'None' : '${value.length} selected';
+    } else if (value is Map) {
+      displayValue = value['name'] ?? 'Selected';
     } else {
       displayValue = value.toString().split(' ').last;
     }
 
     return Container(
       margin: const EdgeInsets.only(right: 8),
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        color: Theme.of(context).brightness == Brightness.light
-            ? Colors.white
-            : Colors.grey[800],
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.grey.withOpacity(0.3)),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.grey.shade200),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.02),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             label,
-            style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Color(0xFF6366F1)),
           ),
+          const SizedBox(height: 2),
           Text(
             displayValue,
-            style: const TextStyle(fontSize: 12),
+            style: const TextStyle(fontSize: 11, color: Color(0xFF334155)),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
         ],
-      ),
-    );
-  }
-
-  // ==================== HELPER WIDGET ====================
-
-  Widget _buildDropdownCard({
-    required String title,
-    required String description,
-    required IconData icon,
-    required Widget dropdown,
-  }) {
-    return Card(
-      margin: const EdgeInsets.only(bottom: 16),
-      elevation: 2,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Icon(icon, size: 20, color: Theme.of(context).primaryColor),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        title,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        description,
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.grey[600],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            dropdown,
-          ],
-        ),
       ),
     );
   }
