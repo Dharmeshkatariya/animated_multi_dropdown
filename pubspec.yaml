@@ -20,3 +20,16 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+# Topics for pub.dev discoverability (root level)
+topics:
+  - dropdown
+  - animation
+  - flutter-widget
+  - multi-select
+  - dropdown-menu
+  - custom-dropdown
+  - animated-dropdown
+  - glass-morphism
+  - liquid-animation
+  - neon-effect
