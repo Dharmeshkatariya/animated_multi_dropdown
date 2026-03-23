@@ -22,6 +22,16 @@ export 'src/models/multi_dropdown_config.dart';
 // ==================== WIDGETS ====================
 export 'src/widgets/custom_animated_multi_dropdown.dart';
 export 'src/widgets/indicator.dart';
+export 'src/widgets/custom_text.dart';
+export 'src/widgets/custom_container.dart';
+export 'src/widgets/custom_button.dart';
+export 'src/widgets/custom_card.dart';
+export 'src/widgets/custom_chip.dart';
+export 'src/widgets/custom_loading.dart';
+
+// Theme
+export 'src/theme/app_colors.dart';
+export 'src/theme/app_text_styles.dart';
 
 // ==================== STRATEGIES ====================
 export 'src/strategies/multi_dropdown_animation_strategy.dart';
