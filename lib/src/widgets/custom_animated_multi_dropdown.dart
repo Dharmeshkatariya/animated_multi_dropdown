@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:animated_multi_dropdown/src/widgets/indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -472,7 +471,5 @@ MultiDropdownAnimationStrategy<T> createDropdownStrategy<T>(
       return FloatingGlassMultiDropdownStrategy<T>();
     case DropdownAnimationType.liquidSmooth:
       return LiquidSmoothMultiDropdownStrategy<T>();
-    default:
-      return MultiGlassDropdownStrategy<T>();
   }
 }
