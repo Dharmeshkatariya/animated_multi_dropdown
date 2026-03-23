@@ -174,16 +174,34 @@ class _CustomAnimatedMultiDropDownState<T>
     }
   }
 
+  // bool _isItemSelected(T item) {
+  //   if (widget.config.selectionMode == SelectionMode.multiple) {
+  //     final currentSelection = _selectedValue.value is List<T>
+  //         ? _selectedValue.value as List<T>
+  //         : [];
+  //     final compareFn = widget.compareFn ?? (T a, T b) => a == b;
+  //     return currentSelection.any((i) => compareFn(i, item));
+  //   } else {
+  //     return widget.compareFn?.call(_selectedValue.value as T, item) ??
+  //         _selectedValue.value == item;
+  //   }
+  // }
+
   bool _isItemSelected(T item) {
     if (widget.config.selectionMode == SelectionMode.multiple) {
       final currentSelection = _selectedValue.value is List<T>
           ? _selectedValue.value as List<T>
-          : [];
+          : <T>[];
       final compareFn = widget.compareFn ?? (T a, T b) => a == b;
       return currentSelection.any((i) => compareFn(i, item));
     } else {
-      return widget.compareFn?.call(_selectedValue.value as T, item) ??
-          _selectedValue.value == item;
+      // Fix the type cast issue here
+      final currentValue = _selectedValue.value;
+      if (currentValue == null) return false;
+      if (widget.compareFn != null) {
+        return widget.compareFn!(currentValue as T, item);
+      }
+      return currentValue == item;
     }
   }
 

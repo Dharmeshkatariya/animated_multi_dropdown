@@ -1,29 +1,86 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:animated_multi_dropdown/animated_multi_dropdown.dart';
-import 'package:animated_multi_dropdown/animated_multi_dropdown_platform_interface.dart';
-import 'package:animated_multi_dropdown/animated_multi_dropdown_method_channel.dart';
-import 'package:plugin_platform_interface/plugin_platform_interface.dart';
-
-class MockAnimatedMultiDropdownPlatform
-    with MockPlatformInterfaceMixin
-    implements AnimatedMultiDropdownPlatform {
-
-  @override
-  Future<String?> getPlatformVersion() => Future.value('42');
-}
 
 void main() {
-  final AnimatedMultiDropdownPlatform initialPlatform = AnimatedMultiDropdownPlatform.instance;
+  group('AnimatedMultiDropdown Widget Tests', () {
+    testWidgets('Basic rendering', (WidgetTester tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: CustomAnimatedMultiDropDown<String>(
+              animationType: DropdownAnimationType.glass,
+              items: ['Item 1', 'Item 2', 'Item 3'],
+              value: null,
+              onChanged: (value) {},
+              itemBuilder: (item) => Text(item),
+              hint: const Text('Select an item'),
+            ),
+          ),
+        ),
+      );
 
-  test('$MethodChannelAnimatedMultiDropdown is the default instance', () {
-    expect(initialPlatform, isInstanceOf<MethodChannelAnimatedMultiDropdown>());
-  });
+      await tester.pumpAndSettle();
+      expect(find.byType(CustomAnimatedMultiDropDown<String>), findsOneWidget);
+    });
 
-  test('getPlatformVersion', () async {
-    AnimatedMultiDropdown animatedMultiDropdownPlugin = AnimatedMultiDropdown();
-    MockAnimatedMultiDropdownPlatform fakePlatform = MockAnimatedMultiDropdownPlatform();
-    AnimatedMultiDropdownPlatform.instance = fakePlatform;
+    testWidgets('Single selection works', (WidgetTester tester) async {
+      String? selectedValue;
 
-    expect(await animatedMultiDropdownPlugin.getPlatformVersion(), '42');
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: CustomAnimatedMultiDropDown<String>(
+              animationType: DropdownAnimationType.glass,
+              items: ['Apple', 'Banana', 'Orange'],
+              value: selectedValue,
+              onChanged: (value) => selectedValue = value,
+              itemBuilder: (item) => Text(item),
+            ),
+          ),
+        ),
+      );
+
+      await tester.pumpAndSettle();
+      await tester.tap(find.byType(CustomAnimatedMultiDropDown<String>));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Banana'));
+      await tester.pumpAndSettle();
+
+      expect(selectedValue, 'Banana');
+    });
+
+    testWidgets('Multiple selection works', (WidgetTester tester) async {
+      List<String> selectedValues = [];
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: CustomAnimatedMultiDropDown<String>(
+              animationType: DropdownAnimationType.liquid,
+              items: ['Apple', 'Banana', 'Orange'],
+              value: selectedValues,
+              onChanged: (value) => selectedValues = value,
+              itemBuilder: (item) => Text(item),
+              config: const MultiDropDownConfig(
+                selectionMode: SelectionMode.multiple,
+              ),
+            ),
+          ),
+        ),
+      );
+
+      await tester.pumpAndSettle();
+      await tester.tap(find.byType(CustomAnimatedMultiDropDown<String>));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Apple'));
+      await tester.pump();
+      await tester.tap(find.text('Orange'));
+      await tester.pump();
+
+      expect(selectedValues.length, 2);
+      expect(selectedValues.contains('Apple'), true);
+      expect(selectedValues.contains('Orange'), true);
+    });
   });
 }
