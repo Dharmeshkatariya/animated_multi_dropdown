@@ -1,0 +1,22 @@
+name: animated_multi_dropdown
+description: A highly customizable animated multi-dropdown widget with stunning animations like glass morphism, liquid effects, neon, cyberpunk, and more.
+version: 1.0.0
+homepage: https://github.com/Dharmeshkatariya/animated_multi_dropdown
+repository: https://github.com/Dharmeshkatariya/animated_multi_dropdown
+issue_tracker: https://github.com/Dharmeshkatariya/animated_multi_dropdown/issues
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+  flutter: '>=3.3.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
