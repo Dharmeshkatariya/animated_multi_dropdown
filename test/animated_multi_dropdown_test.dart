@@ -1,6 +1,9 @@
+import 'package:animated_multi_dropdown/src/models/dropdown_animation_type.dart';
+import 'package:animated_multi_dropdown/src/models/multi_dropdown_config.dart';
+import 'package:animated_multi_dropdown/src/models/selection_mode.dart';
+import 'package:animated_multi_dropdown/src/widgets/custom_animated_multi_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:animated_multi_dropdown/animated_multi_dropdown.dart';
 
 void main() {
   group('AnimatedMultiDropdown Widget Tests', () {
@@ -10,7 +13,7 @@ void main() {
           home: Scaffold(
             body: CustomAnimatedMultiDropDown<String>(
               animationType: DropdownAnimationType.glass,
-              items: ['Item 1', 'Item 2', 'Item 3'],
+              items: const ['Item 1', 'Item 2', 'Item 3'],
               value: null,
               onChanged: (value) {},
               itemBuilder: (item) => Text(item),
@@ -32,7 +35,7 @@ void main() {
           home: Scaffold(
             body: CustomAnimatedMultiDropDown<String>(
               animationType: DropdownAnimationType.glass,
-              items: ['Apple', 'Banana', 'Orange'],
+              items: const ['Apple', 'Banana', 'Orange'],
               value: selectedValue,
               onChanged: (value) => selectedValue = value,
               itemBuilder: (item) => Text(item),
@@ -58,7 +61,7 @@ void main() {
           home: Scaffold(
             body: CustomAnimatedMultiDropDown<String>(
               animationType: DropdownAnimationType.liquid,
-              items: ['Apple', 'Banana', 'Orange'],
+              items: const ['Apple', 'Banana', 'Orange'],
               value: selectedValues,
               onChanged: (value) => selectedValues = value,
               itemBuilder: (item) => Text(item),

@@ -1,3 +1,4 @@
+import 'package:animated_multi_dropdown/src/strategies/strategy_factory.dart';
 import 'package:animated_multi_dropdown/src/widgets/indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,6 +7,7 @@ import '../models/dropdown_animation_type.dart';
 import '../models/multi_dropdown_config.dart';
 import '../models/selection_mode.dart';
 import '../strategies/multi_dropdown_animation_strategy.dart';
+
 
 
 class CustomAnimatedMultiDropDown<T> extends StatefulWidget {
@@ -98,16 +100,7 @@ class _CustomAnimatedMultiDropDownState<T>
       reverseDuration: widget.config.reverseDuration,
     );
 
-    _strategy = createDropdownStrategy<T>(
-      widget.animationType,
-      widget.config,
-      _controller,
-      widget.itemBuilder,
-      widget.items,
-      widget.value,
-      _handleValueChanged,
-      _handleToggle,
-    );
+    _strategy = StrategyFactory.create<T>(widget.animationType);
 
     _selectedValue.value = widget.value;
     _filteredItems = widget.items;
@@ -123,6 +116,10 @@ class _CustomAnimatedMultiDropDownState<T>
     }
     if (widget.items != oldWidget.items) {
       _filteredItems = widget.items;
+    }
+    // If animation type changes, recreate strategy
+    if (widget.animationType != oldWidget.animationType) {
+      _strategy = StrategyFactory.create<T>(widget.animationType);
     }
   }
 
@@ -370,106 +367,4 @@ class _CustomAnimatedMultiDropDownState<T>
 }
 
 
-abstract class MultiDropdownAnimationStrategy<T> {
-  Widget buildDropdown({
-    required BuildContext context,
-    required List<T> items,
-    required dynamic value,
-    required ValueChanged<T> onChanged,
-    required Widget Function(T item) itemBuilder,
-    Widget? hint,
-    Widget? icon,
-    required AnimationController controller,
-    required bool isOpen,
-    required MultiDropDownConfig config,
-    required VoidCallback onToggle,
-    bool showDivider = true,
-    Color? dividerColor,
-    double? dividerThickness,
-    EdgeInsets? padding,
-    EdgeInsets? itemPadding,
-    TextStyle? hintStyle,
-    TextStyle? selectedItemStyle,
-    TextStyle? itemStyle,
-    Color? dropdownBackgroundColor,
-    BoxShadow? shadow,
-    List<BoxShadow>? shadows,
-    double? elevation,
-    double? maxDropdownHeight,
-    bool showCheckmark = true,
-    Widget? customCheckmark,
-    double? dropdownWidth,
-    required bool Function(T) isItemSelected,
-    required Widget Function(bool, MultiDropDownConfig) buildSelectionIndicator,
-    required Widget Function(MultiDropDownConfig) buildSearchField,
-  });
 
-  void toggleDropdown({
-    required AnimationController controller,
-    required bool isOpen,
-  });
-}
-
-MultiDropdownAnimationStrategy<T> createDropdownStrategy<T>(
-    DropdownAnimationType type,
-    MultiDropDownConfig config,
-    AnimationController controller,
-    Widget Function(T item) itemBuilder,
-    List<T> items,
-    dynamic value,
-    ValueChanged<dynamic>? onChanged,
-    VoidCallback onToggle,
-    ) {
-  switch (type) {
-    case DropdownAnimationType.glass:
-      return MultiGlassDropdownStrategy<T>();
-    case DropdownAnimationType.liquid:
-      return MultiLiquidDropdownStrategy<T>();
-    case DropdownAnimationType.neon:
-      return MultiNeonDropdownStrategy<T>();
-    case DropdownAnimationType.bouncy3d:
-      return MultiBounce3DDropdownStrategy<T>();
-    case DropdownAnimationType.floatingCard:
-      return FloatingCardsMultiDropdownStrategy<T>();
-    case DropdownAnimationType.morphing:
-      return MorphingMultiDropdownStrategy<T>();
-    case DropdownAnimationType.staggered:
-      return StaggeredMultiDropdownStrategy<T>();
-    case DropdownAnimationType.staggeredVerticalDropItem:
-      return StaggeredVerticalMultiDropdownStrategy<T>();
-    case DropdownAnimationType.foldable:
-      return FoldableMultiDropdownStrategy<T>();
-    case DropdownAnimationType.fluidWave:
-      return FluidWaveMultiDropdownStrategy<T>();
-    case DropdownAnimationType.holographicFan:
-      return HolographicFanMultiDropdownStrategy<T>();
-    case DropdownAnimationType.molecular:
-      return MolecularMultiDropdownStrategy<T>();
-    case DropdownAnimationType.cosmicRipple:
-      return CosmicRippleMultiDropdownStrategy<T>();
-    case DropdownAnimationType.gravityWell:
-      return GravityWellMultiDropdownStrategy<T>();
-    case DropdownAnimationType.neonPulse:
-      return NeonPulseMultiDropdownStrategy<T>();
-    case DropdownAnimationType.glassMorphism:
-      return GlassMorphismMultiDropdownStrategy<T>();
-    case DropdownAnimationType.liquidSwipe:
-      return LiquidSwipeMultiDropdownStrategy<T>();
-    case DropdownAnimationType.cyberpunk:
-      return CyberpunkMultiDropdownStrategy<T>();
-    case DropdownAnimationType.morphingGlass:
-      return MorphingGlassMultiDropdownStrategy<T>();
-    case DropdownAnimationType.hologram:
-      return HologramMultiDropdownStrategy<T>();
-    case DropdownAnimationType.liquidMetal:
-      return LiquidMetalMultiDropdownStrategy<T>();
-    case DropdownAnimationType.cyberNeon:
-      return CyberNeonMultiDropdownStrategy<T>();
-    case DropdownAnimationType.gradientWave:
-      return GradientWaveMultiDropdownStrategy<T>();
-    case DropdownAnimationType.floatingGlass:
-      return FloatingGlassMultiDropdownStrategy<T>();
-    case DropdownAnimationType.liquidSmooth:
-      return LiquidSmoothMultiDropdownStrategy<T>();
-  }
-}

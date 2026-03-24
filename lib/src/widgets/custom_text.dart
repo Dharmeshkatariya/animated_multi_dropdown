@@ -3,7 +3,8 @@ import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
 
 class CustomText extends StatelessWidget {
-  final String text;
+  final String? text;
+  final Widget? child;
   final TextStyle? style;
   final IconData? icon;
   final Color? iconColor;
@@ -25,7 +26,8 @@ class CustomText extends StatelessWidget {
 
   const CustomText({
     super.key,
-    required this.text,
+    this.text,
+    this.child,
     this.style,
     this.icon,
     this.iconColor,
@@ -44,41 +46,52 @@ class CustomText extends StatelessWidget {
     this.isGradient = false,
     this.gradientColors,
     this.onTap,
-  });
+  }) : assert(text != null || child != null, 'Either text or child must be provided');
 
   @override
   Widget build(BuildContext context) {
-    Widget textWidget = Text(
-      text,
-      style: style ?? AppTextStyles.bodyMedium,
-      textAlign: textAlign,
-      maxLines: maxLines,
-      overflow:
-          textOverflow ?? (maxLines != null ? TextOverflow.ellipsis : null),
-      textDirection: textDirection,
-      softWrap: softWrap,
-      semanticsLabel: semanticsLabel,
-      textWidthBasis: textWidthBasis,
-      textHeightBehavior: textHeightBehavior,
-      selectionColor: selectionColor,
-      strutStyle: strutStyle,
-    );
+    Widget contentWidget;
 
-    if (isGradient) {
-      textWidget = ShaderMask(
+    if (child != null) {
+      contentWidget = child!;
+      if (style != null) {
+        contentWidget = DefaultTextStyle.merge(
+          style: style!,
+          child: contentWidget,
+        );
+      }
+    } else {
+      contentWidget = Text(
+        text!,
+        style: style ?? AppTextStyles.bodyMedium,
+        textAlign: textAlign,
+        maxLines: maxLines,
+        overflow: textOverflow ?? (maxLines != null ? TextOverflow.ellipsis : null),
+        textDirection: textDirection,
+        softWrap: softWrap,
+        semanticsLabel: semanticsLabel,
+        textWidthBasis: textWidthBasis,
+        textHeightBehavior: textHeightBehavior,
+        selectionColor: selectionColor,
+        strutStyle: strutStyle,
+      );
+    }
+
+    if (isGradient && text != null) {
+      contentWidget = ShaderMask(
         shaderCallback: (bounds) => LinearGradient(
           colors: gradientColors ?? AppColors.primaryGradient,
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ).createShader(bounds),
-        child: textWidget,
+        child: contentWidget,
       );
     }
 
     if (onTap != null) {
-      textWidget = GestureDetector(
+      contentWidget = GestureDetector(
         onTap: onTap,
-        child: textWidget,
+        child: contentWidget,
       );
     }
 
@@ -90,23 +103,23 @@ class CustomText extends StatelessWidget {
           children: [
             Icon(icon, color: iconColor ?? style?.color ?? AppColors.primary),
             SizedBox(width: iconSpacing),
-            textWidget,
+            contentWidget,
           ],
         ),
       );
     }
 
-    return Align(alignment: alignment, child: textWidget);
+    return Align(alignment: alignment, child: contentWidget);
   }
 }
 
 // Predefined text styles for quick use
 class AppText {
   static Widget displayLarge(String text, {TextAlign? textAlign}) => CustomText(
-        text: text,
-        style: AppTextStyles.displayLarge,
-        textAlign: textAlign,
-      );
+    text: text,
+    style: AppTextStyles.displayLarge,
+    textAlign: textAlign,
+  );
 
   static Widget displayMedium(String text, {TextAlign? textAlign}) =>
       CustomText(
@@ -123,32 +136,37 @@ class AppText {
       );
 
   static Widget titleLarge(String text, {TextAlign? textAlign}) => CustomText(
-        text: text,
-        style: AppTextStyles.titleLarge,
-        textAlign: textAlign,
-      );
+    text: text,
+    style: AppTextStyles.titleLarge,
+    textAlign: textAlign,
+  );
 
   static Widget titleMedium(String text, {TextAlign? textAlign}) => CustomText(
-        text: text,
-        style: AppTextStyles.titleMedium,
-        textAlign: textAlign,
-      );
+    text: text,
+    style: AppTextStyles.titleMedium,
+    textAlign: textAlign,
+  );
 
   static Widget bodyLarge(String text, {TextAlign? textAlign}) => CustomText(
-        text: text,
-        style: AppTextStyles.bodyLarge,
-        textAlign: textAlign,
-      );
+    text: text,
+    style: AppTextStyles.bodyLarge,
+    textAlign: textAlign,
+  );
 
   static Widget bodyMedium(String text, {TextAlign? textAlign}) => CustomText(
-        text: text,
-        style: AppTextStyles.bodyMedium,
-        textAlign: textAlign,
-      );
+    text: text,
+    style: AppTextStyles.bodyMedium,
+    textAlign: textAlign,
+  );
 
   static Widget caption(String text, {TextAlign? textAlign}) => CustomText(
-        text: text,
-        style: AppTextStyles.caption,
-        textAlign: textAlign,
-      );
+    text: text,
+    style: AppTextStyles.caption,
+    textAlign: textAlign,
+  );
+
+  static Widget fromWidget(Widget child, {TextStyle? style}) => CustomText(
+    style: style,
+    child: child,
+  );
 }

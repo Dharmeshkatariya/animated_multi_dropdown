@@ -29,17 +29,16 @@ export 'src/widgets/custom_card.dart';
 export 'src/widgets/custom_chip.dart';
 export 'src/widgets/custom_loading.dart';
 
-// Theme
+// ==================== THEME ====================
 export 'src/theme/app_colors.dart';
 export 'src/theme/app_text_styles.dart';
 
-// ==================== STRATEGIES ====================
-export 'src/strategies/multi_dropdown_animation_strategy.dart';
 // ==================== PAINTERS ====================
 export 'src/painters/bond_painter.dart';
 export 'src/painters/cosmic_ripple_painter.dart';
 export 'src/painters/cyber_grid_painter.dart';
 export 'src/painters/fluid_clipper.dart';
+export 'src/painters/fluid_liquid_backdrown_painter.dart';
 export 'src/painters/fluid_wave_painter.dart';
 export 'src/painters/glitch_painter.dart';
 export 'src/painters/gradient_wave_painter.dart';
@@ -51,5 +50,5 @@ export 'src/painters/morphing.dart';
 export 'src/painters/morphing_gradient_painter.dart';
 
 // ==================== UTILS ====================
+export 'src/utils/color_utils.dart';
 export 'src/utils/drop_down_physics.dart';
-export 'src/utils/factory.dart';
