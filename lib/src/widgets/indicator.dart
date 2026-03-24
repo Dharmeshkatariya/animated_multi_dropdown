@@ -1,3 +1,4 @@
+import 'package:animated_multi_dropdown/src/utils/color_utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -150,8 +151,8 @@ class IndicatorWidget extends StatelessWidget {
     final effectiveColor = isEnabled
         ? (isSelected ? config.activeColor : config.inactiveColor)
         : (isSelected
-            ? config.activeColor.withOpacity(0.5)
-            : config.inactiveColor.withOpacity(0.5));
+            ? config.activeColor.withValuesOpacity(0.5)
+            : config.inactiveColor.withValuesOpacity(0.5));
 
     final isRadioStyle = config.isRadio ||
         config.type.toString().contains('radio') ||
@@ -365,7 +366,7 @@ class IndicatorWidget extends StatelessWidget {
       height: config.size,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: isSelected ? color.withOpacity(0.2) : Colors.transparent,
+        color: isSelected ? color.withValuesOpacity(0.2) : Colors.transparent,
         border: Border.all(
           color: color,
           width: config.borderWidth,
@@ -387,7 +388,7 @@ class IndicatorWidget extends StatelessWidget {
       height: config.size,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: isSelected ? color.withOpacity(0.2) : Colors.transparent,
+        color: isSelected ? color.withValuesOpacity(0.2) : Colors.transparent,
         border: Border.all(
           color: color,
           width: config.borderWidth,
@@ -413,7 +414,7 @@ class IndicatorWidget extends StatelessWidget {
       height: config.size,
       decoration: BoxDecoration(
         borderRadius: config.borderRadius,
-        color: isSelected ? color.withOpacity(0.2) : Colors.transparent,
+        color: isSelected ? color.withValuesOpacity(0.2) : Colors.transparent,
         border: Border.all(
           color: color,
           width: config.borderWidth,
@@ -484,7 +485,7 @@ class IndicatorWidget extends StatelessWidget {
       height: config.size,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: isSelected ? color.withOpacity(0.2) : Colors.transparent,
+        color: isSelected ? color.withValuesOpacity(0.2) : Colors.transparent,
         border: Border.all(
           color: color,
           width: config.borderWidth,
@@ -510,9 +511,9 @@ class IndicatorWidget extends StatelessWidget {
         color: Colors.grey[200],
         borderRadius: config.borderRadius,
         boxShadow: [
-          BoxShadow(
+          const BoxShadow(
             color: Colors.white,
-            offset: const Offset(-4, -4),
+            offset: Offset(-4, -4),
             blurRadius: 8,
             spreadRadius: 0,
           ),
@@ -561,7 +562,7 @@ class IndicatorWidget extends StatelessWidget {
               color: Colors.white,
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.2),
+                  color: Colors.black.withValuesOpacity(0.2),
                   blurRadius: 2,
                   offset: const Offset(0, 1),
                 ),
@@ -603,7 +604,7 @@ class IndicatorWidget extends StatelessWidget {
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
+                    color: Colors.black.withValuesOpacity(0.1),
                     blurRadius: 2,
                     offset: const Offset(0, 1),
                   ),

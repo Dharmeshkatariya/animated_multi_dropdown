@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:animated_multi_dropdown/animated_multi_dropdown.dart';
 import 'package:flutter/material.dart';
 
 class BondPainter extends CustomPainter {
@@ -16,7 +17,7 @@ class BondPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = color.withOpacity(0.3 * progress)
+      ..color = color.withValuesOpacity(0.3 * progress)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2.0;
 

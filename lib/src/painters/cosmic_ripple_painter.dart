@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:animated_multi_dropdown/animated_multi_dropdown.dart';
 import 'package:flutter/material.dart';
 
 class CosmicRipplePainter extends CustomPainter {
@@ -21,7 +22,7 @@ class CosmicRipplePainter extends CustomPainter {
     // Draw pulsing background gradient
     final bgGradient = RadialGradient(
       colors: [
-        color.withOpacity(0.05 * progress),
+        color.withValuesOpacity(0.05 * progress),
         Colors.transparent,
       ],
       stops: [0.0, 0.8 + (0.2 * controllerValue)],
@@ -42,7 +43,7 @@ class CosmicRipplePainter extends CustomPainter {
       final opacity = 0.2 * (1 - rippleProgress);
 
       final paint = Paint()
-        ..color = color.withOpacity(opacity)
+        ..color = color.withValuesOpacity(opacity)
         ..style = PaintingStyle.stroke
         ..strokeWidth = 1.5 + (2 * rippleProgress)
         ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 2);
@@ -52,7 +53,7 @@ class CosmicRipplePainter extends CustomPainter {
 
     // Draw animated radiating lines with wave effect
     final linePaint = Paint()
-      ..color = color.withOpacity(0.15)
+      ..color = color.withValuesOpacity(0.15)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 1);
@@ -75,7 +76,7 @@ class CosmicRipplePainter extends CustomPainter {
 
     // Draw twinkling stars
     final rnd = Random(42);
-    final starPaint = Paint()..color = Colors.white.withOpacity(0.5 * progress);
+    final starPaint = Paint()..color = Colors.white.withValuesOpacity(0.5 * progress);
 
     for (var i = 0; i < 30; i++) {
       final starX = rnd.nextDouble() * size.width;
