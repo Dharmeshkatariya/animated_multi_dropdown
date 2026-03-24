@@ -1,3 +1,14 @@
+## 1.0.3
+
+### 🐛 Bug Fixes
+- Fixed all deprecation warnings for Flutter 3.27+
+- Fixed type parameter shadowing warnings
+- Removed unused imports
+- Fixed theme color deprecations in example app
+- Resolved type conflicts between strategy interfaces
+- Fixed indicator widget integration issues
+- Corrected null safety issues in selection handling
+
 ## 1.0.2
 
 ### 🎉 Major Improvements
