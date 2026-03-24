@@ -5,7 +5,6 @@ import '../../models/multi_dropdown_config.dart';
 import '../../models/selection_mode.dart';
 import '../../painters/morphing.dart';
 import '../base_drop_Down_strategy.dart';
-import '../multi_dropdown_animation_strategy.dart';
 
 class MorphingMultiDropdownStrategy<T> extends BaseDropdownStrategy<T> {
   @override
@@ -192,11 +191,11 @@ class MorphingMultiDropdownStrategy<T> extends BaseDropdownStrategy<T> {
     );
   }
 
-  Widget _buildDropdownItem<T>({
-    required T item,
+  Widget _buildDropdownItem<U>({
+    required U item,
     required bool isSelected,
     required MultiDropDownConfig config,
-    required Widget Function(T) itemBuilder,
+    required Widget Function(U) itemBuilder,
     required VoidCallback onTap,
     EdgeInsets? itemPadding,
     TextStyle? selectedItemStyle,

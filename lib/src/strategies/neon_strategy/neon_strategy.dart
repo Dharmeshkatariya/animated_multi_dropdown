@@ -1,9 +1,7 @@
 import 'package:animated_multi_dropdown/src/utils/color_utils.dart';
 import 'package:flutter/material.dart';
 import '../../models/multi_dropdown_config.dart';
-import '../../models/selection_mode.dart';
 import '../base_drop_Down_strategy.dart';
-import '../multi_dropdown_animation_strategy.dart';
 
 class MultiNeonDropdownStrategy<T> extends BaseDropdownStrategy<T> {
   @override

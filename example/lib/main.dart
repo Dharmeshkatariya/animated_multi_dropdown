@@ -19,14 +19,8 @@ class MyApp extends StatelessWidget {
         colorScheme: const ColorScheme.light(
           primary: Color(0xFF6366F1),
           secondary: Color(0xFF8B5CF6),
-          tertiary: Color(0xFFEC4899),
-          surface: Color(0xFFF8FAFC),
-          background: Color(0xFFF1F5F9),
-          error: Color(0xFFEF4444),
-          onPrimary: Colors.white,
-          onSecondary: Colors.white,
-          onBackground: Color(0xFF0F172A),
-          onSurface: Color(0xFF1E293B),
+          surface: Color(0xFFF1F5F9),      // Use surface instead of background
+          onSurface: Color(0xFF0F172A),     // Use onSurface instead of onBackground
         ),
         appBarTheme: const AppBarTheme(
           elevation: 0,
@@ -171,7 +165,7 @@ class _HomePageState extends State<HomePage> {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
-      backgroundColor: colorScheme.background,
+      backgroundColor: colorScheme.onSurface,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(80),
         child: Container(

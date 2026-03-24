@@ -1,8 +1,8 @@
+import 'package:animated_multi_dropdown/src/utils/color_utils.dart';
 import 'package:animated_multi_dropdown/src/widgets/custom_text.dart';
 import 'package:animated_multi_dropdown/src/widgets/indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import '../models/multi_dropdown_config.dart';
 import '../models/selection_mode.dart';
 import '../theme/app_colors.dart';
@@ -106,8 +106,8 @@ class DropdownWidgetHelpers {
   }) {
     return InkWell(
       onTap: onTap,
-      splashColor: config.highlightColor.withOpacity(0.2),
-      highlightColor: config.highlightColor.withOpacity(0.1),
+      splashColor: config.highlightColor.withValuesOpacity(0.2),
+      highlightColor: config.highlightColor.withValuesOpacity(0.1),
       child: Container(
         padding: itemPadding ?? config.itemPadding,
         decoration: BoxDecoration(

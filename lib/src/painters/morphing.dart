@@ -1,3 +1,4 @@
+import 'package:animated_multi_dropdown/animated_multi_dropdown.dart';
 import 'package:flutter/cupertino.dart';
 
 class MorphingPainter extends CustomPainter {
@@ -9,7 +10,7 @@ class MorphingPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = color.withOpacity(0.1 * progress)
+      ..color = color.withValuesOpacity(0.1 * progress)
       ..style = PaintingStyle.fill;
 
     final path = Path()

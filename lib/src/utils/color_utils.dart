@@ -104,7 +104,6 @@ class ColorUtils {
 
   /// Creates a color from hex string (e.g., "#FF0000" or "FF0000")
   static Color fromHex(String hexString) {
-    final buffer = StringBuffer();
     String hex = hexString.replaceFirst('#', '');
     if (hex.length == 6) hex = 'FF$hex';
     if (hex.length != 8) hex = 'FF${hex.padLeft(6, '0')}';

@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:animated_multi_dropdown/animated_multi_dropdown.dart';
 import 'package:flutter/material.dart';
 
 class FluidLiquidBackdrownPainter extends CustomPainter {
@@ -22,8 +23,8 @@ class FluidLiquidBackdrownPainter extends CustomPainter {
     final gradient = Paint()
       ..shader = RadialGradient(
         colors: [
-          color.withOpacity(0.3 * progress),
-          color.withOpacity(0.1 * progress),
+          color.withValuesOpacity(0.3 * progress),
+          color.withValuesOpacity(0.1 * progress),
           Colors.transparent,
         ],
         stops: const [0.0, 0.5, 1.0],
@@ -36,7 +37,7 @@ class FluidLiquidBackdrownPainter extends CustomPainter {
 
     // Wave effect
     final wavePaint = Paint()
-      ..color = color.withOpacity(0.2 * progress)
+      ..color = color.withValuesOpacity(0.2 * progress)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2.0;
 
@@ -55,7 +56,7 @@ class FluidLiquidBackdrownPainter extends CustomPainter {
     // Floating droplets when opening
     if (isOpen && progress > 0.3) {
       final dropletPaint = Paint()
-        ..color = color.withOpacity(0.2 * progress)
+        ..color = color.withValuesOpacity(0.2 * progress)
         ..style = PaintingStyle.fill;
 
       final random = Random(progress.hashCode);

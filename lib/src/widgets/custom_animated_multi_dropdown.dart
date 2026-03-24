@@ -76,6 +76,7 @@ class CustomAnimatedMultiDropDown<T> extends StatefulWidget {
   });
 
   @override
+  // ignore: library_private_types_in_public_api
   _CustomAnimatedMultiDropDownState<T> createState() =>
       _CustomAnimatedMultiDropDownState<T>();
 }
@@ -83,6 +84,7 @@ class CustomAnimatedMultiDropDown<T> extends StatefulWidget {
 class _CustomAnimatedMultiDropDownState<T>
     extends State<CustomAnimatedMultiDropDown<T>>
     with SingleTickerProviderStateMixin {
+  // This is a state class and should be private
   late AnimationController _controller;
   late MultiDropdownAnimationStrategy<T> _strategy;
   final ValueNotifier<bool> _isOpen = ValueNotifier<bool>(false);

@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:animated_multi_dropdown/animated_multi_dropdown.dart';
 import 'package:flutter/material.dart';
 
 class GlitchPainter extends CustomPainter {
@@ -27,7 +28,7 @@ class GlitchPainter extends CustomPainter {
       final color = rnd.nextBool() ? color1 : color2;
 
       final paint = Paint()
-        ..color = color.withOpacity(0.1 * progress)
+        ..color = color.withValuesOpacity(0.1 * progress)
         ..strokeWidth = 1;
 
       canvas.drawLine(
@@ -42,7 +43,7 @@ class GlitchPainter extends CustomPainter {
       ..shader = LinearGradient(
         colors: [
           Colors.transparent,
-          color1.withOpacity(0.05 * progress),
+          color1.withValuesOpacity(0.05 * progress),
           Colors.transparent,
         ],
         stops: const [0.0, 0.5, 1.0],

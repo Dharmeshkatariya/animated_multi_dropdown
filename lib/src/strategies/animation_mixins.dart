@@ -1,5 +1,7 @@
 import 'dart:math';
 import 'dart:ui';
+import 'package:animated_multi_dropdown/src/utils/color_utils.dart';
+import 'package:animated_multi_dropdown/src/utils/custom_matrix_utils.dart';
 import 'package:flutter/material.dart';
 import '../models/multi_dropdown_config.dart';
 import '../painters/glitch_painter.dart';
@@ -59,12 +61,12 @@ mixin NeonEffectMixin<T> on BaseDropdownStrategy<T> {
       borderRadius: BorderRadius.circular(12),
       boxShadow: [
         BoxShadow(
-          color: color.withOpacity(0.5 * intensity),
+          color: color.withValuesOpacity(0.5 * intensity),
           blurRadius: 15,
           spreadRadius: 2,
         ),
       ],
-      border: Border.all(color: color.withOpacity(0.7), width: 1.5),
+      border: Border.all(color: color.withValuesOpacity(0.7), width: 1.5),
     );
   }
 }
@@ -90,9 +92,9 @@ mixin Bounce3DEffectMixin<T> on BaseDropdownStrategy<T> {
   }
 
   Matrix4 get3DTransform(Animation<double> depthAnimation) {
-    return Matrix4.identity()
-      ..setEntry(3, 2, 0.001)
-      ..translate(0.0, 0.0, depthAnimation.value);
+    return CustomMatrixUtils.translate(
+      z: depthAnimation.value,
+    )..setEntry(3, 2, 0.001);
   }
 }
 

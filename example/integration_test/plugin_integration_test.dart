@@ -35,7 +35,6 @@ void main() {
     });
 
     testWidgets('Dropdown opens and closes', (WidgetTester tester) async {
-      bool isOpen = false;
 
       await tester.pumpWidget(
         MaterialApp(

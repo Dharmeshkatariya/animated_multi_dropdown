@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:animated_multi_dropdown/animated_multi_dropdown.dart';
 import 'package:flutter/material.dart';
 
 class HologramPainter extends CustomPainter {
@@ -26,7 +27,7 @@ class HologramPainter extends CustomPainter {
 
     // Draw scan lines
     final linePaint = Paint()
-      ..color = colors[0].withOpacity(0.1)
+      ..color = colors[0].withValuesOpacity(0.1)
       ..strokeWidth = 1;
 
     for (var y = 0.0; y < size.height; y += 3) {

@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:animated_multi_dropdown/animated_multi_dropdown.dart';
 import 'package:flutter/material.dart';
 
 class GravityWellPainter extends CustomPainter {
@@ -16,8 +17,8 @@ class GravityWellPainter extends CustomPainter {
     // Draw gravity well gradient
     final gradient = RadialGradient(
       colors: [
-        color.withOpacity(0.2 * progress),
-        color.withOpacity(0.05 * progress),
+        color.withValuesOpacity(0.2 * progress),
+        color.withValuesOpacity(0.05 * progress),
         Colors.transparent,
       ],
       stops: const [0.0, 0.5, 1.0],
@@ -32,13 +33,13 @@ class GravityWellPainter extends CustomPainter {
 
     // Draw spiral effect
     final spiralPaint = Paint()
-      ..color = color.withOpacity(0.3)
+      ..color = color.withValuesOpacity(0.3)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.5;
 
     final spiralPath = Path();
-    final spiralTurns = 2;
-    final spiralStartRadius = 5.0;
+    const spiralTurns = 2;
+    const spiralStartRadius = 5.0;
     final spiralEndRadius = maxRadius * progress;
 
     spiralPath.moveTo(

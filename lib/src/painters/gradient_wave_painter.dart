@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:animated_multi_dropdown/animated_multi_dropdown.dart';
 import 'package:flutter/material.dart';
 
 class GradientWavePainter extends CustomPainter {
@@ -22,9 +23,9 @@ class GradientWavePainter extends CustomPainter {
     final gradientPaint = Paint()
       ..shader = RadialGradient(
         colors: [
-          colors[0].withOpacity(0.3 * progress),
-          colors[1].withOpacity(0.2 * progress),
-          colors[2].withOpacity(0.1 * progress),
+          colors[0].withValuesOpacity(0.3 * progress),
+          colors[1].withValuesOpacity(0.2 * progress),
+          colors[2].withValuesOpacity(0.1 * progress),
         ],
         stops: const [0.0, 0.7, 1.0],
         radius: 0.8,
@@ -38,14 +39,14 @@ class GradientWavePainter extends CustomPainter {
     canvas.drawCircle(center, radius, gradientPaint);
 
     // Draw multiple wave effects for richer visual
-    final waveCount = 3;
+    const waveCount = 3;
     for (int waveIndex = 0; waveIndex < waveCount; waveIndex++) {
       final waveProgress = progress * (1 - waveIndex * 0.2);
       if (waveProgress <= 0) continue;
 
       final wavePaint = Paint()
         ..color = colors[waveIndex % colors.length]
-            .withOpacity(0.3 * waveProgress * waveIntensity)
+            .withValuesOpacity(0.3 * waveProgress * waveIntensity)
         ..style = PaintingStyle.stroke
         ..strokeWidth = 2.0 * (waveCount - waveIndex) / waveCount
         ..strokeCap = StrokeCap.round;

@@ -194,11 +194,11 @@ class MultiBounce3DDropdownStrategy<T> extends BaseDropdownStrategy<T> {
     );
   }
 
-  Widget _buildDropdownItem<T>({
-    required T item,
+  Widget _buildDropdownItem<U>({
+    required U item,
     required bool isSelected,
     required MultiDropDownConfig config,
-    required Widget Function(T) itemBuilder,
+    required Widget Function(U) itemBuilder,
     required VoidCallback onTap,
     EdgeInsets? itemPadding,
     TextStyle? selectedItemStyle,

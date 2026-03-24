@@ -1,3 +1,4 @@
+import 'package:animated_multi_dropdown/animated_multi_dropdown.dart';
 import 'package:flutter/material.dart';
 
 class CyberGridPainter extends CustomPainter {
@@ -14,7 +15,7 @@ class CyberGridPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final gridPaint = Paint()
-      ..color = color1.withOpacity(0.05 * progress)
+      ..color = color1.withValuesOpacity(0.05 * progress)
       ..strokeWidth = 1;
 
     for (var x = 0.0; x < size.width; x += 20) {
@@ -34,7 +35,7 @@ class CyberGridPainter extends CustomPainter {
     }
 
     final bracketPaint = Paint()
-      ..color = color2.withOpacity(progress)
+      ..color = color2.withValuesOpacity(progress)
       ..strokeWidth = 2
       ..style = PaintingStyle.stroke;
 
