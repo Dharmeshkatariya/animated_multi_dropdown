@@ -5,9 +5,9 @@ import '../../models/multi_dropdown_config.dart';
 import '../../models/selection_mode.dart';
 import '../../painters/liquid_swipe_painter.dart';
 import '../../utils/custom_matrix_utils.dart';
-import '../base_drop_Down_strategy.dart';
+import '../base_drop_down_strategy.dart';
 
-class LiquidSwipeMultiDropdownStrategy<T> extends BaseDropdownStrategy<T> {
+class LiquidSwipeMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
   @override
   Widget buildDropdown({
     required BuildContext context,

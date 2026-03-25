@@ -8,7 +8,7 @@ import '../../painters/holo_gram_painter.dart';
 import '../../utils/custom_matrix_utils.dart';
 import '../base_drop_down_strategy.dart';
 
-class HologramMultiDropdownStrategy<T> extends BaseDropdownStrategy<T> {
+class HologramMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
   @override
   Widget buildDropdown({
     required BuildContext context,

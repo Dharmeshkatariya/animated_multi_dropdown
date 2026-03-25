@@ -7,7 +7,7 @@ import '../../models/selection_mode.dart';
 import '../../utils/custom_matrix_utils.dart';
 import '../base_drop_down_strategy.dart';
 
-class FloatingGlassMultiDropdownStrategy<T> extends BaseDropdownStrategy<T> {
+class FloatingGlassMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
   @override
   Widget buildDropdown({
     required BuildContext context,

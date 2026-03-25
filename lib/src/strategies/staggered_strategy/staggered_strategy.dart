@@ -5,9 +5,9 @@ import 'package:flutter/services.dart';
 import '../../models/multi_dropdown_config.dart';
 import '../../models/selection_mode.dart';
 import '../../utils/custom_matrix_utils.dart';
-import '../base_drop_Down_strategy.dart';
+import '../base_drop_down_strategy.dart';
 
-class StaggeredMultiDropdownStrategy<T> extends BaseDropdownStrategy<T> {
+class StaggeredMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
   @override
   Widget buildDropdown({
     required BuildContext context,

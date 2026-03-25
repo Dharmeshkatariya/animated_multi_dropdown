@@ -5,9 +5,9 @@ import 'package:flutter/services.dart';
 import '../../models/multi_dropdown_config.dart';
 import '../../models/selection_mode.dart';
 import '../../painters/gravity_well_painter.dart';
-import '../base_drop_Down_strategy.dart';
+import '../base_drop_down_strategy.dart';
 
-class GravityWellMultiDropdownStrategy<T> extends BaseDropdownStrategy<T> {
+class GravityWellMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
   @override
   Widget buildDropdown({
     required BuildContext context,

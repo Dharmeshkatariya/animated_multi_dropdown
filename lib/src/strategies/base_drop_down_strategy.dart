@@ -6,7 +6,7 @@ import '../utils/color_utils.dart';
 import '../widgets/custom_text.dart';
 import 'multi_dropdown_animation_strategy.dart';
 
-abstract class BaseDropdownStrategy<T> implements MultiDropdownAnimationStrategy<T> {
+abstract class BaseDropDownStrategy<T> implements MultiDropdownAnimationStrategy<T> {
 
   // ==================== COMMON UI BUILDERS ====================
 

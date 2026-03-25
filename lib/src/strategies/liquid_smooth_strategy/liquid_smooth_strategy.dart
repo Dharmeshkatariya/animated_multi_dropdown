@@ -8,7 +8,7 @@ import '../../painters/fluid_clipper.dart';
 import '../../utils/custom_matrix_utils.dart';
 import '../base_drop_down_strategy.dart';
 
-class LiquidSmoothMultiDropdownStrategy<T> extends BaseDropdownStrategy<T> {
+class LiquidSmoothMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
   @override
   Widget buildDropdown({
     required BuildContext context,

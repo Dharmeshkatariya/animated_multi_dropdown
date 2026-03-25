@@ -6,7 +6,7 @@ import '../../models/multi_dropdown_config.dart';
 import '../../models/selection_mode.dart';
 import '../base_drop_down_strategy.dart';
 
-class LiquidMetalMultiDropdownStrategy<T> extends BaseDropdownStrategy<T> {
+class LiquidMetalMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
   @override
   Widget buildDropdown({
     required BuildContext context,

@@ -4,9 +4,9 @@ import 'package:flutter/services.dart';
 import '../../models/multi_dropdown_config.dart';
 import '../../models/selection_mode.dart';
 import '../../painters/morphing.dart';
-import '../base_drop_Down_strategy.dart';
+import '../base_drop_down_strategy.dart';
 
-class MorphingMultiDropdownStrategy<T> extends BaseDropdownStrategy<T> {
+class MorphingMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
   @override
   Widget buildDropdown({
     required BuildContext context,

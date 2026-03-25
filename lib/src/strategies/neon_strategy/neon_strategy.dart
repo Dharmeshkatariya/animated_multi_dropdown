@@ -1,9 +1,9 @@
 import 'package:animated_multi_dropdown/src/utils/color_utils.dart';
 import 'package:flutter/material.dart';
 import '../../models/multi_dropdown_config.dart';
-import '../base_drop_Down_strategy.dart';
+import '../base_drop_down_strategy.dart';
 
-class MultiNeonDropdownStrategy<T> extends BaseDropdownStrategy<T> {
+class MultiNeonDropdownStrategy<T> extends BaseDropDownStrategy<T> {
   @override
   Widget buildDropdown({
     required BuildContext context,

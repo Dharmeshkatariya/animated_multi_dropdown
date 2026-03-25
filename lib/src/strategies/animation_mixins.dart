@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 import '../models/multi_dropdown_config.dart';
 import '../painters/glitch_painter.dart';
 import '../painters/liquid_wave_clipper.dart';
-import 'base_drop_Down_strategy.dart';
+import 'base_drop_down_strategy.dart';
 
 /// Mixin for glass morphism effect
-mixin GlassEffectMixin<T> on BaseDropdownStrategy<T> {
+mixin GlassEffectMixin<T> on BaseDropDownStrategy<T> {
   Widget applyGlassEffect(Widget child, MultiDropDownConfig config) {
     return ClipRRect(
       borderRadius: config.borderRadius,
@@ -25,7 +25,7 @@ mixin GlassEffectMixin<T> on BaseDropdownStrategy<T> {
 }
 
 /// Mixin for wave animation effects
-mixin WaveEffectMixin<T> on BaseDropdownStrategy<T> {
+mixin WaveEffectMixin<T> on BaseDropDownStrategy<T> {
   Animation<double> createWaveAnimation(AnimationController controller, MultiDropDownConfig config) {
     return TweenSequence<double>([
       TweenSequenceItem(tween: Tween(begin: 0, end: 1.5), weight: 1),
@@ -42,7 +42,7 @@ mixin WaveEffectMixin<T> on BaseDropdownStrategy<T> {
 }
 
 /// Mixin for neon glow effect
-mixin NeonEffectMixin<T> on BaseDropdownStrategy<T> {
+mixin NeonEffectMixin<T> on BaseDropDownStrategy<T> {
   Animation<double> createGlowAnimation(AnimationController controller) {
     return TweenSequence<double>([
       TweenSequenceItem(tween: Tween(begin: 0.0, end: 1.0), weight: 1.0),
@@ -72,7 +72,7 @@ mixin NeonEffectMixin<T> on BaseDropdownStrategy<T> {
 }
 
 /// Mixin for 3D bounce effect
-mixin Bounce3DEffectMixin<T> on BaseDropdownStrategy<T> {
+mixin Bounce3DEffectMixin<T> on BaseDropDownStrategy<T> {
   Animation<double> createRotateAnimation(AnimationController controller) {
     return Tween(begin: 0.0, end: 0.5).animate(
       CurvedAnimation(
@@ -99,7 +99,7 @@ mixin Bounce3DEffectMixin<T> on BaseDropdownStrategy<T> {
 }
 
 /// Mixin for staggered animation
-mixin StaggeredEffectMixin<T> on BaseDropdownStrategy<T> {
+mixin StaggeredEffectMixin<T> on BaseDropDownStrategy<T> {
   Animation<double> createStaggeredItemAnimation(
       AnimationController controller,
       int index,
@@ -117,7 +117,7 @@ mixin StaggeredEffectMixin<T> on BaseDropdownStrategy<T> {
 }
 
 /// Mixin for foldable animation
-mixin FoldableEffectMixin<T> on BaseDropdownStrategy<T> {
+mixin FoldableEffectMixin<T> on BaseDropDownStrategy<T> {
   Animation<double> createFoldAnimation(AnimationController controller, MultiDropDownConfig config) {
     return Tween(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: controller, curve: config.curve),
@@ -132,7 +132,7 @@ mixin FoldableEffectMixin<T> on BaseDropdownStrategy<T> {
 }
 
 /// Mixin for cyberpunk glitch effect
-mixin CyberpunkEffectMixin<T> on BaseDropdownStrategy<T> {
+mixin CyberpunkEffectMixin<T> on BaseDropDownStrategy<T> {
   Animation<double> createGlitchAnimation(AnimationController controller) {
     return Tween(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: controller, curve: Curves.easeInOutCubic),

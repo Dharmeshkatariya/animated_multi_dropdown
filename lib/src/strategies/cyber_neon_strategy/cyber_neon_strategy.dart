@@ -7,7 +7,7 @@ import '../../painters/cyber_grid_painter.dart';
 import '../../utils/custom_matrix_utils.dart';
 import '../base_drop_down_strategy.dart';
 
-class CyberNeonMultiDropdownStrategy<T> extends BaseDropdownStrategy<T> {
+class CyberNeonMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
   @override
   Widget buildDropdown({
     required BuildContext context,

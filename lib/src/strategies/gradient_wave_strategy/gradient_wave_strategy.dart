@@ -8,7 +8,7 @@ import '../../painters/gradient_wave_painter.dart';
 import '../../utils/custom_matrix_utils.dart';
 import '../base_drop_down_strategy.dart';
 
-class GradientWaveMultiDropdownStrategy<T> extends BaseDropdownStrategy<T> {
+class GradientWaveMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
   @override
   Widget buildDropdown({
     required BuildContext context,
