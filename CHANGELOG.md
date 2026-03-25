@@ -1,3 +1,21 @@
+## 1.0.5
+
+### 🎉 Major Improvements
+✨ Complete code refactoring with reusable components
+
+🐛 Fixed all deprecation warnings for Flutter 3.27+
+
+🔧 Added ColorUtils with modern withValues() API
+
+🔧 Added MatrixUtils with modern transform methods
+
+📦 Added platform support for all major platforms
+
+📚 Improved documentation for all public APIs
+
+
+
+
 ## 1.0.4
 
 ### 🎉 Major Improvements
