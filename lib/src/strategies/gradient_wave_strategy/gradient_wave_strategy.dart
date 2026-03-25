@@ -41,6 +41,7 @@ class GradientWaveMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
     required bool Function(T) isItemSelected,
     required Widget Function(bool, MultiDropDownConfig) buildSelectionIndicator,
     required Widget Function(MultiDropDownConfig) buildSearchField,
+    Widget Function()? noDataBuilder,
   }) {
     final waveAnim = Tween(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: controller, curve: Curves.easeInOutCubic),

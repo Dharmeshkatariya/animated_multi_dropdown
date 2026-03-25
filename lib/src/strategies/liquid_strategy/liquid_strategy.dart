@@ -38,6 +38,7 @@ class MultiLiquidDropdownStrategy<T> extends BaseDropDownStrategy<T> {
     required bool Function(T) isItemSelected,
     required Widget Function(bool, MultiDropDownConfig) buildSelectionIndicator,
     required Widget Function(MultiDropDownConfig) buildSearchField,
+    Widget Function()? noDataBuilder,
   }) {
     final waveAnimation = TweenSequence<double>([
       TweenSequenceItem(tween: Tween(begin: 0, end: 1.5), weight: 1),

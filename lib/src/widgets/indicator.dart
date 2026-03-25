@@ -1,101 +1,371 @@
-import 'package:animated_multi_dropdown/src/utils/color_utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
+import 'package:animated_multi_dropdown/src/models/selection_mode.dart';
+import 'package:animated_multi_dropdown/src/utils/color_utils.dart';
+/// Type of selection indicator to display
 enum IndicatorType {
-  classic, // Classic checkbox with checkmark
-  checkmark, // Circular checkbox with checkmark
-  dot, // Checkbox with a dot indicator
-  square, // Square checkbox with custom border radius
-  radioClassic, // Classic radio button (filled circle)
-  radioCheckmark, // Radio button with checkmark
-  radioDot, // Radio button with dot indicator
-  radioSquare, // Square radio button
-  gradient, // Gradient dot indicator
-  tick, // Simple tick icon
-  filled, // Filled circle
-  outlined, // Outlined circle with optional checkmark
-  custom, // Custom indicator
-  neumorphic, // Neumorphic style indicator
-  switchStyle, // Switch style indicator
-  toggle, // Toggle button style
+  // Checkbox styles
+  /// Classic checkbox with checkmark
+  classic,
+
+  /// Modern checkbox with checkmark
+  checkmark,
+
+  /// Checkbox with a dot indicator
+  dot,
+
+  /// Square checkbox with custom border radius
+  square,
+
+  // Radio styles
+  /// Classic radio button (filled circle)
+  radioClassic,
+
+  /// Radio button with checkmark
+  radioCheckmark,
+
+  /// Radio button with dot indicator
+  radioDot,
+
+  /// Square radio button
+  radioSquare,
+
+  // Special styles
+  /// Gradient dot indicator
+  gradient,
+
+  /// Simple tick icon
+  tick,
+
+  /// Filled circle
+  filled,
+
+  /// Outlined circle with optional checkmark
+  outlined,
+
+  /// Neumorphic style indicator
+  neumorphic,
+
+  /// Switch style indicator
+  switchStyle,
+
+  /// Toggle button style
+  toggle,
+
+  /// Custom indicator (requires customBuilder)
+  custom,
 }
 
+/// Configuration class for selection indicators
 class IndicatorConfig {
+  // ==================== BASIC PROPERTIES ====================
+
+  /// Type of indicator to display
   final IndicatorType type;
+
+  /// Whether this is a radio button (single selection)
+  final bool isRadio;
+
+  /// Whether this is a checkbox (multiple selection)
+  final bool isCheckbox;
+
+  // ==================== COLOR PROPERTIES ====================
+
+  /// Color when selected
   final Color activeColor;
+
+  /// Color when not selected
   final Color inactiveColor;
+
+  /// Optional gradient colors for gradient indicator
   final List<Color>? gradientColors;
+
+  // ==================== SIZE & SHAPE PROPERTIES ====================
+
+  /// Size of the indicator in pixels
   final double size;
+
+  /// Border radius for square indicators
   final BorderRadius borderRadius;
+
+  /// Border width for outlined indicators
   final double borderWidth;
-  final WidgetBuilder? customBuilder;
+
+  // ==================== VISUAL ELEMENTS ====================
+
+  /// Whether to show a checkmark when selected
   final bool showCheckmark;
+
+  /// Whether to show a dot when selected
   final bool showDot;
+
+  /// Size of the dot as a fraction of indicator size (0.0 to 1.0)
   final double dotSize;
-  final bool isRadio; // Explicit radio style
-  final bool isCheckbox; // Explicit checkbox style
+
+  // ==================== ANIMATION ====================
+
+  /// Whether to animate changes
   final bool animateChanges;
+
+  // ==================== CUSTOM INDICATOR ====================
+
+  /// Custom builder for custom indicator type
+  final WidgetBuilder? customBuilder;
+
+  // ==================== CONSTRUCTOR ====================
 
   const IndicatorConfig({
     required this.type,
+    this.isRadio = false,
+    this.isCheckbox = false,
     this.activeColor = Colors.blue,
     this.inactiveColor = Colors.grey,
     this.gradientColors,
-    this.size = 24.0,
+    this.size = 20.0,
     this.borderRadius = const BorderRadius.all(Radius.circular(4)),
     this.borderWidth = 2.0,
-    this.customBuilder,
     this.showCheckmark = true,
     this.showDot = true,
-    this.dotSize = 0.5,
-    this.isRadio = false,
-    this.isCheckbox = false,
+    this.dotSize = 0.6,
     this.animateChanges = true,
+    this.customBuilder,
   }) : assert(
-          type != IndicatorType.custom || customBuilder != null,
-          'Custom builder must be provided for custom indicator type',
-        );
+  type != IndicatorType.custom || customBuilder != null,
+  'Custom builder must be provided for custom indicator type',
+  );
 
+  // ==================== FACTORY METHODS ====================
+
+  /// Creates a classic checkbox indicator
+  factory IndicatorConfig.checkbox({
+    Color? activeColor,
+    Color? inactiveColor,
+    double? size,
+    BorderRadius? borderRadius,
+  }) {
+    return IndicatorConfig(
+      type: IndicatorType.checkmark,
+      isCheckbox: true,
+      activeColor: activeColor ?? Colors.blue,
+      inactiveColor: inactiveColor ?? Colors.grey,
+      size: size ?? 20,
+      borderRadius: borderRadius ?? const BorderRadius.all(Radius.circular(4)),
+    );
+  }
+
+  /// Creates a classic radio indicator
+  factory IndicatorConfig.radio({
+    Color? activeColor,
+    Color? inactiveColor,
+    double? size,
+  }) {
+    return IndicatorConfig(
+      type: IndicatorType.radioClassic,
+      isRadio: true,
+      activeColor: activeColor ?? Colors.blue,
+      inactiveColor: inactiveColor ?? Colors.grey,
+      size: size ?? 20,
+      borderRadius: BorderRadius.zero,
+    );
+  }
+
+  /// Creates a dot style checkbox indicator
+  factory IndicatorConfig.dotCheckbox({
+    Color? activeColor,
+    Color? inactiveColor,
+    double? size,
+  }) {
+    return IndicatorConfig(
+      type: IndicatorType.dot,
+      isCheckbox: true,
+      activeColor: activeColor ?? Colors.blue,
+      inactiveColor: inactiveColor ?? Colors.grey,
+      size: size ?? 20,
+      showCheckmark: false,
+      showDot: true,
+      dotSize: 0.6,
+    );
+  }
+
+  /// Creates a dot style radio indicator
+  factory IndicatorConfig.dotRadio({
+    Color? activeColor,
+    Color? inactiveColor,
+    double? size,
+  }) {
+    return IndicatorConfig(
+      type: IndicatorType.radioDot,
+      isRadio: true,
+      activeColor: activeColor ?? Colors.blue,
+      inactiveColor: inactiveColor ?? Colors.grey,
+      size: size ?? 20,
+      showCheckmark: false,
+      showDot: true,
+      dotSize: 0.6,
+    );
+  }
+
+  /// Creates a gradient indicator
+  factory IndicatorConfig.gradient({
+    required List<Color> colors,
+    double? size,
+    bool isRadio = false,
+  }) {
+    return IndicatorConfig(
+      type: IndicatorType.gradient,
+      isRadio: isRadio,
+      isCheckbox: !isRadio,
+      activeColor: colors.first,
+      inactiveColor: Colors.grey,
+      gradientColors: colors,
+      size: size ?? 20,
+    );
+  }
+
+  /// Creates a toggle style indicator
+  factory IndicatorConfig.toggle({
+    Color? activeColor,
+    Color? inactiveColor,
+    double? size,
+  }) {
+    return IndicatorConfig(
+      type: IndicatorType.toggle,
+      isRadio: true,
+      activeColor: activeColor ?? Colors.blue,
+      inactiveColor: inactiveColor ?? Colors.grey,
+      size: size ?? 24,
+    );
+  }
+
+  /// Creates a switch style indicator
+  factory IndicatorConfig.switchStyle({
+    Color? activeColor,
+    Color? inactiveColor,
+    double? size,
+  }) {
+    return IndicatorConfig(
+      type: IndicatorType.switchStyle,
+      isRadio: true,
+      activeColor: activeColor ?? Colors.blue,
+      inactiveColor: inactiveColor ?? Colors.grey,
+      size: size ?? 28,
+    );
+  }
+
+  /// Creates a neumorphic style indicator
+  factory IndicatorConfig.neumorphic({
+    Color? activeColor,
+    Color? inactiveColor,
+    double? size,
+    bool isRadio = false,
+  }) {
+    return IndicatorConfig(
+      type: IndicatorType.neumorphic,
+      isRadio: isRadio,
+      isCheckbox: !isRadio,
+      activeColor: activeColor ?? Colors.blue,
+      inactiveColor: inactiveColor ?? Colors.grey,
+      size: size ?? 24,
+    );
+  }
+
+  /// Creates a square checkbox indicator
+  factory IndicatorConfig.squareCheckbox({
+    Color? activeColor,
+    Color? inactiveColor,
+    double? size,
+  }) {
+    return IndicatorConfig(
+      type: IndicatorType.square,
+      isCheckbox: true,
+      activeColor: activeColor ?? Colors.blue,
+      inactiveColor: inactiveColor ?? Colors.grey,
+      size: size ?? 20,
+    );
+  }
+
+  /// Creates a custom indicator
+  factory IndicatorConfig.custom({
+    required WidgetBuilder builder,
+    double? size,
+  }) {
+    return IndicatorConfig(
+      type: IndicatorType.custom,
+      size: size ?? 20,
+      customBuilder: builder,
+    );
+  }
+
+  // ==================== COPY WITH METHOD ====================
+
+  /// Creates a copy of this config with the given fields replaced
   IndicatorConfig copyWith({
     IndicatorType? type,
+    bool? isRadio,
+    bool? isCheckbox,
     Color? activeColor,
     Color? inactiveColor,
     List<Color>? gradientColors,
     double? size,
     BorderRadius? borderRadius,
     double? borderWidth,
-    WidgetBuilder? customBuilder,
     bool? showCheckmark,
     bool? showDot,
     double? dotSize,
-    bool? isRadio,
-    bool? isCheckbox,
     bool? animateChanges,
+    WidgetBuilder? customBuilder,
   }) {
     return IndicatorConfig(
       type: type ?? this.type,
+      isRadio: isRadio ?? this.isRadio,
+      isCheckbox: isCheckbox ?? this.isCheckbox,
       activeColor: activeColor ?? this.activeColor,
       inactiveColor: inactiveColor ?? this.inactiveColor,
       gradientColors: gradientColors ?? this.gradientColors,
       size: size ?? this.size,
       borderRadius: borderRadius ?? this.borderRadius,
       borderWidth: borderWidth ?? this.borderWidth,
-      customBuilder: customBuilder ?? this.customBuilder,
       showCheckmark: showCheckmark ?? this.showCheckmark,
       showDot: showDot ?? this.showDot,
       dotSize: dotSize ?? this.dotSize,
-      isRadio: isRadio ?? this.isRadio,
-      isCheckbox: isCheckbox ?? this.isCheckbox,
       animateChanges: animateChanges ?? this.animateChanges,
+      customBuilder: customBuilder ?? this.customBuilder,
     );
   }
+
+  // ==================== HELPER METHODS ====================
+
+  /// Returns the effective indicator style based on selection mode
+  static IndicatorConfig forSelectionMode({
+    required SelectionMode mode,
+    Color? activeColor,
+    Color? inactiveColor,
+    double? size,
+  }) {
+    if (mode == SelectionMode.single) {
+      return IndicatorConfig.radio(
+        activeColor: activeColor,
+        inactiveColor: inactiveColor,
+        size: size,
+      );
+    } else {
+      return IndicatorConfig.checkbox(
+        activeColor: activeColor,
+        inactiveColor: inactiveColor,
+        size: size,
+      );
+    }
+  }
+
+  // ==================== EQUALITY & HASHCODE ====================
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is IndicatorConfig &&
         other.type == type &&
+        other.isRadio == isRadio &&
+        other.isCheckbox == isCheckbox &&
         other.activeColor == activeColor &&
         other.inactiveColor == inactiveColor &&
         listEquals(other.gradientColors, gradientColors) &&
@@ -105,14 +375,15 @@ class IndicatorConfig {
         other.showCheckmark == showCheckmark &&
         other.showDot == showDot &&
         other.dotSize == dotSize &&
-        other.isRadio == isRadio &&
-        other.isCheckbox == isCheckbox;
+        other.animateChanges == animateChanges;
   }
 
   @override
   int get hashCode {
     return Object.hash(
       type,
+      isRadio,
+      isCheckbox,
       activeColor,
       inactiveColor,
       gradientColors,
@@ -122,11 +393,12 @@ class IndicatorConfig {
       showCheckmark,
       showDot,
       dotSize,
-      isRadio,
-      isCheckbox,
+      animateChanges,
     );
   }
 }
+
+
 
 class IndicatorWidget extends StatelessWidget {
   final bool isSelected;
@@ -151,8 +423,8 @@ class IndicatorWidget extends StatelessWidget {
     final effectiveColor = isEnabled
         ? (isSelected ? config.activeColor : config.inactiveColor)
         : (isSelected
-            ? config.activeColor.withValuesOpacity(0.5)
-            : config.inactiveColor.withValuesOpacity(0.5));
+        ? config.activeColor.withValuesOpacity(0.5)
+        : config.inactiveColor.withValuesOpacity(0.5));
 
     final isRadioStyle = config.isRadio ||
         config.type.toString().contains('radio') ||
@@ -324,12 +596,12 @@ class IndicatorWidget extends StatelessWidget {
       ),
       child: isSelected
           ? Center(
-              child: Icon(
-                Icons.check,
-                size: config.size * 0.7,
-                color: Colors.white,
-              ),
-            )
+        child: Icon(
+          Icons.check,
+          size: config.size * 0.7,
+          color: Colors.white,
+        ),
+      )
           : null,
     );
   }
@@ -374,10 +646,10 @@ class IndicatorWidget extends StatelessWidget {
       ),
       child: isSelected
           ? Icon(
-              Icons.check,
-              size: config.size * 0.7,
-              color: color,
-            )
+        Icons.check,
+        size: config.size * 0.7,
+        color: color,
+      )
           : null,
     );
   }
@@ -443,10 +715,10 @@ class IndicatorWidget extends StatelessWidget {
         shape: BoxShape.circle,
         gradient: isSelected && config.gradientColors != null
             ? LinearGradient(
-                colors: config.gradientColors!,
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              )
+          colors: config.gradientColors!,
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        )
             : null,
         color: isSelected ? null : config.inactiveColor,
         border: Border.all(
@@ -493,23 +765,25 @@ class IndicatorWidget extends StatelessWidget {
       ),
       child: isSelected
           ? Icon(
-              Icons.check,
-              size: config.size * 0.6,
-              color: color,
-            )
+        Icons.check,
+        size: config.size * 0.6,
+        color: color,
+      )
           : null,
     );
   }
 
   // Neumorphic style
+
+  // Alternative neumorphic style with square shape (no borderRadius conflict)
   Widget _buildNeumorphicIndicator(Color color) {
     return Container(
       width: config.size,
       height: config.size,
       decoration: BoxDecoration(
-        shape: BoxShape.circle,
+        shape: BoxShape.rectangle,
+        borderRadius: config.borderRadius, // This works with rectangle shape
         color: Colors.grey[200],
-        borderRadius: config.borderRadius,
         boxShadow: [
           const BoxShadow(
             color: Colors.white,
@@ -538,7 +812,6 @@ class IndicatorWidget extends StatelessWidget {
       ),
     );
   }
-
   // Switch style
   Widget _buildSwitchIndicator(Color color) {
     return AnimatedContainer(
@@ -619,11 +892,11 @@ class IndicatorWidget extends StatelessWidget {
 }
 
 typedef IndicatorBuilder = Widget Function(
-  BuildContext context,
-  bool isSelected,
-  bool isEnabled,
-  IndicatorConfig config,
-);
+    BuildContext context,
+    bool isSelected,
+    bool isEnabled,
+    IndicatorConfig config,
+    );
 
 class CustomIndicator extends StatelessWidget {
   final bool isSelected;
@@ -651,5 +924,218 @@ class CustomIndicator extends StatelessWidget {
           config: config,
           isRadioGroup: isRadioGroup,
         );
+  }
+}
+
+
+
+class IndicatorPresets {
+  /// Classic checkbox indicator
+  static IndicatorConfig classicCheckbox({
+    Color? activeColor,
+    Color? inactiveColor,
+    double? size,
+  }) {
+    return IndicatorConfig(
+      type: IndicatorType.classic,
+      activeColor: activeColor ?? Colors.blue,
+      inactiveColor: inactiveColor ?? Colors.grey,
+      size: size ?? 20,
+      borderRadius: BorderRadius.circular(4),
+      showCheckmark: true,
+      isRadio: false,
+      isCheckbox: true,
+    );
+  }
+
+  /// Modern checkbox with checkmark
+  static IndicatorConfig modernCheckbox({
+    Color? activeColor,
+    Color? inactiveColor,
+    double? size,
+  }) {
+    return IndicatorConfig(
+      type: IndicatorType.checkmark,
+      activeColor: activeColor ?? Colors.blue,
+      inactiveColor: inactiveColor ?? Colors.grey,
+      size: size ?? 20,
+      borderRadius: BorderRadius.circular(6),
+      showCheckmark: true,
+      isRadio: false,
+      isCheckbox: true,
+    );
+  }
+
+  /// Dot style checkbox
+  static IndicatorConfig dotCheckbox({
+    Color? activeColor,
+    Color? inactiveColor,
+    double? size,
+  }) {
+    return IndicatorConfig(
+      type: IndicatorType.dot,
+      activeColor: activeColor ?? Colors.blue,
+      inactiveColor: inactiveColor ?? Colors.grey,
+      size: size ?? 20,
+      borderRadius: BorderRadius.circular(4),
+      showDot: true,
+      dotSize: 0.6,
+      isRadio: false,
+      isCheckbox: true,
+    );
+  }
+
+  /// Square checkbox
+  static IndicatorConfig squareCheckbox({
+    Color? activeColor,
+    Color? inactiveColor,
+    double? size,
+  }) {
+    return IndicatorConfig(
+      type: IndicatorType.square,
+      activeColor: activeColor ?? Colors.blue,
+      inactiveColor: inactiveColor ?? Colors.grey,
+      size: size ?? 20,
+      borderRadius: BorderRadius.circular(4),
+      showCheckmark: true,
+      isRadio: false,
+      isCheckbox: true,
+    );
+  }
+
+  /// Classic radio button
+  static IndicatorConfig classicRadio({
+    Color? activeColor,
+    Color? inactiveColor,
+    double? size,
+  }) {
+    return IndicatorConfig(
+      type: IndicatorType.radioClassic,
+      activeColor: activeColor ?? Colors.blue,
+      inactiveColor: inactiveColor ?? Colors.grey,
+      size: size ?? 20,
+      showCheckmark: false,
+      isRadio: true,
+      isCheckbox: false,
+    );
+  }
+
+  /// Radio with checkmark
+  static IndicatorConfig checkmarkRadio({
+    Color? activeColor,
+    Color? inactiveColor,
+    double? size,
+  }) {
+    return IndicatorConfig(
+      type: IndicatorType.radioCheckmark,
+      activeColor: activeColor ?? Colors.blue,
+      inactiveColor: inactiveColor ?? Colors.grey,
+      size: size ?? 20,
+      showCheckmark: true,
+      isRadio: true,
+      isCheckbox: false,
+    );
+  }
+
+  /// Dot radio
+  static IndicatorConfig dotRadio({
+    Color? activeColor,
+    Color? inactiveColor,
+    double? size,
+  }) {
+    return IndicatorConfig(
+      type: IndicatorType.radioDot,
+      activeColor: activeColor ?? Colors.blue,
+      inactiveColor: inactiveColor ?? Colors.grey,
+      size: size ?? 20,
+      showDot: true,
+      dotSize: 0.6,
+      isRadio: true,
+      isCheckbox: false,
+    );
+  }
+
+  /// Square radio
+  static IndicatorConfig squareRadio({
+    Color? activeColor,
+    Color? inactiveColor,
+    double? size,
+  }) {
+    return IndicatorConfig(
+      type: IndicatorType.radioSquare,
+      activeColor: activeColor ?? Colors.blue,
+      inactiveColor: inactiveColor ?? Colors.grey,
+      size: size ?? 20,
+      borderRadius: BorderRadius.circular(4),
+      showCheckmark: true,
+      isRadio: true,
+      isCheckbox: false,
+    );
+  }
+
+  /// Gradient indicator
+  static IndicatorConfig gradient({
+    required List<Color> colors,
+    double? size,
+    bool isRadio = false,
+  }) {
+    return IndicatorConfig(
+      type: IndicatorType.gradient,
+      activeColor: colors.first,
+      inactiveColor: Colors.grey,
+      gradientColors: colors,
+      size: size ?? 20,
+      isRadio: isRadio,
+      isCheckbox: !isRadio,
+    );
+  }
+
+  /// Toggle switch style
+  static IndicatorConfig toggle({
+    Color? activeColor,
+    Color? inactiveColor,
+    double? size,
+  }) {
+    return IndicatorConfig(
+      type: IndicatorType.toggle,
+      activeColor: activeColor ?? Colors.blue,
+      inactiveColor: inactiveColor ?? Colors.grey,
+      size: size ?? 24,
+      isRadio: true,
+      isCheckbox: false,
+    );
+  }
+
+  /// Switch style
+  static IndicatorConfig switchStyle({
+    Color? activeColor,
+    Color? inactiveColor,
+    double? size,
+  }) {
+    return IndicatorConfig(
+      type: IndicatorType.switchStyle,
+      activeColor: activeColor ?? Colors.blue,
+      inactiveColor: inactiveColor ?? Colors.grey,
+      size: size ?? 28,
+      isRadio: true,
+      isCheckbox: false,
+    );
+  }
+
+  /// Neumorphic style
+  static IndicatorConfig neumorphic({
+    Color? activeColor,
+    Color? inactiveColor,
+    double? size,
+    bool isRadio = false,
+  }) {
+    return IndicatorConfig(
+      type: IndicatorType.neumorphic,
+      activeColor: activeColor ?? Colors.blue,
+      inactiveColor: inactiveColor ?? Colors.grey,
+      size: size ?? 24,
+      isRadio: isRadio,
+      isCheckbox: !isRadio,
+    );
   }
 }

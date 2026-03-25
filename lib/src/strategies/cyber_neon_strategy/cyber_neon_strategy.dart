@@ -40,6 +40,7 @@ class CyberNeonMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
     required bool Function(T) isItemSelected,
     required Widget Function(bool, MultiDropDownConfig) buildSelectionIndicator,
     required Widget Function(MultiDropDownConfig) buildSearchField,
+    Widget Function()? noDataBuilder,
   }) {
     final gridAnim = Tween(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: controller, curve: Curves.easeInOutCubic),
@@ -121,7 +122,8 @@ class CyberNeonMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                       const SizedBox(width: 8),
                     ],
                     Expanded(child: displayValue),
-                    _buildRotatingIcon(controller, config, effectiveHighlightColor, textGlow),
+                    _buildRotatingIcon(
+                        controller, config, effectiveHighlightColor, textGlow),
                   ],
                 ),
               ),
@@ -145,13 +147,15 @@ class CyberNeonMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                           child: Container(
                             width: dropdownWidth ?? config.dropdownWidth,
                             constraints: BoxConstraints(
-                              maxHeight: maxDropdownHeight ?? config.maxDropdownHeight,
+                              maxHeight:
+                                  maxDropdownHeight ?? config.maxDropdownHeight,
                             ),
                             decoration: BoxDecoration(
                               color: dropdownBackgroundColor ??
                                   Colors.black.withValuesOpacity(0.8),
                               border: Border.all(
-                                color: effectiveHighlightColor.withValuesOpacity(0.3),
+                                color: effectiveHighlightColor
+                                    .withValuesOpacity(0.3),
                                 width: 1,
                               ),
                               borderRadius: config.dropdownBorderRadius,
@@ -187,7 +191,8 @@ class CyberNeonMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                                         return FadeTransition(
                                           opacity: itemAnim,
                                           child: Transform(
-                                            transform: CustomMatrixUtils.staggerTransform(
+                                            transform: CustomMatrixUtils
+                                                .staggerTransform(
                                               progress: itemAnim.value,
                                               startY: 15,
                                               endY: 0,
@@ -198,8 +203,10 @@ class CyberNeonMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                                               color: Colors.transparent,
                                               child: InkWell(
                                                 onTap: () {
-                                                  if (config.enableHapticFeedback) {
-                                                    HapticFeedback.lightImpact();
+                                                  if (config
+                                                      .enableHapticFeedback) {
+                                                    HapticFeedback
+                                                        .lightImpact();
                                                   }
                                                   onChanged(item);
                                                   if (config.selectionMode ==
@@ -207,52 +214,72 @@ class CyberNeonMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                                                     onToggle();
                                                   }
                                                 },
-                                                splashColor: effectiveHighlightColor
-                                                    .withValuesOpacity(0.2),
-                                                highlightColor: neonBlue.withValuesOpacity(0.1),
+                                                splashColor:
+                                                    effectiveHighlightColor
+                                                        .withValuesOpacity(0.2),
+                                                highlightColor: neonBlue
+                                                    .withValuesOpacity(0.1),
                                                 child: Container(
-                                                  padding: itemPadding ?? config.itemPadding,
+                                                  padding: itemPadding ??
+                                                      config.itemPadding,
                                                   decoration: BoxDecoration(
-                                                    border: index < items.length - 1 &&
-                                                        showDivider
+                                                    border: index <
+                                                                items.length -
+                                                                    1 &&
+                                                            showDivider
                                                         ? Border(
-                                                      bottom: BorderSide(
-                                                        color: dividerColor ??
-                                                            effectiveHighlightColor
-                                                                .withValuesOpacity(0.1),
-                                                        width: dividerThickness ??
-                                                            config.dividerThickness,
-                                                      ),
-                                                    )
+                                                            bottom: BorderSide(
+                                                              color: dividerColor ??
+                                                                  effectiveHighlightColor
+                                                                      .withValuesOpacity(
+                                                                          0.1),
+                                                              width: dividerThickness ??
+                                                                  config
+                                                                      .dividerThickness,
+                                                            ),
+                                                          )
                                                         : null,
                                                   ),
                                                   child: Row(
                                                     children: [
                                                       if (config.selectionMode ==
-                                                          SelectionMode.multiple ||
+                                                              SelectionMode
+                                                                  .multiple ||
                                                           (config.selectionMode ==
-                                                              SelectionMode.single &&
-                                                              config.showCheckmark))
+                                                                  SelectionMode
+                                                                      .single &&
+                                                              config
+                                                                  .showCheckmark))
                                                         Padding(
-                                                          padding: const EdgeInsets.only(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(
                                                             right: 12,
                                                           ),
-                                                          child: buildSelectionIndicator(
+                                                          child:
+                                                              buildSelectionIndicator(
                                                             isSelected,
                                                             config,
                                                           ),
                                                         ),
                                                       Expanded(
-                                                        child: DefaultTextStyle.merge(
+                                                        child: DefaultTextStyle
+                                                            .merge(
                                                           style: (isSelected
-                                                              ? selectedItemStyle ??
-                                                              config.selectedItemStyle
-                                                              : itemStyle ?? config.itemStyle)
+                                                                  ? selectedItemStyle ??
+                                                                      config
+                                                                          .selectedItemStyle
+                                                                  : itemStyle ??
+                                                                      config
+                                                                          .itemStyle)
                                                               .copyWith(
                                                             color: Colors.white,
-                                                            shadows: isSelected ? textGlow : null,
+                                                            shadows: isSelected
+                                                                ? textGlow
+                                                                : null,
                                                           ),
-                                                          child: itemBuilder(item),
+                                                          child:
+                                                              itemBuilder(item),
                                                         ),
                                                       ),
                                                     ],
@@ -282,11 +309,11 @@ class CyberNeonMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
   }
 
   Widget _buildRotatingIcon(
-      AnimationController controller,
-      MultiDropDownConfig config,
-      Color color,
-      List<Shadow> textGlow,
-      ) {
+    AnimationController controller,
+    MultiDropDownConfig config,
+    Color color,
+    List<Shadow> textGlow,
+  ) {
     return RotationTransition(
       turns: Tween(begin: 0.0, end: 0.5).animate(
         CurvedAnimation(parent: controller, curve: Curves.easeInOutBack),

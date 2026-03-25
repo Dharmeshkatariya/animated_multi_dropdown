@@ -4,10 +4,11 @@ import '../models/multi_dropdown_config.dart';
 import '../models/selection_mode.dart';
 import '../utils/color_utils.dart';
 import '../widgets/custom_text.dart';
+import '../widgets/indicator.dart';
 import 'multi_dropdown_animation_strategy.dart';
 
-abstract class BaseDropDownStrategy<T> implements MultiDropdownAnimationStrategy<T> {
-
+abstract class BaseDropDownStrategy<T>
+    implements MultiDropdownAnimationStrategy<T> {
   // ==================== COMMON UI BUILDERS ====================
 
   /// Builds the display value (single or multiple selection)
@@ -43,7 +44,8 @@ abstract class BaseDropDownStrategy<T> implements MultiDropdownAnimationStrategy
               mainAxisSize: MainAxisSize.min,
               children: [
                 CustomText(
-                  style: config.chipLabelStyle ?? const TextStyle(color: Colors.black),
+                  style: config.chipLabelStyle ??
+                      const TextStyle(color: Colors.black),
                   child: itemBuilder(item),
                 ),
                 GestureDetector(
@@ -53,7 +55,8 @@ abstract class BaseDropDownStrategy<T> implements MultiDropdownAnimationStrategy
                       HapticFeedback.lightImpact();
                     }
                   },
-                  child: config.chipDeleteIcon ?? const Icon(Icons.close, size: 16),
+                  child: config.chipDeleteIcon ??
+                      const Icon(Icons.close, size: 16),
                 ),
               ],
             ),
@@ -63,14 +66,14 @@ abstract class BaseDropDownStrategy<T> implements MultiDropdownAnimationStrategy
     } else {
       return value != null
           ? CustomText(
-        style: selectedItemStyle ?? config.selectedItemStyle,
-        child: itemBuilder(value as T),
-      )
+              style: selectedItemStyle ?? config.selectedItemStyle,
+              child: itemBuilder(value as T),
+            )
           : CustomText(
-        text: 'Select...',
-        style: hintStyle ?? config.hintStyle,
-        child: hint,
-      );
+              text: 'Select...',
+              style: hintStyle ?? config.hintStyle,
+              child: hint,
+            );
     }
   }
 
@@ -116,7 +119,10 @@ abstract class BaseDropDownStrategy<T> implements MultiDropdownAnimationStrategy
               children: [
                 Row(
                   children: [
-                    if (leadingIcon != null) ...[leadingIcon, const SizedBox(width: 8)],
+                    if (leadingIcon != null) ...[
+                      leadingIcon,
+                      const SizedBox(width: 8)
+                    ],
                     Expanded(child: child),
                     const SizedBox(width: 8),
                     _buildRotatingIcon(controller, config),
@@ -131,7 +137,8 @@ abstract class BaseDropDownStrategy<T> implements MultiDropdownAnimationStrategy
     );
   }
 
-  Widget _buildRotatingIcon(AnimationController controller, MultiDropDownConfig config) {
+  Widget _buildRotatingIcon(
+      AnimationController controller, MultiDropDownConfig config) {
     return RotationTransition(
       turns: Tween(begin: 0.0, end: 0.5).animate(
         CurvedAnimation(parent: controller, curve: Curves.easeInOutBack),
@@ -165,6 +172,7 @@ abstract class BaseDropDownStrategy<T> implements MultiDropdownAnimationStrategy
     List<BoxShadow>? shadows,
     double? elevation,
     Decoration? customDecoration,
+    Widget Function()? noDataBuilder,
   }) {
     return ConstrainedBox(
       constraints: BoxConstraints(
@@ -185,6 +193,9 @@ abstract class BaseDropDownStrategy<T> implements MultiDropdownAnimationStrategy
             mainAxisSize: MainAxisSize.min,
             children: [
               buildSearchField(config),
+              if (items.isEmpty && noDataBuilder != null)
+                Expanded(child: noDataBuilder())
+              else
               Expanded(
                 child: ListView.builder(
                   padding: EdgeInsets.zero,
@@ -242,20 +253,21 @@ abstract class BaseDropDownStrategy<T> implements MultiDropdownAnimationStrategy
         decoration: BoxDecoration(
           border: showDivider && index < totalItems - 1
               ? Border(
-            bottom: BorderSide(
-              color: dividerColor ?? config.dividerColor,
-              width: dividerThickness ?? config.dividerThickness,
-            ),
-          )
+                  bottom: BorderSide(
+                    color: dividerColor ?? config.dividerColor,
+                    width: dividerThickness ?? config.dividerThickness,
+                  ),
+                )
               : null,
         ),
         child: Row(
           children: [
             if (config.selectionMode == SelectionMode.multiple ||
-                (config.selectionMode == SelectionMode.single && config.showCheckmark))
+                (config.selectionMode == SelectionMode.single &&
+                    config.showCheckmark))
               Padding(
                 padding: const EdgeInsets.only(right: 12),
-                child: _buildSelectionIndicator(isSelected, config),
+                child: buildSelectionIndicator(isSelected, config),
               ),
             Expanded(
               child: DefaultTextStyle.merge(
@@ -271,28 +283,53 @@ abstract class BaseDropDownStrategy<T> implements MultiDropdownAnimationStrategy
     );
   }
 
-  Widget _buildSelectionIndicator(bool isSelected, MultiDropDownConfig config) {
-    if (config.customIndicator != null) {
-      return config.customIndicator!;
+  /// Uses the IndicatorWidget from the widgets folder
+  /// Public method for building selection indicator
+  Widget buildSelectionIndicator(bool isSelected, MultiDropDownConfig config) {
+    // Check for custom indicator first
+    if (config.customCheckmark != null) {
+      return config.customCheckmark!;
     }
 
-    final isRadioStyle = config.selectedIndicator.toString().contains('radio');
+    // Use the indicator configuration from the config
+    final indicatorConfig = config.indicatorConfig;
 
-    return Container(
-      width: config.indicatorSize,
-      height: config.indicatorSize,
-      decoration: BoxDecoration(
-        shape: isRadioStyle ? BoxShape.circle : BoxShape.rectangle,
-        color: isSelected ? config.indicatorActiveColor : config.indicatorInactiveColor,
-        borderRadius: !isRadioStyle ? BorderRadius.circular(4) : null,
-      ),
-      child: isSelected
-          ? Icon(
-        isRadioStyle ? Icons.radio_button_checked : Icons.check,
-        size: config.indicatorSize * 0.7,
-        color: Colors.white,
-      )
-          : null,
+    // FIXED: Determine if this is a radio-style indicator based on the type, not selection mode
+    final isRadioStyle = indicatorConfig.type.toString().contains('radio') ||
+        indicatorConfig.type == IndicatorType.toggle ||
+        indicatorConfig.type == IndicatorType.switchStyle ||
+        indicatorConfig.type == IndicatorType.radioClassic ||
+        indicatorConfig.type == IndicatorType.radioCheckmark ||
+        indicatorConfig.type == IndicatorType.radioDot ||
+        indicatorConfig.type == IndicatorType.radioSquare;
+
+    final isCheckboxStyle = !isRadioStyle &&
+        indicatorConfig.type != IndicatorType.toggle &&
+        indicatorConfig.type != IndicatorType.switchStyle;
+
+    // Create indicator configuration with proper flags based on type
+    final configForIndicator = IndicatorConfig(
+      type: indicatorConfig.type,
+      activeColor: indicatorConfig.activeColor,
+      inactiveColor: indicatorConfig.inactiveColor,
+      gradientColors: indicatorConfig.gradientColors,
+      size: indicatorConfig.size,
+      borderRadius: indicatorConfig.borderRadius,
+      borderWidth: indicatorConfig.borderWidth,
+      showCheckmark: indicatorConfig.showCheckmark,
+      showDot: indicatorConfig.showDot,
+      dotSize: indicatorConfig.dotSize,
+      isRadio: isRadioStyle,
+      isCheckbox: isCheckboxStyle,
+      animateChanges: indicatorConfig.animateChanges,
+      customBuilder: indicatorConfig.customBuilder,
+    );
+
+    return IndicatorWidget(
+      isSelected: isSelected,
+      isEnabled: true,
+      config: configForIndicator,
+      isRadioGroup: isRadioStyle,
     );
   }
 
@@ -300,11 +337,11 @@ abstract class BaseDropDownStrategy<T> implements MultiDropdownAnimationStrategy
 
   /// Creates a height animation for the dropdown
   Animation<double> createHeightAnimation(
-      AnimationController controller, {
-        Curve? curve,
-        double begin = 0.0,
-        double end = 1.0,
-      }) {
+    AnimationController controller, {
+    Curve? curve,
+    double begin = 0.0,
+    double end = 1.0,
+  }) {
     return Tween(begin: begin, end: end).animate(
       CurvedAnimation(parent: controller, curve: curve ?? Curves.easeOut),
     );
@@ -312,11 +349,11 @@ abstract class BaseDropDownStrategy<T> implements MultiDropdownAnimationStrategy
 
   /// Creates an opacity animation for the dropdown
   Animation<double> createOpacityAnimation(
-      AnimationController controller, {
-        Interval? interval,
-        double begin = 0.0,
-        double end = 1.0,
-      }) {
+    AnimationController controller, {
+    Interval? interval,
+    double begin = 0.0,
+    double end = 1.0,
+  }) {
     final effectiveInterval = interval ?? const Interval(0.3, 1.0);
     return Tween(begin: begin, end: end).animate(
       CurvedAnimation(parent: controller, curve: effectiveInterval),

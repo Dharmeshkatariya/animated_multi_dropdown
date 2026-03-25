@@ -7,9 +7,6 @@ import '../models/dropdown_animation_type.dart';
 import '../models/multi_dropdown_config.dart';
 import '../models/selection_mode.dart';
 import '../strategies/multi_dropdown_animation_strategy.dart';
-
-
-
 class CustomAnimatedMultiDropDown<T> extends StatefulWidget {
   final DropdownAnimationType animationType;
   final List<T> items;
@@ -37,6 +34,8 @@ class CustomAnimatedMultiDropDown<T> extends StatefulWidget {
   final double? dropdownWidth;
   final bool Function(T, T)? compareFn;
   final Widget Function(T)? chipBuilder;
+  final Widget? noDataWidget;
+  final String? noDataMessage;
 
   const CustomAnimatedMultiDropDown({
     super.key,
@@ -73,6 +72,8 @@ class CustomAnimatedMultiDropDown<T> extends StatefulWidget {
     this.dropdownWidth,
     this.compareFn,
     this.chipBuilder,
+    this.noDataWidget,
+    this.noDataMessage,
   });
 
   @override
@@ -84,7 +85,6 @@ class CustomAnimatedMultiDropDown<T> extends StatefulWidget {
 class _CustomAnimatedMultiDropDownState<T>
     extends State<CustomAnimatedMultiDropDown<T>>
     with SingleTickerProviderStateMixin {
-  // This is a state class and should be private
   late AnimationController _controller;
   late MultiDropdownAnimationStrategy<T> _strategy;
   final ValueNotifier<bool> _isOpen = ValueNotifier<bool>(false);
@@ -92,6 +92,7 @@ class _CustomAnimatedMultiDropDownState<T>
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _searchFocusNode = FocusNode();
   List<T> _filteredItems = [];
+  String _searchQuery = '';
 
   @override
   void initState() {
@@ -118,6 +119,7 @@ class _CustomAnimatedMultiDropDownState<T>
     }
     if (widget.items != oldWidget.items) {
       _filteredItems = widget.items;
+      _filterItems(_searchQuery);
     }
     // If animation type changes, recreate strategy
     if (widget.animationType != oldWidget.animationType) {
@@ -126,18 +128,35 @@ class _CustomAnimatedMultiDropDownState<T>
   }
 
   void _onSearchChanged() {
-    final query = _searchController.text.toLowerCase();
+    final query = _searchController.text;
+    _searchQuery = query;
+    _filterItems(query);
+  }
+
+  void _filterItems(String query) {
     setState(() {
-      _filteredItems = widget.items.where((item) {
-        final itemText = widget.itemBuilder(item).toString().toLowerCase();
-        return itemText.contains(query);
-      }).toList();
+      if (query.isEmpty) {
+        _filteredItems = widget.items;
+      } else {
+        final lowerQuery = query.toLowerCase();
+        _filteredItems = widget.items.where((item) {
+          final itemText = widget.itemBuilder(item).toString().toLowerCase();
+          return itemText.contains(lowerQuery);
+        }).toList();
+      }
     });
   }
 
   void _handleValueChanged(dynamic newValue) {
     _selectedValue.value = newValue;
     widget.onChanged?.call(newValue);
+
+    // Clear search when selection changes (optional)
+    if (widget.config.selectionMode == SelectionMode.single) {
+      _searchController.clear();
+      _searchQuery = '';
+      _filterItems('');
+    }
   }
 
   void _handleToggle() {
@@ -145,8 +164,18 @@ class _CustomAnimatedMultiDropDownState<T>
     _strategy.toggleDropdown(controller: _controller, isOpen: _isOpen.value);
 
     if (!_isOpen.value) {
+      // Clear search when closing
       _searchController.clear();
+      _searchQuery = '';
+      _filterItems('');
       _searchFocusNode.unfocus();
+    } else {
+      // Focus search when opening if search is enabled
+      if (widget.config.enableSearch) {
+        Future.delayed(const Duration(milliseconds: 100), () {
+          _searchFocusNode.requestFocus();
+        });
+      }
     }
   }
 
@@ -172,19 +201,6 @@ class _CustomAnimatedMultiDropDownState<T>
     }
   }
 
-  // bool _isItemSelected(T item) {
-  //   if (widget.config.selectionMode == SelectionMode.multiple) {
-  //     final currentSelection = _selectedValue.value is List<T>
-  //         ? _selectedValue.value as List<T>
-  //         : [];
-  //     final compareFn = widget.compareFn ?? (T a, T b) => a == b;
-  //     return currentSelection.any((i) => compareFn(i, item));
-  //   } else {
-  //     return widget.compareFn?.call(_selectedValue.value as T, item) ??
-  //         _selectedValue.value == item;
-  //   }
-  // }
-
   bool _isItemSelected(T item) {
     if (widget.config.selectionMode == SelectionMode.multiple) {
       final currentSelection = _selectedValue.value is List<T>
@@ -193,7 +209,6 @@ class _CustomAnimatedMultiDropDownState<T>
       final compareFn = widget.compareFn ?? (T a, T b) => a == b;
       return currentSelection.any((i) => compareFn(i, item));
     } else {
-      // Fix the type cast issue here
       final currentValue = _selectedValue.value;
       if (currentValue == null) return false;
       if (widget.compareFn != null) {
@@ -202,22 +217,51 @@ class _CustomAnimatedMultiDropDownState<T>
       return currentValue == item;
     }
   }
-
   Widget _buildSelectionIndicator(bool isSelected, MultiDropDownConfig config) {
-    if (config.customIndicator != null) {
-      return config.customIndicator!;
+    // Check for custom indicator first
+    if (config.customCheckmark != null) {
+      return config.customCheckmark!;
     }
+
+    // Use the indicator configuration from the config
+    final indicatorConfig = config.indicatorConfig;
+
+    // FIXED: Determine if this is a radio-style indicator based on the type, not selection mode
+    final isRadioStyle = indicatorConfig.type.toString().contains('radio') ||
+        indicatorConfig.type == IndicatorType.toggle ||
+        indicatorConfig.type == IndicatorType.switchStyle ||
+        indicatorConfig.type == IndicatorType.radioClassic ||
+        indicatorConfig.type == IndicatorType.radioCheckmark ||
+        indicatorConfig.type == IndicatorType.radioDot ||
+        indicatorConfig.type == IndicatorType.radioSquare;
+
+    final isCheckboxStyle = !isRadioStyle &&
+        indicatorConfig.type != IndicatorType.toggle &&
+        indicatorConfig.type != IndicatorType.switchStyle;
+
+    // Create indicator configuration with proper flags based on type
+    final configForIndicator = IndicatorConfig(
+      type: indicatorConfig.type,
+      activeColor: indicatorConfig.activeColor,
+      inactiveColor: indicatorConfig.inactiveColor,
+      gradientColors: indicatorConfig.gradientColors,
+      size: indicatorConfig.size,
+      borderRadius: indicatorConfig.borderRadius,
+      borderWidth: indicatorConfig.borderWidth,
+      showCheckmark: indicatorConfig.showCheckmark,
+      showDot: indicatorConfig.showDot,
+      dotSize: indicatorConfig.dotSize,
+      isRadio: isRadioStyle,
+      isCheckbox: isCheckboxStyle,
+      animateChanges: indicatorConfig.animateChanges,
+      customBuilder: indicatorConfig.customBuilder,
+    );
 
     return IndicatorWidget(
       isSelected: isSelected,
       isEnabled: true,
-      config: IndicatorConfig(
-        type: config.selectedIndicator,
-        activeColor: config.indicatorActiveColor,
-        inactiveColor: config.indicatorInactiveColor,
-        size: config.indicatorSize,
-        borderRadius: config.borderRadius,
-      ),
+      config: configForIndicator,
+      isRadioGroup: isRadioStyle,
     );
   }
 
@@ -287,6 +331,15 @@ class _CustomAnimatedMultiDropDownState<T>
             color: config.searchDecorationColor,
           ),
           prefixIcon: Icon(Icons.search, color: config.searchDecorationColor),
+          suffixIcon: _searchController.text.isNotEmpty
+              ? IconButton(
+            icon: Icon(Icons.clear, color: config.searchDecorationColor),
+            onPressed: () {
+              _searchController.clear();
+              _filterItems('');
+            },
+          )
+              : null,
           filled: true,
           fillColor: config.searchBackgroundColor,
           border: OutlineInputBorder(
@@ -297,6 +350,75 @@ class _CustomAnimatedMultiDropDownState<T>
             horizontal: 16,
             vertical: 12,
           ),
+        ),
+      ),
+    );
+  }
+
+  /// Builds the no data widget when no items match the search
+  Widget _buildNoDataWidget() {
+    // If custom widget is provided, use it
+    if (widget.noDataWidget != null) {
+      return widget.noDataWidget!;
+    }
+
+    // If custom message is provided, show it
+    if (widget.noDataMessage != null) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(32.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.search_off,
+                size: 48,
+                color: Colors.grey[400],
+              ),
+              const SizedBox(height: 12),
+              Text(
+                widget.noDataMessage!,
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.grey[600],
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    // Default no data widget
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(32.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.search_off,
+              size: 48,
+              color: Colors.grey[400],
+            ),
+            const SizedBox(height: 12),
+            Text(
+              'No items found',
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.grey[600],
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              'Try a different search term',
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.grey[500],
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -347,6 +469,7 @@ class _CustomAnimatedMultiDropDownState<T>
                   isItemSelected: _isItemSelected,
                   buildSelectionIndicator: _buildSelectionIndicator,
                   buildSearchField: _buildSearchField,
+                  noDataBuilder: _buildNoDataWidget,
                 ),
                 _buildSelectedItemsChips(),
               ],
@@ -367,6 +490,5 @@ class _CustomAnimatedMultiDropDownState<T>
     super.dispose();
   }
 }
-
 
 

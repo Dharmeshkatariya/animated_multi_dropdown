@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import '../widgets/indicator.dart';
 import 'selection_mode.dart';
@@ -132,26 +131,14 @@ class MultiDropDownConfig {
   /// Selection mode (single or multiple)
   final SelectionMode selectionMode;
 
-  /// Type of selection indicator
-  final IndicatorType selectedIndicator;
-
-  /// Size of the selection indicator
-  final double indicatorSize;
-
-  /// Color of the indicator when selected
-  final Color indicatorActiveColor;
-
-  /// Color of the indicator when not selected
-  final Color indicatorInactiveColor;
-
   /// Whether to show a checkmark next to selected items
   final bool showCheckmark;
 
   /// Custom checkmark widget
   final Widget? customCheckmark;
 
-  /// Custom indicator widget
-  final Widget? customIndicator;
+  /// Configuration for the selection indicator
+  final IndicatorConfig indicatorConfig;
 
   // ==================== CHIP PROPERTIES ====================
 
@@ -212,6 +199,8 @@ class MultiDropDownConfig {
 
   /// Whether to enable haptic feedback on interactions
   final bool enableHapticFeedback;
+
+  // ==================== CONSTRUCTOR ====================
 
   const MultiDropDownConfig({
     // Animation defaults
@@ -279,13 +268,14 @@ class MultiDropDownConfig {
 
     // Selection defaults
     this.selectionMode = SelectionMode.single,
-    this.selectedIndicator = IndicatorType.checkmark,
-    this.indicatorSize = 20.0,
-    this.indicatorActiveColor = const Color(0xFF6200EE),
-    this.indicatorInactiveColor = const Color(0xFFE0E0E0),
     this.showCheckmark = true,
     this.customCheckmark,
-    this.customIndicator,
+    this.indicatorConfig = const IndicatorConfig(
+      type: IndicatorType.checkmark,
+      size: 20.0,
+      activeColor: Color(0xFF6200EE),
+      inactiveColor: Color(0xFFE0E0E0),
+    ),
 
     // Chip defaults
     this.showSelectedItemsAsChips = true,
@@ -312,12 +302,25 @@ class MultiDropDownConfig {
     this.enableHapticFeedback = false,
   });
 
+  // ==================== HELPER GETTERS ====================
+
+  /// Returns whether the indicator should use radio style
+  bool get isRadioIndicator => selectionMode == SelectionMode.single;
+
+  /// Returns whether the indicator should use checkbox style
+  bool get isCheckboxIndicator => selectionMode == SelectionMode.multiple;
+
+  // ==================== COPY WITH METHOD ====================
+
   /// Creates a copy of this config with the given fields replaced
   MultiDropDownConfig copyWith({
+    // Animation
     Duration? duration,
     Duration? reverseDuration,
     Curve? curve,
     Curve? reverseCurve,
+
+    // Appearance
     Color? backgroundColor,
     Color? highlightColor,
     double? blurIntensity,
@@ -331,6 +334,8 @@ class MultiDropDownConfig {
     Color? dropdownBackgroundColor,
     Border? border,
     Border? dropdownBorder,
+
+    // Shadow
     double? spreadRadius,
     double? blurRadius,
     Offset? shadowOffset,
@@ -338,26 +343,36 @@ class MultiDropDownConfig {
     List<BoxShadow>? shadows,
     List<BoxShadow>? dropdownShadows,
     double? elevation,
+
+    // Sizing
     double? maxDropdownHeight,
     double? dropdownWidth,
     double? selectorHeight,
     double? selectorWidth,
+
+    // Divider
     bool? showDivider,
     Color? dividerColor,
     double? dividerThickness,
+
+    // Padding
     EdgeInsets? padding,
     EdgeInsets? itemPadding,
+
+    // Text
     TextStyle? hintStyle,
     TextStyle? selectedItemStyle,
     TextStyle? itemStyle,
+
+    // Selection
     SelectionMode? selectionMode,
-    IndicatorType? selectedIndicator,
-    double? indicatorSize,
-    Color? indicatorActiveColor,
-    Color? indicatorInactiveColor,
     bool? showCheckmark,
     Widget? customCheckmark,
-    Widget? customIndicator,
+
+    // Indicator
+    IndicatorConfig? indicatorConfig,
+
+    // Chip
     bool? showSelectedItemsAsChips,
     EdgeInsets? chipPadding,
     double? chipSpacing,
@@ -368,20 +383,27 @@ class MultiDropDownConfig {
     TextStyle? chipLabelStyle,
     TextStyle? chipSelectedLabelStyle,
     Widget? chipDeleteIcon,
+
+    // Search
     bool? enableSearch,
     String? searchHintText,
     TextStyle? searchTextStyle,
     Color? searchBackgroundColor,
     Color? searchCursorColor,
     Color? searchDecorationColor,
+
+    // Miscellaneous
     Widget? leadingIcon,
     bool? enableHapticFeedback,
   }) {
     return MultiDropDownConfig(
+      // Animation
       duration: duration ?? this.duration,
       reverseDuration: reverseDuration ?? this.reverseDuration,
       curve: curve ?? this.curve,
       reverseCurve: reverseCurve ?? this.reverseCurve,
+
+      // Appearance
       backgroundColor: backgroundColor ?? this.backgroundColor,
       highlightColor: highlightColor ?? this.highlightColor,
       blurIntensity: blurIntensity ?? this.blurIntensity,
@@ -395,6 +417,8 @@ class MultiDropDownConfig {
       dropdownBackgroundColor: dropdownBackgroundColor ?? this.dropdownBackgroundColor,
       border: border ?? this.border,
       dropdownBorder: dropdownBorder ?? this.dropdownBorder,
+
+      // Shadow
       spreadRadius: spreadRadius ?? this.spreadRadius,
       blurRadius: blurRadius ?? this.blurRadius,
       shadowOffset: shadowOffset ?? this.shadowOffset,
@@ -402,26 +426,36 @@ class MultiDropDownConfig {
       shadows: shadows ?? this.shadows,
       dropdownShadows: dropdownShadows ?? this.dropdownShadows,
       elevation: elevation ?? this.elevation,
+
+      // Sizing
       maxDropdownHeight: maxDropdownHeight ?? this.maxDropdownHeight,
       dropdownWidth: dropdownWidth ?? this.dropdownWidth,
       selectorHeight: selectorHeight ?? this.selectorHeight,
       selectorWidth: selectorWidth ?? this.selectorWidth,
+
+      // Divider
       showDivider: showDivider ?? this.showDivider,
       dividerColor: dividerColor ?? this.dividerColor,
       dividerThickness: dividerThickness ?? this.dividerThickness,
+
+      // Padding
       padding: padding ?? this.padding,
       itemPadding: itemPadding ?? this.itemPadding,
+
+      // Text
       hintStyle: hintStyle ?? this.hintStyle,
       selectedItemStyle: selectedItemStyle ?? this.selectedItemStyle,
       itemStyle: itemStyle ?? this.itemStyle,
+
+      // Selection
       selectionMode: selectionMode ?? this.selectionMode,
-      selectedIndicator: selectedIndicator ?? this.selectedIndicator,
-      indicatorSize: indicatorSize ?? this.indicatorSize,
-      indicatorActiveColor: indicatorActiveColor ?? this.indicatorActiveColor,
-      indicatorInactiveColor: indicatorInactiveColor ?? this.indicatorInactiveColor,
       showCheckmark: showCheckmark ?? this.showCheckmark,
       customCheckmark: customCheckmark ?? this.customCheckmark,
-      customIndicator: customIndicator ?? this.customIndicator,
+
+      // Indicator
+      indicatorConfig: indicatorConfig ?? this.indicatorConfig,
+
+      // Chip
       showSelectedItemsAsChips: showSelectedItemsAsChips ?? this.showSelectedItemsAsChips,
       chipPadding: chipPadding ?? this.chipPadding,
       chipSpacing: chipSpacing ?? this.chipSpacing,
@@ -432,14 +466,146 @@ class MultiDropDownConfig {
       chipLabelStyle: chipLabelStyle ?? this.chipLabelStyle,
       chipSelectedLabelStyle: chipSelectedLabelStyle ?? this.chipSelectedLabelStyle,
       chipDeleteIcon: chipDeleteIcon ?? this.chipDeleteIcon,
+
+      // Search
       enableSearch: enableSearch ?? this.enableSearch,
       searchHintText: searchHintText ?? this.searchHintText,
       searchTextStyle: searchTextStyle ?? this.searchTextStyle,
       searchBackgroundColor: searchBackgroundColor ?? this.searchBackgroundColor,
       searchCursorColor: searchCursorColor ?? this.searchCursorColor,
       searchDecorationColor: searchDecorationColor ?? this.searchDecorationColor,
+
+      // Miscellaneous
       leadingIcon: leadingIcon ?? this.leadingIcon,
       enableHapticFeedback: enableHapticFeedback ?? this.enableHapticFeedback,
+    );
+  }
+
+  // ==================== INDICATOR PRESET METHODS ====================
+
+  /// Creates a copy with classic checkbox indicator
+  MultiDropDownConfig withClassicCheckbox({Color? activeColor}) {
+    return copyWith(
+      indicatorConfig: IndicatorConfig.checkbox(
+        activeColor: activeColor ?? indicatorConfig.activeColor,
+      ).copyWith(type: IndicatorType.classic),
+    );
+  }
+
+  /// Creates a copy with modern checkbox indicator
+  MultiDropDownConfig withModernCheckbox({Color? activeColor}) {
+    return copyWith(
+      indicatorConfig: IndicatorConfig.checkbox(
+        activeColor: activeColor ?? indicatorConfig.activeColor,
+      ),
+    );
+  }
+
+  /// Creates a copy with dot checkbox indicator
+  MultiDropDownConfig withDotCheckbox({Color? activeColor}) {
+    return copyWith(
+      indicatorConfig: IndicatorConfig.dotCheckbox(
+        activeColor: activeColor ?? indicatorConfig.activeColor,
+        size: indicatorConfig.size,
+      ),
+    );
+  }
+
+  /// Creates a copy with square checkbox indicator
+  MultiDropDownConfig withSquareCheckbox({Color? activeColor}) {
+    return copyWith(
+      indicatorConfig: IndicatorConfig.squareCheckbox(
+        activeColor: activeColor ?? indicatorConfig.activeColor,
+        size: indicatorConfig.size,
+      ),
+    );
+  }
+
+  /// Creates a copy with classic radio indicator
+  MultiDropDownConfig withClassicRadio({Color? activeColor}) {
+    return copyWith(
+      indicatorConfig: IndicatorConfig.radio(
+        activeColor: activeColor ?? indicatorConfig.activeColor,
+        size: indicatorConfig.size,
+      ).copyWith(type: IndicatorType.radioClassic),
+    );
+  }
+
+  /// Creates a copy with checkmark radio indicator
+  MultiDropDownConfig withCheckmarkRadio({Color? activeColor}) {
+    return copyWith(
+      indicatorConfig: IndicatorConfig.radio(
+        activeColor: activeColor ?? indicatorConfig.activeColor,
+        size: indicatorConfig.size,
+      ).copyWith(type: IndicatorType.radioCheckmark),
+    );
+  }
+
+  /// Creates a copy with dot radio indicator
+  MultiDropDownConfig withDotRadio({Color? activeColor}) {
+    return copyWith(
+      indicatorConfig: IndicatorConfig.dotRadio(
+        activeColor: activeColor ?? indicatorConfig.activeColor,
+        size: indicatorConfig.size,
+      ),
+    );
+  }
+
+  /// Creates a copy with toggle indicator
+  MultiDropDownConfig withToggle({Color? activeColor}) {
+    return copyWith(
+      indicatorConfig: IndicatorConfig.toggle(
+        activeColor: activeColor ?? indicatorConfig.activeColor,
+        size: 28,
+      ),
+    );
+  }
+
+  /// Creates a copy with switch indicator
+  MultiDropDownConfig withSwitch({Color? activeColor}) {
+    return copyWith(
+      indicatorConfig: IndicatorConfig.switchStyle(
+        activeColor: activeColor ?? indicatorConfig.activeColor,
+        size: 32,
+      ),
+    );
+  }
+
+  /// Creates a copy with gradient indicator
+  MultiDropDownConfig withGradient({
+    required List<Color> colors,
+    double? size,
+  }) {
+    return copyWith(
+      indicatorConfig: IndicatorConfig.gradient(
+        colors: colors,
+        size: size ?? indicatorConfig.size,
+        isRadio: selectionMode == SelectionMode.single,
+      ),
+    );
+  }
+
+  /// Creates a copy with neumorphic indicator
+  MultiDropDownConfig withNeumorphic({Color? activeColor}) {
+    return copyWith(
+      indicatorConfig: IndicatorConfig.neumorphic(
+        activeColor: activeColor ?? indicatorConfig.activeColor,
+        size: 24,
+        isRadio: selectionMode == SelectionMode.single,
+      ),
+    );
+  }
+
+  /// Creates a copy with custom indicator
+  MultiDropDownConfig withCustomIndicator({
+    required WidgetBuilder builder,
+    double? size,
+  }) {
+    return copyWith(
+      indicatorConfig: IndicatorConfig.custom(
+        builder: builder,
+        size: size ?? indicatorConfig.size,
+      ),
     );
   }
 }

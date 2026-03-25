@@ -47,3 +47,8 @@ export 'src/utils/color_file.dart';
 export 'src/utils/color_utils.dart';
 export 'src/utils/custom_matrix_utils.dart';
 export 'src/utils/drop_down_physics.dart';
+
+// ==================== factory preset dropdown  ====================
+
+export 'src/strategies/simple_dropdown_factory.dart';
+export 'src/strategies/preset_dropdowns.dart';

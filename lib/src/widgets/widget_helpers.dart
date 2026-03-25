@@ -1,6 +1,5 @@
 import 'package:animated_multi_dropdown/src/utils/color_utils.dart';
 import 'package:animated_multi_dropdown/src/widgets/custom_text.dart';
-import 'package:animated_multi_dropdown/src/widgets/indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../models/multi_dropdown_config.dart';
@@ -199,81 +198,6 @@ class DropdownWidgetHelpers {
     );
   }
 
-  /// Maps dropdown config to appropriate indicator type
- static IndicatorType _getIndicatorType(MultiDropDownConfig config) {
-    // For multiple selection, use checkbox styles
-    if (config.selectionMode == SelectionMode.multiple) {
-      switch (config.selectedIndicator) {
-        case IndicatorType.checkmark:
-          return IndicatorType.checkmark;
-        case IndicatorType.dot:
-          return IndicatorType.dot;
-        case IndicatorType.square:
-          return IndicatorType.square;
-        case IndicatorType.classic:
-          return IndicatorType.classic;
-        case IndicatorType.gradient:
-          return IndicatorType.gradient;
-        case IndicatorType.tick:
-          return IndicatorType.tick;
-        case IndicatorType.neumorphic:
-          return IndicatorType.neumorphic;
-        case IndicatorType.switchStyle:
-          return IndicatorType.switchStyle;
-        case IndicatorType.toggle:
-          return IndicatorType.toggle;
-        default:
-          return IndicatorType.checkmark;
-      }
-    }
-    // For single selection, use radio styles
-    else {
-      switch (config.selectedIndicator) {
-        case IndicatorType.radioClassic:
-          return IndicatorType.radioClassic;
-        case IndicatorType.radioCheckmark:
-          return IndicatorType.radioCheckmark;
-        case IndicatorType.radioDot:
-          return IndicatorType.radioDot;
-        case IndicatorType.radioSquare:
-          return IndicatorType.radioSquare;
-        case IndicatorType.gradient:
-          return IndicatorType.gradient;
-        case IndicatorType.neumorphic:
-          return IndicatorType.neumorphic;
-        case IndicatorType.toggle:
-          return IndicatorType.toggle;
-        default:
-          return IndicatorType.radioClassic;
-      }
-    }
-  }
 
- static Widget buildSelectionIndicator({
-  required  bool isSelected, required MultiDropDownConfig config
-}) {
-    if (config.customIndicator != null) {
-      return config.customIndicator!;
-    }
-
-    return IndicatorWidget(
-      isSelected: isSelected,
-      isEnabled: true,
-      config: IndicatorConfig(
-        type: _getIndicatorType(config),
-        activeColor: config.indicatorActiveColor,
-        inactiveColor: config.indicatorInactiveColor,
-        size: config.indicatorSize,
-        borderRadius: config.borderRadius,
-        showCheckmark: true,
-        showDot: true,
-        dotSize: 0.6,
-        isRadio: config.selectionMode == SelectionMode.single,
-        isCheckbox: config.selectionMode == SelectionMode.multiple,
-        animateChanges: true,
-      ),
-      isRadioGroup: config.selectionMode == SelectionMode.single,
-    );
-  }
 
 }

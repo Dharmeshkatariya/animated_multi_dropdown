@@ -41,6 +41,7 @@ class HologramMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
     required bool Function(T) isItemSelected,
     required Widget Function(bool, MultiDropDownConfig) buildSelectionIndicator,
     required Widget Function(MultiDropDownConfig) buildSearchField,
+    Widget Function()? noDataBuilder,
   }) {
     final hologramAnim = Tween(
       begin: 0.0,

@@ -41,6 +41,7 @@ class CosmicRippleMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
     required bool Function(T) isItemSelected,
     required Widget Function(bool, MultiDropDownConfig) buildSelectionIndicator,
     required Widget Function(MultiDropDownConfig) buildSearchField,
+    Widget Function()? noDataBuilder,
   }) {
     final rippleAnimation = Tween(
       begin: 0.0,

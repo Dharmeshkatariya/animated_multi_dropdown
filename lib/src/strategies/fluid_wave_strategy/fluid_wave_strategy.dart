@@ -39,6 +39,7 @@ class FluidWaveMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
     required bool Function(T) isItemSelected,
     required Widget Function(bool, MultiDropDownConfig) buildSelectionIndicator,
     required Widget Function(MultiDropDownConfig) buildSearchField,
+    Widget Function()? noDataBuilder,
   }) {
     final waveAnimation = Tween(
       begin: 0.0,
@@ -241,7 +242,7 @@ class FluidWaveMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                 (config.selectionMode == SelectionMode.single && config.showCheckmark))
               Padding(
                 padding: const EdgeInsets.only(right: 12),
-                child: _buildSelectionIndicator(isSelected, config),
+                child: buildSelectionIndicator(isSelected, config),
               ),
             Expanded(
               child: DefaultTextStyle.merge(
@@ -257,28 +258,4 @@ class FluidWaveMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
     );
   }
 
-  Widget _buildSelectionIndicator(bool isSelected, MultiDropDownConfig config) {
-    if (config.customIndicator != null) {
-      return config.customIndicator!;
-    }
-
-    final isRadioStyle = config.selectedIndicator.toString().contains('radio');
-
-    return Container(
-      width: config.indicatorSize,
-      height: config.indicatorSize,
-      decoration: BoxDecoration(
-        shape: isRadioStyle ? BoxShape.circle : BoxShape.rectangle,
-        color: isSelected ? config.indicatorActiveColor : config.indicatorInactiveColor,
-        borderRadius: !isRadioStyle ? BorderRadius.circular(4) : null,
-      ),
-      child: isSelected
-          ? Icon(
-        isRadioStyle ? Icons.radio_button_checked : Icons.check,
-        size: config.indicatorSize * 0.7,
-        color: Colors.white,
-      )
-          : null,
-    );
-  }
 }

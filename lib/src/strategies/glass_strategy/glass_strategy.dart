@@ -38,10 +38,8 @@ class MultiGlassDropdownStrategy<T> extends BaseDropDownStrategy<T> {
     required bool Function(T) isItemSelected,
     required Widget Function(bool, MultiDropDownConfig) buildSelectionIndicator,
     required Widget Function(MultiDropDownConfig) buildSearchField,
+    Widget Function()? noDataBuilder,
   }) {
-    // final opacityAnimation = createOpacityAnimation(controller);
-    // final heightAnimation = createHeightAnimation(controller, curve: config.curve);
-
     final displayValue = buildDisplayValue(
       value: value,
       config: config,
