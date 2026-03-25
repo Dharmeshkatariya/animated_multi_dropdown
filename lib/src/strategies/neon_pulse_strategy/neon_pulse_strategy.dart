@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import '../../models/multi_dropdown_config.dart';
 import '../../models/selection_mode.dart';
 import '../base_drop_down_strategy.dart';
+
 class NeonPulseMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
   @override
   Widget buildDropdown({
@@ -125,7 +126,8 @@ class NeonPulseMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                         const SizedBox(width: 8),
                       ],
                       Expanded(child: displayValue),
-                      _buildRotatingIcon(controller, config, effectiveHighlightColor, textGlow),
+                      _buildRotatingIcon(controller, config,
+                          effectiveHighlightColor, textGlow),
                     ],
                   ),
                 ),
@@ -201,41 +203,54 @@ class NeonPulseMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                                     HapticFeedback.lightImpact();
                                   }
                                   onChanged(item);
-                                  if (config.selectionMode == SelectionMode.single) {
+                                  if (config.selectionMode ==
+                                      SelectionMode.single) {
                                     onToggle();
                                   }
                                 },
-                                splashColor: effectiveHighlightColor.withValuesOpacity(0.2),
-                                highlightColor: effectiveHighlightColor.withValuesOpacity(0.1),
+                                splashColor: effectiveHighlightColor
+                                    .withValuesOpacity(0.2),
+                                highlightColor: effectiveHighlightColor
+                                    .withValuesOpacity(0.1),
                                 child: Container(
                                   padding: itemPadding ?? config.itemPadding,
                                   decoration: BoxDecoration(
-                                    border: index < items.length - 1 && showDivider
+                                    border: index < items.length - 1 &&
+                                            showDivider
                                         ? Border(
-                                      bottom: BorderSide(
-                                        color: dividerColor ??
-                                            effectiveHighlightColor.withValuesOpacity(0.1),
-                                        width: dividerThickness ?? config.dividerThickness,
-                                      ),
-                                    )
+                                            bottom: BorderSide(
+                                              color: dividerColor ??
+                                                  effectiveHighlightColor
+                                                      .withValuesOpacity(0.1),
+                                              width: dividerThickness ??
+                                                  config.dividerThickness,
+                                            ),
+                                          )
                                         : null,
                                   ),
                                   child: Row(
                                     children: [
-                                      if (config.selectionMode == SelectionMode.multiple ||
-                                          (config.selectionMode == SelectionMode.single &&
+                                      if (config.selectionMode ==
+                                              SelectionMode.multiple ||
+                                          (config.selectionMode ==
+                                                  SelectionMode.single &&
                                               config.showCheckmark))
                                         Padding(
-                                          padding: const EdgeInsets.only(right: 12),
-                                          child: buildSelectionIndicator(isSelected, config),
+                                          padding:
+                                              const EdgeInsets.only(right: 12),
+                                          child: buildSelectionIndicator(
+                                              isSelected, config),
                                         ),
                                       Expanded(
                                         child: DefaultTextStyle.merge(
                                           style: (isSelected
-                                              ? selectedItemStyle ?? config.selectedItemStyle
-                                              : itemStyle ?? config.itemStyle)
+                                                  ? selectedItemStyle ??
+                                                      config.selectedItemStyle
+                                                  : itemStyle ??
+                                                      config.itemStyle)
                                               .copyWith(
-                                            shadows: isSelected ? textGlow : null,
+                                            shadows:
+                                                isSelected ? textGlow : null,
                                           ),
                                           child: itemBuilder(item),
                                         ),
@@ -265,11 +280,11 @@ class NeonPulseMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
   }
 
   Widget _buildRotatingIcon(
-      AnimationController controller,
-      MultiDropDownConfig config,
-      Color color,
-      List<Shadow> textGlow,
-      ) {
+    AnimationController controller,
+    MultiDropDownConfig config,
+    Color color,
+    List<Shadow> textGlow,
+  ) {
     return RotationTransition(
       turns: Tween(begin: 0.0, end: 0.5).animate(
         CurvedAnimation(parent: controller, curve: Curves.easeInOutBack),

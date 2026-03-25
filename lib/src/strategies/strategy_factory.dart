@@ -28,7 +28,8 @@ import 'liquid_smooth_strategy/liquid_smooth_strategy.dart';
 
 /// Factory class for creating dropdown animation strategies
 class StrategyFactory {
-  static MultiDropdownAnimationStrategy<T> create<T>(DropdownAnimationType type) {
+  static MultiDropdownAnimationStrategy<T> create<T>(
+      DropdownAnimationType type) {
     switch (type) {
       case DropdownAnimationType.glass:
         return MultiGlassDropdownStrategy<T>();

@@ -28,12 +28,14 @@ class CustomChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget chip = Container(
-      padding: padding ?? const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      padding:
+          padding ?? const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
         color: backgroundColor ?? AppColors.primary.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(borderRadius ?? 20),
         border: Border.all(
-          color: backgroundColor?.withValues(alpha: 0.2) ?? AppColors.primary.withValues(alpha: 0.2),
+          color: backgroundColor?.withValues(alpha: 0.2) ??
+              AppColors.primary.withValues(alpha: 0.2),
         ),
       ),
       child: Row(

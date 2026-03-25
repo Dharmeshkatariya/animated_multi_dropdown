@@ -48,7 +48,8 @@ class GlassMorphismMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
       ),
     );
 
-    final heightAnimation = createHeightAnimation(controller, curve: config.curve);
+    final heightAnimation =
+        createHeightAnimation(controller, curve: config.curve);
 
     final effectiveHighlightColor = config.highlightColor;
     final color = dropdownBackgroundColor ?? config.backgroundColor;
@@ -107,7 +108,8 @@ class GlassMorphismMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                       ],
                       Expanded(child: displayValue),
                       const SizedBox(width: 8),
-                      _buildRotatingIcon(controller, config, effectiveHighlightColor),
+                      _buildRotatingIcon(
+                          controller, config, effectiveHighlightColor),
                     ],
                   ),
                 ),
@@ -175,41 +177,53 @@ class GlassMorphismMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                                   HapticFeedback.lightImpact();
                                 }
                                 onChanged(item);
-                                if (config.selectionMode == SelectionMode.single) {
+                                if (config.selectionMode ==
+                                    SelectionMode.single) {
                                   onToggle();
                                 }
                               },
-                              splashColor: effectiveHighlightColor.withValuesOpacity(0.1),
-                              highlightColor: effectiveHighlightColor.withValuesOpacity(0.05),
+                              splashColor: effectiveHighlightColor
+                                  .withValuesOpacity(0.1),
+                              highlightColor: effectiveHighlightColor
+                                  .withValuesOpacity(0.05),
                               child: Container(
                                 padding: itemPadding ?? config.itemPadding,
                                 decoration: BoxDecoration(
-                                  border: index < items.length - 1 && showDivider
-                                      ? Border(
-                                    bottom: BorderSide(
-                                      color: dividerColor ??
-                                          effectiveHighlightColor.withValuesOpacity(0.1),
-                                      width: dividerThickness ?? config.dividerThickness,
-                                    ),
-                                  )
-                                      : null,
+                                  border:
+                                      index < items.length - 1 && showDivider
+                                          ? Border(
+                                              bottom: BorderSide(
+                                                color: dividerColor ??
+                                                    effectiveHighlightColor
+                                                        .withValuesOpacity(0.1),
+                                                width: dividerThickness ??
+                                                    config.dividerThickness,
+                                              ),
+                                            )
+                                          : null,
                                 ),
                                 child: Row(
                                   children: [
-                                    if (config.selectionMode == SelectionMode.multiple ||
-                                        (config.selectionMode == SelectionMode.single &&
+                                    if (config.selectionMode ==
+                                            SelectionMode.multiple ||
+                                        (config.selectionMode ==
+                                                SelectionMode.single &&
                                             config.showCheckmark))
                                       Padding(
-                                        padding: const EdgeInsets.only(right: 12),
-                                        child: buildSelectionIndicator(isSelected, config),
+                                        padding:
+                                            const EdgeInsets.only(right: 12),
+                                        child: buildSelectionIndicator(
+                                            isSelected, config),
                                       ),
                                     Expanded(
                                       child: DefaultTextStyle.merge(
                                         style: (isSelected
-                                            ? selectedItemStyle ?? config.selectedItemStyle
-                                            : itemStyle ?? config.itemStyle)
+                                                ? selectedItemStyle ??
+                                                    config.selectedItemStyle
+                                                : itemStyle ?? config.itemStyle)
                                             .copyWith(
-                                          color: effectiveHighlightColor.withValuesOpacity(0.9),
+                                          color: effectiveHighlightColor
+                                              .withValuesOpacity(0.9),
                                         ),
                                         child: itemBuilder(item),
                                       ),
@@ -238,10 +252,10 @@ class GlassMorphismMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
   }
 
   Widget _buildRotatingIcon(
-      AnimationController controller,
-      MultiDropDownConfig config,
-      Color color,
-      ) {
+    AnimationController controller,
+    MultiDropDownConfig config,
+    Color color,
+  ) {
     return RotationTransition(
       turns: Tween(begin: 0.0, end: 0.5).animate(
         CurvedAnimation(parent: controller, curve: Curves.easeInOutBack),

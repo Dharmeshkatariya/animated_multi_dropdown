@@ -1,4 +1,3 @@
-
 /// Available animation types for the dropdown
 enum DropdownAnimationType {
   /// Glass morphism effect with blur and transparency

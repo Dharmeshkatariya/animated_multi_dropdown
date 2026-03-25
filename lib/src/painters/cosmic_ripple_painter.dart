@@ -76,7 +76,8 @@ class CosmicRipplePainter extends CustomPainter {
 
     // Draw twinkling stars
     final rnd = Random(42);
-    final starPaint = Paint()..color = Colors.white.withValuesOpacity(0.5 * progress);
+    final starPaint = Paint()
+      ..color = Colors.white.withValuesOpacity(0.5 * progress);
 
     for (var i = 0; i < 30; i++) {
       final starX = rnd.nextDouble() * size.width;

@@ -50,8 +50,9 @@ class MultiGlassDropdownStrategy<T> extends BaseDropDownStrategy<T> {
       selectedItemStyle: selectedItemStyle,
     );
 
-    final effectiveBackgroundColor = dropdownBackgroundColor?.withValuesOpacity(0.13) ??
-        config.backgroundColor.withValuesOpacity(0.13);
+    final effectiveBackgroundColor =
+        dropdownBackgroundColor?.withValuesOpacity(0.13) ??
+            config.backgroundColor.withValuesOpacity(0.13);
 
     final selector = buildSelector(
       child: displayValue,

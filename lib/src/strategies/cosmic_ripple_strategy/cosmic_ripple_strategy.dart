@@ -90,7 +90,8 @@ class CosmicRippleMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                 decoration: BoxDecoration(
                   color: Colors.black.withValuesOpacity(0.7),
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: color.withValuesOpacity(0.5), width: 1),
+                  border:
+                      Border.all(color: color.withValuesOpacity(0.5), width: 1),
                   boxShadow: [
                     BoxShadow(
                       color: color.withValuesOpacity(0.3),
@@ -184,23 +185,26 @@ class CosmicRippleMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                                       }
                                     },
                                     child: Container(
-                                      padding: itemPadding ?? const EdgeInsets.all(16),
+                                      padding: itemPadding ??
+                                          const EdgeInsets.all(16),
                                       decoration: BoxDecoration(
                                         border: Border(
                                           bottom: BorderSide(
-                                            color: Colors.white.withValuesOpacity(0.1),
+                                            color: Colors.white
+                                                .withValuesOpacity(0.1),
                                           ),
                                         ),
                                       ),
                                       child: Row(
                                         children: [
                                           if (config.selectionMode ==
-                                              SelectionMode.multiple ||
+                                                  SelectionMode.multiple ||
                                               (config.selectionMode ==
-                                                  SelectionMode.single &&
+                                                      SelectionMode.single &&
                                                   config.showCheckmark))
                                             Padding(
-                                              padding: const EdgeInsets.only(right: 12),
+                                              padding: const EdgeInsets.only(
+                                                  right: 12),
                                               child: buildSelectionIndicator(
                                                 selected,
                                                 config,
@@ -241,7 +245,8 @@ class CosmicRippleMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
     );
   }
 
-  Widget _buildRotatingIcon(AnimationController controller, MultiDropDownConfig config, Color color) {
+  Widget _buildRotatingIcon(
+      AnimationController controller, MultiDropDownConfig config, Color color) {
     return RotationTransition(
       turns: Tween(begin: 0.0, end: 0.5).animate(
         CurvedAnimation(parent: controller, curve: Curves.easeInOutBack),

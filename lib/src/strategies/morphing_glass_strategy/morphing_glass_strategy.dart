@@ -7,6 +7,7 @@ import '../../models/selection_mode.dart';
 import '../../painters/morphing_gradient_painter.dart';
 import '../../utils/custom_matrix_utils.dart';
 import '../base_drop_down_strategy.dart';
+
 class MorphingGlassMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
   @override
   Widget buildDropdown({
@@ -153,7 +154,8 @@ class MorphingGlassMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                     child: Container(
                       width: dropdownWidth ?? config.dropdownWidth,
                       constraints: BoxConstraints(
-                        maxHeight: maxDropdownHeight ?? config.maxDropdownHeight,
+                        maxHeight:
+                            maxDropdownHeight ?? config.maxDropdownHeight,
                       ),
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
@@ -200,7 +202,8 @@ class MorphingGlassMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                                   return FadeTransition(
                                     opacity: itemAnim,
                                     child: Transform(
-                                      transform: CustomMatrixUtils.molecularBond(
+                                      transform:
+                                          CustomMatrixUtils.molecularBond(
                                         progress: itemAnim.value,
                                         startOffset: 20,
                                         endOffset: 0,
@@ -213,31 +216,40 @@ class MorphingGlassMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                                             onToggle();
                                           }
                                         },
-                                        splashColor: Colors.white.withValuesOpacity(0.1),
-                                        highlightColor: Colors.white.withValuesOpacity(0.05),
+                                        splashColor:
+                                            Colors.white.withValuesOpacity(0.1),
+                                        highlightColor: Colors.white
+                                            .withValuesOpacity(0.05),
                                         child: Container(
-                                          padding: itemPadding ?? config.itemPadding,
+                                          padding:
+                                              itemPadding ?? config.itemPadding,
                                           decoration: BoxDecoration(
-                                            border: index < items.length - 1 && showDivider
+                                            border: index < items.length - 1 &&
+                                                    showDivider
                                                 ? Border(
-                                              bottom: BorderSide(
-                                                color: Colors.white.withValuesOpacity(0.08),
-                                              ),
-                                            )
+                                                    bottom: BorderSide(
+                                                      color: Colors.white
+                                                          .withValuesOpacity(
+                                                              0.08),
+                                                    ),
+                                                  )
                                                 : null,
                                           ),
                                           child: Row(
                                             children: [
                                               if (config.selectionMode ==
-                                                  SelectionMode.multiple ||
+                                                      SelectionMode.multiple ||
                                                   (config.selectionMode ==
-                                                      SelectionMode.single &&
+                                                          SelectionMode
+                                                              .single &&
                                                       config.showCheckmark))
                                                 Padding(
-                                                  padding: const EdgeInsets.only(
+                                                  padding:
+                                                      const EdgeInsets.only(
                                                     right: 12,
                                                   ),
-                                                  child: buildSelectionIndicator(
+                                                  child:
+                                                      buildSelectionIndicator(
                                                     isSelected,
                                                     config,
                                                   ),
@@ -245,11 +257,14 @@ class MorphingGlassMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                                               Expanded(
                                                 child: DefaultTextStyle.merge(
                                                   style: (isSelected
-                                                      ? selectedItemStyle ??
-                                                      config.selectedItemStyle
-                                                      : itemStyle ?? config.itemStyle)
+                                                          ? selectedItemStyle ??
+                                                              config
+                                                                  .selectedItemStyle
+                                                          : itemStyle ??
+                                                              config.itemStyle)
                                                       .copyWith(
-                                                    color: Colors.white.withValuesOpacity(0.9),
+                                                    color: Colors.white
+                                                        .withValuesOpacity(0.9),
                                                   ),
                                                   child: itemBuilder(item),
                                                 ),

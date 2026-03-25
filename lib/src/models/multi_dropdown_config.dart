@@ -414,7 +414,8 @@ class MultiDropDownConfig {
       glowIntensity: glowIntensity ?? this.glowIntensity,
       borderRadius: borderRadius ?? this.borderRadius,
       dropdownBorderRadius: dropdownBorderRadius ?? this.dropdownBorderRadius,
-      dropdownBackgroundColor: dropdownBackgroundColor ?? this.dropdownBackgroundColor,
+      dropdownBackgroundColor:
+          dropdownBackgroundColor ?? this.dropdownBackgroundColor,
       border: border ?? this.border,
       dropdownBorder: dropdownBorder ?? this.dropdownBorder,
 
@@ -456,7 +457,8 @@ class MultiDropDownConfig {
       indicatorConfig: indicatorConfig ?? this.indicatorConfig,
 
       // Chip
-      showSelectedItemsAsChips: showSelectedItemsAsChips ?? this.showSelectedItemsAsChips,
+      showSelectedItemsAsChips:
+          showSelectedItemsAsChips ?? this.showSelectedItemsAsChips,
       chipPadding: chipPadding ?? this.chipPadding,
       chipSpacing: chipSpacing ?? this.chipSpacing,
       chipRunSpacing: chipRunSpacing ?? this.chipRunSpacing,
@@ -464,16 +466,19 @@ class MultiDropDownConfig {
       chipColor: chipColor ?? this.chipColor,
       chipSelectedColor: chipSelectedColor ?? this.chipSelectedColor,
       chipLabelStyle: chipLabelStyle ?? this.chipLabelStyle,
-      chipSelectedLabelStyle: chipSelectedLabelStyle ?? this.chipSelectedLabelStyle,
+      chipSelectedLabelStyle:
+          chipSelectedLabelStyle ?? this.chipSelectedLabelStyle,
       chipDeleteIcon: chipDeleteIcon ?? this.chipDeleteIcon,
 
       // Search
       enableSearch: enableSearch ?? this.enableSearch,
       searchHintText: searchHintText ?? this.searchHintText,
       searchTextStyle: searchTextStyle ?? this.searchTextStyle,
-      searchBackgroundColor: searchBackgroundColor ?? this.searchBackgroundColor,
+      searchBackgroundColor:
+          searchBackgroundColor ?? this.searchBackgroundColor,
       searchCursorColor: searchCursorColor ?? this.searchCursorColor,
-      searchDecorationColor: searchDecorationColor ?? this.searchDecorationColor,
+      searchDecorationColor:
+          searchDecorationColor ?? this.searchDecorationColor,
 
       // Miscellaneous
       leadingIcon: leadingIcon ?? this.leadingIcon,

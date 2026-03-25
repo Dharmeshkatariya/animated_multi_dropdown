@@ -134,7 +134,12 @@ class MultiNeonDropdownStrategy<T> extends BaseDropDownStrategy<T> {
             dividerColor: dividerColor,
             dividerThickness: dividerThickness,
             backgroundColor: Colors.black87,
-            shadows: [BoxShadow(color: config.glowColor.withValuesOpacity(0.2), blurRadius: 20, spreadRadius: 2)],
+            shadows: [
+              BoxShadow(
+                  color: config.glowColor.withValuesOpacity(0.2),
+                  blurRadius: 20,
+                  spreadRadius: 2)
+            ],
             elevation: elevation,
           ),
         ),
@@ -147,7 +152,8 @@ class MultiNeonDropdownStrategy<T> extends BaseDropDownStrategy<T> {
     );
   }
 
-  Widget _buildRotatingIcon(AnimationController controller, MultiDropDownConfig config) {
+  Widget _buildRotatingIcon(
+      AnimationController controller, MultiDropDownConfig config) {
     return RotationTransition(
       turns: Tween(begin: 0.0, end: 0.5).animate(
         CurvedAnimation(parent: controller, curve: Curves.easeInOutBack),

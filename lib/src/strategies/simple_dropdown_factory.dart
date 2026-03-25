@@ -23,7 +23,8 @@ class SimpleDropdownFactory {
     bool showCheckmark = true,
     IndicatorType indicatorType = IndicatorType.radioClassic,
     double? indicatorSize,
-    Widget Function(BuildContext, bool isSelected, Color activeColor)? customIndicatorBuilder,
+    Widget Function(BuildContext, bool isSelected, Color activeColor)?
+        customIndicatorBuilder,
   }) {
     // Create a custom builder that captures the selection state
     WidgetBuilder? customBuilder;
@@ -81,7 +82,8 @@ class SimpleDropdownFactory {
     bool enableSearch = false,
     IndicatorType indicatorType = IndicatorType.checkmark,
     double? indicatorSize,
-    Widget Function(BuildContext, bool isSelected, Color activeColor)? customIndicatorBuilder,
+    Widget Function(BuildContext, bool isSelected, Color activeColor)?
+        customIndicatorBuilder,
   }) {
     // Create a custom builder that captures the selection state
     WidgetBuilder? customBuilder;
@@ -558,7 +560,7 @@ class _CustomIndicatorWidget extends StatefulWidget {
 }
 
 class _CustomIndicatorWidgetState extends State<_CustomIndicatorWidget> {
-  bool _isSelected = false;
+  final bool _isSelected = false;
   Color _color = Colors.blue;
 
   @override
@@ -576,6 +578,7 @@ class _CustomIndicatorWidgetState extends State<_CustomIndicatorWidget> {
     return widget.builder(context, _isSelected, _color);
   }
 }
+
 /// Style configuration for simple dropdowns
 class SimpleDropdownStyle {
   final DropdownAnimationType animationType;
@@ -594,7 +597,8 @@ class SimpleDropdownStyle {
   final TextStyle? itemStyle;
   final Color? chipColor;
   final TextStyle? chipLabelStyle;
-  final Widget Function(BuildContext, bool isSelected, Color activeColor)? customIndicatorBuilder;
+  final Widget Function(BuildContext, bool isSelected, Color activeColor)?
+      customIndicatorBuilder;
 
   const SimpleDropdownStyle({
     this.animationType = DropdownAnimationType.glass,
@@ -753,7 +757,7 @@ class SimpleDropdownStyle {
       width: width ?? double.infinity,
       borderRadius: BorderRadius.circular(12),
       indicatorType:
-      isMultiple ? IndicatorType.checkmark : IndicatorType.radioClassic,
+          isMultiple ? IndicatorType.checkmark : IndicatorType.radioClassic,
     );
   }
 

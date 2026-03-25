@@ -113,44 +113,55 @@ class FoldableMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                                     HapticFeedback.lightImpact();
                                   }
                                   onChanged(item);
-                                  if (config.selectionMode == SelectionMode.single) {
+                                  if (config.selectionMode ==
+                                      SelectionMode.single) {
                                     onToggle();
                                   }
                                 },
                                 borderRadius: index == items.length - 1
                                     ? BorderRadius.only(
-                                  bottomLeft: config.dropdownBorderRadius.bottomLeft,
-                                  bottomRight: config.dropdownBorderRadius.bottomRight,
-                                  topLeft: Radius.zero,
-                                  topRight: Radius.zero,
-                                )
+                                        bottomLeft: config
+                                            .dropdownBorderRadius.bottomLeft,
+                                        bottomRight: config
+                                            .dropdownBorderRadius.bottomRight,
+                                        topLeft: Radius.zero,
+                                        topRight: Radius.zero,
+                                      )
                                     : null,
                                 child: Container(
                                   height: itemHeight,
                                   padding: itemPadding ?? config.itemPadding,
                                   decoration: BoxDecoration(
-                                    border: showDivider && index < items.length - 1
-                                        ? Border(
-                                      bottom: BorderSide(
-                                        color: dividerColor ?? config.dividerColor,
-                                        width: dividerThickness ?? config.dividerThickness,
-                                      ),
-                                    )
-                                        : null,
+                                    border:
+                                        showDivider && index < items.length - 1
+                                            ? Border(
+                                                bottom: BorderSide(
+                                                  color: dividerColor ??
+                                                      config.dividerColor,
+                                                  width: dividerThickness ??
+                                                      config.dividerThickness,
+                                                ),
+                                              )
+                                            : null,
                                   ),
                                   child: Row(
                                     children: [
-                                      if (config.selectionMode == SelectionMode.multiple ||
-                                          (config.selectionMode == SelectionMode.single &&
+                                      if (config.selectionMode ==
+                                              SelectionMode.multiple ||
+                                          (config.selectionMode ==
+                                                  SelectionMode.single &&
                                               config.showCheckmark))
                                         Padding(
-                                          padding: const EdgeInsets.only(right: 12),
-                                          child: buildSelectionIndicator(selected, config),
+                                          padding:
+                                              const EdgeInsets.only(right: 12),
+                                          child: buildSelectionIndicator(
+                                              selected, config),
                                         ),
                                       Expanded(
                                         child: DefaultTextStyle.merge(
                                           style: selected
-                                              ? selectedItemStyle ?? config.selectedItemStyle
+                                              ? selectedItemStyle ??
+                                                  config.selectedItemStyle
                                               : itemStyle ?? config.itemStyle,
                                           child: itemBuilder(item),
                                         ),

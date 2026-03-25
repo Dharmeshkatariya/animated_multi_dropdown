@@ -154,13 +154,14 @@ class FloatingCardsMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                                       },
                                       borderRadius: config.dropdownBorderRadius,
                                       child: Padding(
-                                        padding: itemPadding ?? config.itemPadding,
+                                        padding:
+                                            itemPadding ?? config.itemPadding,
                                         child: Row(
                                           children: [
                                             if (config.selectionMode ==
-                                                SelectionMode.multiple ||
+                                                    SelectionMode.multiple ||
                                                 (config.selectionMode ==
-                                                    SelectionMode.single &&
+                                                        SelectionMode.single &&
                                                     config.showCheckmark))
                                               Padding(
                                                 padding: const EdgeInsets.only(
@@ -175,8 +176,9 @@ class FloatingCardsMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                                               child: DefaultTextStyle.merge(
                                                 style: isSelected
                                                     ? selectedItemStyle ??
-                                                    config.selectedItemStyle
-                                                    : itemStyle ?? config.itemStyle,
+                                                        config.selectedItemStyle
+                                                    : itemStyle ??
+                                                        config.itemStyle,
                                                 child: itemBuilder(item),
                                               ),
                                             ),

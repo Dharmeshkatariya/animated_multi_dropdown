@@ -46,7 +46,8 @@ class CustomText extends StatelessWidget {
     this.isGradient = false,
     this.gradientColors,
     this.onTap,
-  }) : assert(text != null || child != null, 'Either text or child must be provided');
+  }) : assert(text != null || child != null,
+            'Either text or child must be provided');
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +67,8 @@ class CustomText extends StatelessWidget {
         style: style ?? AppTextStyles.bodyMedium,
         textAlign: textAlign,
         maxLines: maxLines,
-        overflow: textOverflow ?? (maxLines != null ? TextOverflow.ellipsis : null),
+        overflow:
+            textOverflow ?? (maxLines != null ? TextOverflow.ellipsis : null),
         textDirection: textDirection,
         softWrap: softWrap,
         semanticsLabel: semanticsLabel,
@@ -116,10 +118,10 @@ class CustomText extends StatelessWidget {
 // Predefined text styles for quick use
 class AppText {
   static Widget displayLarge(String text, {TextAlign? textAlign}) => CustomText(
-    text: text,
-    style: AppTextStyles.displayLarge,
-    textAlign: textAlign,
-  );
+        text: text,
+        style: AppTextStyles.displayLarge,
+        textAlign: textAlign,
+      );
 
   static Widget displayMedium(String text, {TextAlign? textAlign}) =>
       CustomText(
@@ -136,37 +138,37 @@ class AppText {
       );
 
   static Widget titleLarge(String text, {TextAlign? textAlign}) => CustomText(
-    text: text,
-    style: AppTextStyles.titleLarge,
-    textAlign: textAlign,
-  );
+        text: text,
+        style: AppTextStyles.titleLarge,
+        textAlign: textAlign,
+      );
 
   static Widget titleMedium(String text, {TextAlign? textAlign}) => CustomText(
-    text: text,
-    style: AppTextStyles.titleMedium,
-    textAlign: textAlign,
-  );
+        text: text,
+        style: AppTextStyles.titleMedium,
+        textAlign: textAlign,
+      );
 
   static Widget bodyLarge(String text, {TextAlign? textAlign}) => CustomText(
-    text: text,
-    style: AppTextStyles.bodyLarge,
-    textAlign: textAlign,
-  );
+        text: text,
+        style: AppTextStyles.bodyLarge,
+        textAlign: textAlign,
+      );
 
   static Widget bodyMedium(String text, {TextAlign? textAlign}) => CustomText(
-    text: text,
-    style: AppTextStyles.bodyMedium,
-    textAlign: textAlign,
-  );
+        text: text,
+        style: AppTextStyles.bodyMedium,
+        textAlign: textAlign,
+      );
 
   static Widget caption(String text, {TextAlign? textAlign}) => CustomText(
-    text: text,
-    style: AppTextStyles.caption,
-    textAlign: textAlign,
-  );
+        text: text,
+        style: AppTextStyles.caption,
+        textAlign: textAlign,
+      );
 
   static Widget fromWidget(Widget child, {TextStyle? style}) => CustomText(
-    style: style,
-    child: child,
-  );
+        style: style,
+        child: child,
+      );
 }

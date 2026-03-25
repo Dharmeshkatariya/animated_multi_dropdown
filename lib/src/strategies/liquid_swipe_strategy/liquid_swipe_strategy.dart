@@ -115,8 +115,10 @@ class LiquidSwipeMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                                 decoration: BoxDecoration(
                                   gradient: LinearGradient(
                                     colors: [
-                                      effectiveHighlightColor.withValuesOpacity(0.8),
-                                      effectiveHighlightColor.withValuesOpacity(0.5),
+                                      effectiveHighlightColor
+                                          .withValuesOpacity(0.8),
+                                      effectiveHighlightColor
+                                          .withValuesOpacity(0.5),
                                     ],
                                   ),
                                 ),
@@ -136,7 +138,8 @@ class LiquidSwipeMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                           ],
                           Expanded(child: displayValue),
                           const SizedBox(width: 8),
-                          _buildRotatingIcon(controller, config, effectiveHighlightColor, swipeAnimation),
+                          _buildRotatingIcon(controller, config,
+                              effectiveHighlightColor, swipeAnimation),
                         ],
                       ),
                     ),
@@ -164,10 +167,12 @@ class LiquidSwipeMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                           borderRadius: config.dropdownBorderRadius,
                           child: Container(
                             constraints: BoxConstraints(
-                              maxHeight: maxDropdownHeight ?? config.maxDropdownHeight,
+                              maxHeight:
+                                  maxDropdownHeight ?? config.maxDropdownHeight,
                             ),
                             width: dropdownWidth ?? config.dropdownWidth,
-                            color: dropdownBackgroundColor ?? config.backgroundColor,
+                            color: dropdownBackgroundColor ??
+                                config.backgroundColor,
                             child: Column(
                               children: [
                                 buildSearchField(config),
@@ -195,7 +200,8 @@ class LiquidSwipeMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                                       );
 
                                       return Transform(
-                                        transform: CustomMatrixUtils.staggerTransform(
+                                        transform:
+                                            CustomMatrixUtils.staggerTransform(
                                           progress: itemAnim.value,
                                           startY: 10,
                                           endY: 0,
@@ -217,45 +223,57 @@ class LiquidSwipeMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                                             },
                                             splashColor: effectiveHighlightColor
                                                 .withValuesOpacity(0.2),
-                                            highlightColor: effectiveHighlightColor
-                                                .withValuesOpacity(0.1),
+                                            highlightColor:
+                                                effectiveHighlightColor
+                                                    .withValuesOpacity(0.1),
                                             child: Container(
-                                              padding: itemPadding ?? config.itemPadding,
+                                              padding: itemPadding ??
+                                                  config.itemPadding,
                                               decoration: BoxDecoration(
-                                                border: index < items.length - 1 &&
-                                                    showDivider
-                                                    ? Border(
-                                                  bottom: BorderSide(
-                                                    color: dividerColor ??
-                                                        config.dividerColor,
-                                                    width: dividerThickness ??
-                                                        config.dividerThickness,
-                                                  ),
-                                                )
-                                                    : null,
+                                                border:
+                                                    index < items.length - 1 &&
+                                                            showDivider
+                                                        ? Border(
+                                                            bottom: BorderSide(
+                                                              color: dividerColor ??
+                                                                  config
+                                                                      .dividerColor,
+                                                              width: dividerThickness ??
+                                                                  config
+                                                                      .dividerThickness,
+                                                            ),
+                                                          )
+                                                        : null,
                                               ),
                                               child: Row(
                                                 children: [
                                                   if (config.selectionMode ==
-                                                      SelectionMode.multiple ||
+                                                          SelectionMode
+                                                              .multiple ||
                                                       (config.selectionMode ==
-                                                          SelectionMode.single &&
+                                                              SelectionMode
+                                                                  .single &&
                                                           config.showCheckmark))
                                                     Padding(
-                                                      padding: const EdgeInsets.only(
+                                                      padding:
+                                                          const EdgeInsets.only(
                                                         right: 12,
                                                       ),
-                                                      child: buildSelectionIndicator(
+                                                      child:
+                                                          buildSelectionIndicator(
                                                         isSelected,
                                                         config,
                                                       ),
                                                     ),
                                                   Expanded(
-                                                    child: DefaultTextStyle.merge(
+                                                    child:
+                                                        DefaultTextStyle.merge(
                                                       style: isSelected
                                                           ? selectedItemStyle ??
-                                                          config.selectedItemStyle
-                                                          : itemStyle ?? config.itemStyle,
+                                                              config
+                                                                  .selectedItemStyle
+                                                          : itemStyle ??
+                                                              config.itemStyle,
                                                       child: itemBuilder(item),
                                                     ),
                                                   ),
@@ -285,11 +303,11 @@ class LiquidSwipeMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
   }
 
   Widget _buildRotatingIcon(
-      AnimationController controller,
-      MultiDropDownConfig config,
-      Color color,
-      Animation<double> swipeAnimation,
-      ) {
+    AnimationController controller,
+    MultiDropDownConfig config,
+    Color color,
+    Animation<double> swipeAnimation,
+  ) {
     return RotationTransition(
       turns: Tween(begin: 0.0, end: 0.5).animate(
         CurvedAnimation(parent: controller, curve: Curves.easeInOutBack),

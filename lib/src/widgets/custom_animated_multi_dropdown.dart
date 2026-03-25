@@ -7,6 +7,7 @@ import '../models/dropdown_animation_type.dart';
 import '../models/multi_dropdown_config.dart';
 import '../models/selection_mode.dart';
 import '../strategies/multi_dropdown_animation_strategy.dart';
+
 class CustomAnimatedMultiDropDown<T> extends StatefulWidget {
   final DropdownAnimationType animationType;
   final List<T> items;
@@ -217,6 +218,7 @@ class _CustomAnimatedMultiDropDownState<T>
       return currentValue == item;
     }
   }
+
   Widget _buildSelectionIndicator(bool isSelected, MultiDropDownConfig config) {
     // Check for custom indicator first
     if (config.customCheckmark != null) {
@@ -271,9 +273,8 @@ class _CustomAnimatedMultiDropDownState<T>
       return const SizedBox.shrink();
     }
 
-    final selectedItems = _selectedValue.value is List<T>
-        ? _selectedValue.value as List<T>
-        : [];
+    final selectedItems =
+        _selectedValue.value is List<T> ? _selectedValue.value as List<T> : [];
 
     if (selectedItems.isEmpty) {
       return const SizedBox.shrink();
@@ -288,26 +289,26 @@ class _CustomAnimatedMultiDropDownState<T>
           return widget.chipBuilder != null
               ? widget.chipBuilder!(item)
               : Chip(
-            padding: widget.config.chipPadding,
-            backgroundColor: widget.config.chipColor ?? Colors.grey[200],
-            label: DefaultTextStyle.merge(
-              style: widget.config.chipLabelStyle ??
-                  const TextStyle(color: Colors.black),
-              child: widget.itemBuilder(item),
-            ),
-            shape: RoundedRectangleBorder(
-              borderRadius: widget.config.chipBorderRadius ??
-                  BorderRadius.circular(8),
-            ),
-            deleteIcon: widget.config.chipDeleteIcon ??
-                const Icon(Icons.close, size: 18),
-            onDeleted: () {
-              _handleItemSelection(item);
-              if (widget.config.enableHapticFeedback) {
-                HapticFeedback.lightImpact();
-              }
-            },
-          );
+                  padding: widget.config.chipPadding,
+                  backgroundColor: widget.config.chipColor ?? Colors.grey[200],
+                  label: DefaultTextStyle.merge(
+                    style: widget.config.chipLabelStyle ??
+                        const TextStyle(color: Colors.black),
+                    child: widget.itemBuilder(item),
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: widget.config.chipBorderRadius ??
+                        BorderRadius.circular(8),
+                  ),
+                  deleteIcon: widget.config.chipDeleteIcon ??
+                      const Icon(Icons.close, size: 18),
+                  onDeleted: () {
+                    _handleItemSelection(item);
+                    if (widget.config.enableHapticFeedback) {
+                      HapticFeedback.lightImpact();
+                    }
+                  },
+                );
         }).toList(),
       ),
     );
@@ -333,12 +334,12 @@ class _CustomAnimatedMultiDropDownState<T>
           prefixIcon: Icon(Icons.search, color: config.searchDecorationColor),
           suffixIcon: _searchController.text.isNotEmpty
               ? IconButton(
-            icon: Icon(Icons.clear, color: config.searchDecorationColor),
-            onPressed: () {
-              _searchController.clear();
-              _filterItems('');
-            },
-          )
+                  icon: Icon(Icons.clear, color: config.searchDecorationColor),
+                  onPressed: () {
+                    _searchController.clear();
+                    _filterItems('');
+                  },
+                )
               : null,
           filled: true,
           fillColor: config.searchBackgroundColor,
@@ -490,5 +491,3 @@ class _CustomAnimatedMultiDropDownState<T>
     super.dispose();
   }
 }
-
-

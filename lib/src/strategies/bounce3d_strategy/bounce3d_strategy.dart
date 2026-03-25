@@ -224,17 +224,18 @@ class MultiBounce3DDropdownStrategy<T> extends BaseDropDownStrategy<T> {
         decoration: BoxDecoration(
           border: index < totalItems - 1 && showDivider
               ? Border(
-            bottom: BorderSide(
-              color: dividerColor ?? config.dividerColor,
-              width: dividerThickness ?? config.dividerThickness,
-            ),
-          )
+                  bottom: BorderSide(
+                    color: dividerColor ?? config.dividerColor,
+                    width: dividerThickness ?? config.dividerThickness,
+                  ),
+                )
               : null,
         ),
         child: Row(
           children: [
             if (config.selectionMode == SelectionMode.multiple ||
-                (config.selectionMode == SelectionMode.single && config.showCheckmark))
+                (config.selectionMode == SelectionMode.single &&
+                    config.showCheckmark))
               Padding(
                 padding: const EdgeInsets.only(right: 12),
                 child: buildSelectionIndicator(isSelected, config),

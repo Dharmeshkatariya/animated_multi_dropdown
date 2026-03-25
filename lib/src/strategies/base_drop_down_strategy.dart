@@ -196,32 +196,32 @@ abstract class BaseDropDownStrategy<T>
               if (items.isEmpty && noDataBuilder != null)
                 Expanded(child: noDataBuilder())
               else
-              Expanded(
-                child: ListView.builder(
-                  padding: EdgeInsets.zero,
-                  shrinkWrap: true,
-                  itemCount: items.length,
-                  itemBuilder: (context, index) {
-                    final item = items[index];
-                    final selected = isItemSelected(item);
-                    return _buildDropdownItem(
-                      item: item,
-                      isSelected: selected,
-                      config: config,
-                      itemBuilder: itemBuilder,
-                      onTap: () => onChanged(item),
-                      itemPadding: itemPadding,
-                      selectedItemStyle: selectedItemStyle,
-                      itemStyle: itemStyle,
-                      showDivider: showDivider,
-                      dividerColor: dividerColor,
-                      dividerThickness: dividerThickness,
-                      index: index,
-                      totalItems: items.length,
-                    );
-                  },
+                Expanded(
+                  child: ListView.builder(
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    itemCount: items.length,
+                    itemBuilder: (context, index) {
+                      final item = items[index];
+                      final selected = isItemSelected(item);
+                      return _buildDropdownItem(
+                        item: item,
+                        isSelected: selected,
+                        config: config,
+                        itemBuilder: itemBuilder,
+                        onTap: () => onChanged(item),
+                        itemPadding: itemPadding,
+                        selectedItemStyle: selectedItemStyle,
+                        itemStyle: itemStyle,
+                        showDivider: showDivider,
+                        dividerColor: dividerColor,
+                        dividerThickness: dividerThickness,
+                        index: index,
+                        totalItems: items.length,
+                      );
+                    },
+                  ),
                 ),
-              ),
             ],
           ),
         ),

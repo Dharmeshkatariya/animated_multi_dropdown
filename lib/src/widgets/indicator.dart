@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_multi_dropdown/src/models/selection_mode.dart';
 import 'package:animated_multi_dropdown/src/utils/color_utils.dart';
+
 /// Type of selection indicator to display
 enum IndicatorType {
   // Checkbox styles
@@ -130,9 +131,9 @@ class IndicatorConfig {
     this.animateChanges = true,
     this.customBuilder,
   }) : assert(
-  type != IndicatorType.custom || customBuilder != null,
-  'Custom builder must be provided for custom indicator type',
-  );
+          type != IndicatorType.custom || customBuilder != null,
+          'Custom builder must be provided for custom indicator type',
+        );
 
   // ==================== FACTORY METHODS ====================
 
@@ -398,8 +399,6 @@ class IndicatorConfig {
   }
 }
 
-
-
 class IndicatorWidget extends StatelessWidget {
   final bool isSelected;
   final bool isEnabled;
@@ -423,8 +422,8 @@ class IndicatorWidget extends StatelessWidget {
     final effectiveColor = isEnabled
         ? (isSelected ? config.activeColor : config.inactiveColor)
         : (isSelected
-        ? config.activeColor.withValuesOpacity(0.5)
-        : config.inactiveColor.withValuesOpacity(0.5));
+            ? config.activeColor.withValuesOpacity(0.5)
+            : config.inactiveColor.withValuesOpacity(0.5));
 
     final isRadioStyle = config.isRadio ||
         config.type.toString().contains('radio') ||
@@ -596,12 +595,12 @@ class IndicatorWidget extends StatelessWidget {
       ),
       child: isSelected
           ? Center(
-        child: Icon(
-          Icons.check,
-          size: config.size * 0.7,
-          color: Colors.white,
-        ),
-      )
+              child: Icon(
+                Icons.check,
+                size: config.size * 0.7,
+                color: Colors.white,
+              ),
+            )
           : null,
     );
   }
@@ -646,10 +645,10 @@ class IndicatorWidget extends StatelessWidget {
       ),
       child: isSelected
           ? Icon(
-        Icons.check,
-        size: config.size * 0.7,
-        color: color,
-      )
+              Icons.check,
+              size: config.size * 0.7,
+              color: color,
+            )
           : null,
     );
   }
@@ -715,10 +714,10 @@ class IndicatorWidget extends StatelessWidget {
         shape: BoxShape.circle,
         gradient: isSelected && config.gradientColors != null
             ? LinearGradient(
-          colors: config.gradientColors!,
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        )
+                colors: config.gradientColors!,
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              )
             : null,
         color: isSelected ? null : config.inactiveColor,
         border: Border.all(
@@ -765,10 +764,10 @@ class IndicatorWidget extends StatelessWidget {
       ),
       child: isSelected
           ? Icon(
-        Icons.check,
-        size: config.size * 0.6,
-        color: color,
-      )
+              Icons.check,
+              size: config.size * 0.6,
+              color: color,
+            )
           : null,
     );
   }
@@ -812,6 +811,7 @@ class IndicatorWidget extends StatelessWidget {
       ),
     );
   }
+
   // Switch style
   Widget _buildSwitchIndicator(Color color) {
     return AnimatedContainer(
@@ -892,11 +892,11 @@ class IndicatorWidget extends StatelessWidget {
 }
 
 typedef IndicatorBuilder = Widget Function(
-    BuildContext context,
-    bool isSelected,
-    bool isEnabled,
-    IndicatorConfig config,
-    );
+  BuildContext context,
+  bool isSelected,
+  bool isEnabled,
+  IndicatorConfig config,
+);
 
 class CustomIndicator extends StatelessWidget {
   final bool isSelected;
@@ -926,8 +926,6 @@ class CustomIndicator extends StatelessWidget {
         );
   }
 }
-
-
 
 class IndicatorPresets {
   /// Classic checkbox indicator

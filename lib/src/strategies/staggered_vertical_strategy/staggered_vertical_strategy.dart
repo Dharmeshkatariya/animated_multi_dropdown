@@ -7,7 +7,8 @@ import '../../models/selection_mode.dart';
 import '../../utils/custom_matrix_utils.dart';
 import '../base_drop_down_strategy.dart';
 
-class StaggeredVerticalMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
+class StaggeredVerticalMultiDropdownStrategy<T>
+    extends BaseDropDownStrategy<T> {
   @override
   Widget buildDropdown({
     required BuildContext context,
@@ -131,7 +132,8 @@ class StaggeredVerticalMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> 
                               },
                               child: Container(
                                 constraints: BoxConstraints(
-                                  minWidth: dropdownWidth ?? config.selectorWidth,
+                                  minWidth:
+                                      dropdownWidth ?? config.selectorWidth,
                                 ),
                                 padding: itemPadding ?? config.itemPadding,
                                 decoration: BoxDecoration(
@@ -146,7 +148,8 @@ class StaggeredVerticalMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> 
                                   ),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.black.withValuesOpacity(0.05),
+                                      color:
+                                          Colors.black.withValuesOpacity(0.05),
                                       blurRadius: 5,
                                       spreadRadius: 1,
                                     ),
@@ -156,12 +159,13 @@ class StaggeredVerticalMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> 
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     if (config.selectionMode ==
-                                        SelectionMode.multiple ||
+                                            SelectionMode.multiple ||
                                         (config.selectionMode ==
-                                            SelectionMode.single &&
+                                                SelectionMode.single &&
                                             config.showCheckmark))
                                       Padding(
-                                        padding: const EdgeInsets.only(right: 12),
+                                        padding:
+                                            const EdgeInsets.only(right: 12),
                                         child: buildSelectionIndicator(
                                           selected,
                                           config,
@@ -170,7 +174,8 @@ class StaggeredVerticalMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> 
                                     Expanded(
                                       child: DefaultTextStyle.merge(
                                         style: selected
-                                            ? selectedItemStyle ?? config.selectedItemStyle
+                                            ? selectedItemStyle ??
+                                                config.selectedItemStyle
                                             : itemStyle ?? config.itemStyle,
                                         child: itemBuilder(item),
                                       ),

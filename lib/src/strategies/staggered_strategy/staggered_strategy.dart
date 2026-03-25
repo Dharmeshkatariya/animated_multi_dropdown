@@ -143,7 +143,8 @@ class StaggeredMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                                   ),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.black.withValuesOpacity(0.05),
+                                      color:
+                                          Colors.black.withValuesOpacity(0.05),
                                       blurRadius: 5,
                                       spreadRadius: 1,
                                     ),
@@ -153,12 +154,13 @@ class StaggeredMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     if (config.selectionMode ==
-                                        SelectionMode.multiple ||
+                                            SelectionMode.multiple ||
                                         (config.selectionMode ==
-                                            SelectionMode.single &&
+                                                SelectionMode.single &&
                                             config.showCheckmark))
                                       Padding(
-                                        padding: const EdgeInsets.only(right: 12),
+                                        padding:
+                                            const EdgeInsets.only(right: 12),
                                         child: buildSelectionIndicator(
                                           selected,
                                           config,
@@ -166,7 +168,8 @@ class StaggeredMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                                       ),
                                     DefaultTextStyle.merge(
                                       style: selected
-                                          ? selectedItemStyle ?? config.selectedItemStyle
+                                          ? selectedItemStyle ??
+                                              config.selectedItemStyle
                                           : itemStyle ?? config.itemStyle,
                                       child: itemBuilder(item),
                                     ),

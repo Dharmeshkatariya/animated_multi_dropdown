@@ -124,7 +124,9 @@ class MultiLiquidDropdownStrategy<T> extends BaseDropDownStrategy<T> {
             elevation: elevation,
             customDecoration: BoxDecoration(
               gradient: LinearGradient(
-                colors: config.gradientColors.map((c) => c.withValuesOpacity(0.8)).toList(),
+                colors: config.gradientColors
+                    .map((c) => c.withValuesOpacity(0.8))
+                    .toList(),
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),

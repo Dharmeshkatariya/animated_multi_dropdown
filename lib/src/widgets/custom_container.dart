@@ -65,7 +65,8 @@ class CustomContainer extends StatelessWidget {
       clipBehavior: clipBehavior,
       decoration: BoxDecoration(
         color: isGlass ? null : (color ?? AppColors.white),
-        border: border ?? (borderColor != null ? Border.all(color: borderColor!) : null),
+        border: border ??
+            (borderColor != null ? Border.all(color: borderColor!) : null),
         borderRadius: borderRadius ?? BorderRadius.circular(16),
         boxShadow: boxShadow ?? (isGlass ? AppShadows.glass : null),
         gradient: gradient,

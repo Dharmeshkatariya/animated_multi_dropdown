@@ -141,10 +141,12 @@ class GravityWellMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                           borderRadius: config.dropdownBorderRadius,
                           child: Container(
                             constraints: BoxConstraints(
-                              maxHeight: maxDropdownHeight ?? config.maxDropdownHeight,
+                              maxHeight:
+                                  maxDropdownHeight ?? config.maxDropdownHeight,
                             ),
                             width: dropdownWidth ?? config.dropdownWidth,
-                            color: dropdownBackgroundColor ?? config.backgroundColor,
+                            color: dropdownBackgroundColor ??
+                                config.backgroundColor,
                             child: Column(
                               children: [
                                 buildSearchField(config),
@@ -172,7 +174,8 @@ class GravityWellMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                                       );
 
                                       return Transform(
-                                        transform: CustomMatrixUtils.staggerTransform(
+                                        transform:
+                                            CustomMatrixUtils.staggerTransform(
                                           progress: itemAnim.value,
                                           startY: 10,
                                           endY: 0,
@@ -194,45 +197,57 @@ class GravityWellMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                                             },
                                             splashColor: config.highlightColor
                                                 .withValuesOpacity(0.2),
-                                            highlightColor: config.highlightColor
+                                            highlightColor: config
+                                                .highlightColor
                                                 .withValuesOpacity(0.1),
                                             child: Container(
-                                              padding: itemPadding ?? config.itemPadding,
+                                              padding: itemPadding ??
+                                                  config.itemPadding,
                                               decoration: BoxDecoration(
-                                                border: index < items.length - 1 &&
-                                                    showDivider
-                                                    ? Border(
-                                                  bottom: BorderSide(
-                                                    color: dividerColor ??
-                                                        config.dividerColor,
-                                                    width: dividerThickness ??
-                                                        config.dividerThickness,
-                                                  ),
-                                                )
-                                                    : null,
+                                                border:
+                                                    index < items.length - 1 &&
+                                                            showDivider
+                                                        ? Border(
+                                                            bottom: BorderSide(
+                                                              color: dividerColor ??
+                                                                  config
+                                                                      .dividerColor,
+                                                              width: dividerThickness ??
+                                                                  config
+                                                                      .dividerThickness,
+                                                            ),
+                                                          )
+                                                        : null,
                                               ),
                                               child: Row(
                                                 children: [
                                                   if (config.selectionMode ==
-                                                      SelectionMode.multiple ||
+                                                          SelectionMode
+                                                              .multiple ||
                                                       (config.selectionMode ==
-                                                          SelectionMode.single &&
+                                                              SelectionMode
+                                                                  .single &&
                                                           config.showCheckmark))
                                                     Padding(
-                                                      padding: const EdgeInsets.only(
+                                                      padding:
+                                                          const EdgeInsets.only(
                                                         right: 12,
                                                       ),
-                                                      child: buildSelectionIndicator(
+                                                      child:
+                                                          buildSelectionIndicator(
                                                         selected,
                                                         config,
                                                       ),
                                                     ),
                                                   Expanded(
-                                                    child: DefaultTextStyle.merge(
+                                                    child:
+                                                        DefaultTextStyle.merge(
                                                       style: selected
                                                           ? selectedItemStyle ??
-                                                          config.selectedItemStyle
-                                                          : itemStyle ?? config.itemStyle,
+                                                              config
+                                                                  .selectedItemStyle
+                                                          : itemStyle ??
+                                                              config.itemStyle,
                                                       child: itemBuilder(item),
                                                     ),
                                                   ),
@@ -261,7 +276,8 @@ class GravityWellMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
     );
   }
 
-  Widget _buildRotatingIcon(AnimationController controller, MultiDropDownConfig config) {
+  Widget _buildRotatingIcon(
+      AnimationController controller, MultiDropDownConfig config) {
     return RotationTransition(
       turns: Tween(begin: 0.0, end: 0.5).animate(
         CurvedAnimation(parent: controller, curve: Curves.easeInOutBack),

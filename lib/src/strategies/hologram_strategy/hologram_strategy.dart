@@ -128,7 +128,8 @@ class HologramMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                         const SizedBox(width: 8),
                       ],
                       Expanded(child: displayValue),
-                      _buildRotatingIcon(controller, config, effectiveHighlightColor),
+                      _buildRotatingIcon(
+                          controller, config, effectiveHighlightColor),
                     ],
                   ),
                 ),
@@ -160,13 +161,15 @@ class HologramMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                             child: Container(
                               width: dropdownWidth ?? config.dropdownWidth,
                               constraints: BoxConstraints(
-                                maxHeight: maxDropdownHeight ?? config.maxDropdownHeight,
+                                maxHeight: maxDropdownHeight ??
+                                    config.maxDropdownHeight,
                               ),
                               decoration: BoxDecoration(
                                 color: dropdownBackgroundColor ??
                                     Colors.black.withValuesOpacity(0.5),
                                 border: Border.all(
-                                  color: effectiveHighlightColor.withValuesOpacity(0.3),
+                                  color: effectiveHighlightColor
+                                      .withValuesOpacity(0.3),
                                   width: 1,
                                 ),
                               ),
@@ -182,7 +185,8 @@ class HologramMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                                         itemCount: items.length,
                                         itemBuilder: (context, index) {
                                           final item = items[index];
-                                          final isSelected = isItemSelected(item);
+                                          final isSelected =
+                                              isItemSelected(item);
                                           final delay = index * 0.05;
                                           final itemAnim = Tween(
                                             begin: 0.0,
@@ -201,7 +205,8 @@ class HologramMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                                           return FadeTransition(
                                             opacity: itemAnim,
                                             child: Transform(
-                                              transform: CustomMatrixUtils.staggerTransform(
+                                              transform: CustomMatrixUtils
+                                                  .staggerTransform(
                                                 progress: itemAnim.value,
                                                 startY: 10,
                                                 endY: 0,
@@ -212,8 +217,10 @@ class HologramMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                                                 color: Colors.transparent,
                                                 child: InkWell(
                                                   onTap: () {
-                                                    if (config.enableHapticFeedback) {
-                                                      HapticFeedback.lightImpact();
+                                                    if (config
+                                                        .enableHapticFeedback) {
+                                                      HapticFeedback
+                                                          .lightImpact();
                                                     }
                                                     onChanged(item);
                                                     if (config.selectionMode ==
@@ -222,51 +229,74 @@ class HologramMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                                                     }
                                                   },
                                                   splashColor:
-                                                  effectiveHighlightColor.withValuesOpacity(0.2),
+                                                      effectiveHighlightColor
+                                                          .withValuesOpacity(
+                                                              0.2),
                                                   highlightColor:
-                                                  effectiveHighlightColor.withValuesOpacity(0.1),
+                                                      effectiveHighlightColor
+                                                          .withValuesOpacity(
+                                                              0.1),
                                                   child: Container(
-                                                    padding: itemPadding ?? config.itemPadding,
+                                                    padding: itemPadding ??
+                                                        config.itemPadding,
                                                     decoration: BoxDecoration(
-                                                      border: index < items.length - 1 &&
-                                                          showDivider
+                                                      border: index <
+                                                                  items.length -
+                                                                      1 &&
+                                                              showDivider
                                                           ? Border(
-                                                        bottom: BorderSide(
-                                                          color: dividerColor ??
-                                                              effectiveHighlightColor
-                                                                  .withValuesOpacity(0.1),
-                                                          width: dividerThickness ??
-                                                              config.dividerThickness,
-                                                        ),
-                                                      )
+                                                              bottom:
+                                                                  BorderSide(
+                                                                color: dividerColor ??
+                                                                    effectiveHighlightColor
+                                                                        .withValuesOpacity(
+                                                                            0.1),
+                                                                width: dividerThickness ??
+                                                                    config
+                                                                        .dividerThickness,
+                                                              ),
+                                                            )
                                                           : null,
                                                     ),
                                                     child: Row(
                                                       children: [
                                                         if (config.selectionMode ==
-                                                            SelectionMode.multiple ||
+                                                                SelectionMode
+                                                                    .multiple ||
                                                             (config.selectionMode ==
-                                                                SelectionMode.single &&
-                                                                config.showCheckmark))
+                                                                    SelectionMode
+                                                                        .single &&
+                                                                config
+                                                                    .showCheckmark))
                                                           Padding(
-                                                            padding: const EdgeInsets.only(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .only(
                                                               right: 12,
                                                             ),
-                                                            child: buildSelectionIndicator(
+                                                            child:
+                                                                buildSelectionIndicator(
                                                               isSelected,
                                                               config,
                                                             ),
                                                           ),
                                                         Expanded(
-                                                          child: DefaultTextStyle.merge(
+                                                          child:
+                                                              DefaultTextStyle
+                                                                  .merge(
                                                             style: (isSelected
-                                                                ? selectedItemStyle ??
-                                                                config.selectedItemStyle
-                                                                : itemStyle ?? config.itemStyle)
+                                                                    ? selectedItemStyle ??
+                                                                        config
+                                                                            .selectedItemStyle
+                                                                    : itemStyle ??
+                                                                        config
+                                                                            .itemStyle)
                                                                 .copyWith(
-                                                              color: Colors.white,
+                                                              color:
+                                                                  Colors.white,
                                                             ),
-                                                            child: itemBuilder(item),
+                                                            child: itemBuilder(
+                                                                item),
                                                           ),
                                                         ),
                                                       ],
@@ -298,10 +328,10 @@ class HologramMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
   }
 
   Widget _buildRotatingIcon(
-      AnimationController controller,
-      MultiDropDownConfig config,
-      Color color,
-      ) {
+    AnimationController controller,
+    MultiDropDownConfig config,
+    Color color,
+  ) {
     return RotationTransition(
       turns: Tween(begin: 0.0, end: 0.5).animate(
         CurvedAnimation(parent: controller, curve: Curves.easeInOutBack),

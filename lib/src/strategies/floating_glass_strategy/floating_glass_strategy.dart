@@ -175,18 +175,22 @@ class FloatingGlassMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                     child: Container(
                       width: dropdownWidth ?? config.dropdownWidth,
                       constraints: BoxConstraints(
-                        maxHeight: maxDropdownHeight ?? config.maxDropdownHeight,
+                        maxHeight:
+                            maxDropdownHeight ?? config.maxDropdownHeight,
                       ),
                       decoration: BoxDecoration(
-                        color: glassColor.withValuesOpacity(0.7 * floatAnim.value),
+                        color:
+                            glassColor.withValuesOpacity(0.7 * floatAnim.value),
                         border: Border.all(
-                          color: Colors.white.withValuesOpacity(0.3 * floatAnim.value),
+                          color: Colors.white
+                              .withValuesOpacity(0.3 * floatAnim.value),
                           width: 1,
                         ),
                         borderRadius: config.dropdownBorderRadius,
                         boxShadow: [
                           BoxShadow(
-                            color: effectiveHighlightColor.withValuesOpacity(0.2 * floatAnim.value),
+                            color: effectiveHighlightColor
+                                .withValuesOpacity(0.2 * floatAnim.value),
                             blurRadius: 30,
                             spreadRadius: 1,
                           ),
@@ -240,34 +244,46 @@ class FloatingGlassMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                                               onToggle();
                                             }
                                           },
-                                          splashColor: Colors.white.withValuesOpacity(0.15),
-                                          highlightColor: Colors.white.withValuesOpacity(0.08),
+                                          splashColor: Colors.white
+                                              .withValuesOpacity(0.15),
+                                          highlightColor: Colors.white
+                                              .withValuesOpacity(0.08),
                                           child: Container(
-                                            padding: itemPadding ?? config.itemPadding,
+                                            padding: itemPadding ??
+                                                config.itemPadding,
                                             decoration: BoxDecoration(
-                                              border: index < items.length - 1 && showDivider
-                                                  ? Border(
-                                                bottom: BorderSide(
-                                                  color: dividerColor ??
-                                                      Colors.white.withValuesOpacity(0.1),
-                                                  width: dividerThickness ??
-                                                      config.dividerThickness,
-                                                ),
-                                              )
-                                                  : null,
+                                              border:
+                                                  index < items.length - 1 &&
+                                                          showDivider
+                                                      ? Border(
+                                                          bottom: BorderSide(
+                                                            color: dividerColor ??
+                                                                Colors.white
+                                                                    .withValuesOpacity(
+                                                                        0.1),
+                                                            width: dividerThickness ??
+                                                                config
+                                                                    .dividerThickness,
+                                                          ),
+                                                        )
+                                                      : null,
                                             ),
                                             child: Row(
                                               children: [
                                                 if (config.selectionMode ==
-                                                    SelectionMode.multiple ||
+                                                        SelectionMode
+                                                            .multiple ||
                                                     (config.selectionMode ==
-                                                        SelectionMode.single &&
+                                                            SelectionMode
+                                                                .single &&
                                                         config.showCheckmark))
                                                   Padding(
-                                                    padding: const EdgeInsets.only(
+                                                    padding:
+                                                        const EdgeInsets.only(
                                                       right: 12,
                                                     ),
-                                                    child: buildSelectionIndicator(
+                                                    child:
+                                                        buildSelectionIndicator(
                                                       isSelected,
                                                       config,
                                                     ),
@@ -275,11 +291,16 @@ class FloatingGlassMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                                                 Expanded(
                                                   child: DefaultTextStyle.merge(
                                                     style: (isSelected
-                                                        ? selectedItemStyle ??
-                                                        config.selectedItemStyle
-                                                        : itemStyle ?? config.itemStyle)
+                                                            ? selectedItemStyle ??
+                                                                config
+                                                                    .selectedItemStyle
+                                                            : itemStyle ??
+                                                                config
+                                                                    .itemStyle)
                                                         .copyWith(
-                                                      color: Colors.white.withValuesOpacity(0.95),
+                                                      color: Colors.white
+                                                          .withValuesOpacity(
+                                                              0.95),
                                                     ),
                                                     child: itemBuilder(item),
                                                   ),

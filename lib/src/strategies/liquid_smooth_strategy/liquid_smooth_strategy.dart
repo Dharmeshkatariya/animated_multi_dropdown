@@ -166,18 +166,22 @@ class LiquidSmoothMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                           child: Container(
                             width: dropdownWidth ?? config.dropdownWidth,
                             constraints: BoxConstraints(
-                              maxHeight: maxDropdownHeight ?? config.maxDropdownHeight,
+                              maxHeight:
+                                  maxDropdownHeight ?? config.maxDropdownHeight,
                             ),
                             decoration: BoxDecoration(
-                              color: effectiveHighlightColor.withValuesOpacity(0.2),
+                              color: effectiveHighlightColor
+                                  .withValuesOpacity(0.2),
                               border: Border.all(
-                                color: Colors.white.withValuesOpacity(progress * 0.3),
+                                color: Colors.white
+                                    .withValuesOpacity(progress * 0.3),
                                 width: 1,
                               ),
                               borderRadius: config.dropdownBorderRadius,
                               boxShadow: [
                                 BoxShadow(
-                                  color: effectiveHighlightColor.withValuesOpacity(0.2 * progress),
+                                  color: effectiveHighlightColor
+                                      .withValuesOpacity(0.2 * progress),
                                   blurRadius: 30,
                                   spreadRadius: 1,
                                 ),
@@ -215,9 +219,11 @@ class LiquidSmoothMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                                         return AnimatedBuilder(
                                           animation: itemAnim,
                                           builder: (context, _) {
-                                            final itemProgress = itemAnim.value.clamp(0.0, 1.0);
+                                            final itemProgress =
+                                                itemAnim.value.clamp(0.0, 1.0);
                                             return Transform(
-                                              transform: CustomMatrixUtils.staggerTransform(
+                                              transform: CustomMatrixUtils
+                                                  .staggerTransform(
                                                 progress: itemProgress,
                                                 startY: 20,
                                                 endY: 0,
@@ -230,63 +236,90 @@ class LiquidSmoothMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                                                   color: Colors.transparent,
                                                   child: InkWell(
                                                     onTap: () {
-                                                      if (config.enableHapticFeedback) {
-                                                        HapticFeedback.lightImpact();
+                                                      if (config
+                                                          .enableHapticFeedback) {
+                                                        HapticFeedback
+                                                            .lightImpact();
                                                       }
                                                       onChanged(item);
-                                                      if (config.selectionMode ==
-                                                          SelectionMode.single) {
+                                                      if (config
+                                                              .selectionMode ==
+                                                          SelectionMode
+                                                              .single) {
                                                         onToggle();
                                                       }
                                                     },
-                                                    splashColor:
-                                                    Colors.white.withValuesOpacity(0.15),
-                                                    highlightColor:
-                                                    Colors.white.withValuesOpacity(0.08),
+                                                    splashColor: Colors.white
+                                                        .withValuesOpacity(
+                                                            0.15),
+                                                    highlightColor: Colors.white
+                                                        .withValuesOpacity(
+                                                            0.08),
                                                     child: Container(
-                                                      padding: itemPadding ?? config.itemPadding,
+                                                      padding: itemPadding ??
+                                                          config.itemPadding,
                                                       decoration: BoxDecoration(
-                                                        border: index < items.length - 1 &&
-                                                            showDivider
+                                                        border: index <
+                                                                    items.length -
+                                                                        1 &&
+                                                                showDivider
                                                             ? Border(
-                                                          bottom: BorderSide(
-                                                            color: dividerColor ??
-                                                                Colors.white
-                                                                    .withValuesOpacity(0.15),
-                                                            width: dividerThickness ??
-                                                                config.dividerThickness,
-                                                          ),
-                                                        )
+                                                                bottom:
+                                                                    BorderSide(
+                                                                  color: dividerColor ??
+                                                                      Colors
+                                                                          .white
+                                                                          .withValuesOpacity(
+                                                                              0.15),
+                                                                  width: dividerThickness ??
+                                                                      config
+                                                                          .dividerThickness,
+                                                                ),
+                                                              )
                                                             : null,
                                                       ),
                                                       child: Row(
                                                         children: [
                                                           if (config.selectionMode ==
-                                                              SelectionMode.multiple ||
+                                                                  SelectionMode
+                                                                      .multiple ||
                                                               (config.selectionMode ==
-                                                                  SelectionMode.single &&
-                                                                  config.showCheckmark))
+                                                                      SelectionMode
+                                                                          .single &&
+                                                                  config
+                                                                      .showCheckmark))
                                                             Padding(
-                                                              padding: const EdgeInsets.only(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .only(
                                                                 right: 12,
                                                               ),
-                                                              child: buildSelectionIndicator(
+                                                              child:
+                                                                  buildSelectionIndicator(
                                                                 isSelected,
                                                                 config,
                                                               ),
                                                             ),
                                                           Expanded(
-                                                            child: DefaultTextStyle.merge(
+                                                            child:
+                                                                DefaultTextStyle
+                                                                    .merge(
                                                               style: (isSelected
-                                                                  ? selectedItemStyle ??
-                                                                  config.selectedItemStyle
-                                                                  : itemStyle ??
-                                                                  config.itemStyle)
+                                                                      ? selectedItemStyle ??
+                                                                          config
+                                                                              .selectedItemStyle
+                                                                      : itemStyle ??
+                                                                          config
+                                                                              .itemStyle)
                                                                   .copyWith(
-                                                                color: Colors.white
-                                                                    .withValuesOpacity(0.95),
+                                                                color: Colors
+                                                                    .white
+                                                                    .withValuesOpacity(
+                                                                        0.95),
                                                               ),
-                                                              child: itemBuilder(item),
+                                                              child:
+                                                                  itemBuilder(
+                                                                      item),
                                                             ),
                                                           ),
                                                         ],

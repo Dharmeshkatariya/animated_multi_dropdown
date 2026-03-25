@@ -110,7 +110,8 @@ class FluidWaveMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                               alignment: Alignment.bottomCenter,
                               heightFactor: waveAnimation.value,
                               child: Container(
-                                color: config.highlightColor.withValuesOpacity(0.1),
+                                color: config.highlightColor
+                                    .withValuesOpacity(0.1),
                               ),
                             ),
                           ),
@@ -148,7 +149,8 @@ class FluidWaveMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                     child: Container(
                       width: dropdownWidth ?? config.dropdownWidth,
                       decoration: BoxDecoration(
-                        color: dropdownBackgroundColor ?? config.backgroundColor,
+                        color:
+                            dropdownBackgroundColor ?? config.backgroundColor,
                         boxShadow: shadows ?? config.shadows,
                       ),
                       child: Column(
@@ -193,7 +195,8 @@ class FluidWaveMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
     );
   }
 
-  Widget _buildRotatingIcon(AnimationController controller, MultiDropDownConfig config) {
+  Widget _buildRotatingIcon(
+      AnimationController controller, MultiDropDownConfig config) {
     return RotationTransition(
       turns: Tween(begin: 0.0, end: 0.5).animate(
         CurvedAnimation(parent: controller, curve: Curves.easeInOutBack),
@@ -229,17 +232,18 @@ class FluidWaveMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
         decoration: BoxDecoration(
           border: showDivider && index < totalItems - 1
               ? Border(
-            bottom: BorderSide(
-              color: dividerColor ?? config.dividerColor,
-              width: dividerThickness ?? config.dividerThickness,
-            ),
-          )
+                  bottom: BorderSide(
+                    color: dividerColor ?? config.dividerColor,
+                    width: dividerThickness ?? config.dividerThickness,
+                  ),
+                )
               : null,
         ),
         child: Row(
           children: [
             if (config.selectionMode == SelectionMode.multiple ||
-                (config.selectionMode == SelectionMode.single && config.showCheckmark))
+                (config.selectionMode == SelectionMode.single &&
+                    config.showCheckmark))
               Padding(
                 padding: const EdgeInsets.only(right: 12),
                 child: buildSelectionIndicator(isSelected, config),
@@ -257,5 +261,4 @@ class FluidWaveMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
       ),
     );
   }
-
 }

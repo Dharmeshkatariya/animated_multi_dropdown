@@ -61,11 +61,26 @@ class AppColors {
   static const List<Color> warningGradient = [warning, warningLight];
   static const List<Color> errorGradient = [error, errorLight];
   static const List<Color> infoGradient = [info, infoLight];
-  static const List<Color> cyberGradient = [Color(0xFFEC4899), Color(0xFF06B6D4)];
-  static const List<Color> sunsetGradient = [Color(0xFFF59E0B), Color(0xFFEF4444)];
-  static const List<Color> oceanGradient = [Color(0xFF06B6D4), Color(0xFF3B82F6)];
-  static const List<Color> forestGradient = [Color(0xFF10B981), Color(0xFF3B82F6)];
-  static const List<Color> midnightGradient = [Color(0xFF6366F1), Color(0xFF8B5CF6)];
+  static const List<Color> cyberGradient = [
+    Color(0xFFEC4899),
+    Color(0xFF06B6D4)
+  ];
+  static const List<Color> sunsetGradient = [
+    Color(0xFFF59E0B),
+    Color(0xFFEF4444)
+  ];
+  static const List<Color> oceanGradient = [
+    Color(0xFF06B6D4),
+    Color(0xFF3B82F6)
+  ];
+  static const List<Color> forestGradient = [
+    Color(0xFF10B981),
+    Color(0xFF3B82F6)
+  ];
+  static const List<Color> midnightGradient = [
+    Color(0xFF6366F1),
+    Color(0xFF8B5CF6)
+  ];
 }
 
 class AppShadows {
@@ -110,15 +125,15 @@ class AppShadows {
   ];
 
   static List<BoxShadow> neon(Color color) => [
-    BoxShadow(
-      color: color.withValues(alpha: 0.5),
-      blurRadius: 10,
-      spreadRadius: 2,
-    ),
-    BoxShadow(
-      color: color.withValues(alpha: 0.3),
-      blurRadius: 20,
-      spreadRadius: 1,
-    ),
-  ];
+        BoxShadow(
+          color: color.withValues(alpha: 0.5),
+          blurRadius: 10,
+          spreadRadius: 2,
+        ),
+        BoxShadow(
+          color: color.withValues(alpha: 0.3),
+          blurRadius: 20,
+          spreadRadius: 1,
+        ),
+      ];
 }

@@ -186,34 +186,44 @@ class LiquidMetalMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                                             onToggle();
                                           }
                                         },
-                                        splashColor: Colors.white.withValuesOpacity(0.2),
-                                        highlightColor: Colors.white.withValuesOpacity(0.1),
+                                        splashColor:
+                                            Colors.white.withValuesOpacity(0.2),
+                                        highlightColor:
+                                            Colors.white.withValuesOpacity(0.1),
                                         child: Container(
-                                          padding: itemPadding ?? config.itemPadding,
+                                          padding:
+                                              itemPadding ?? config.itemPadding,
                                           decoration: BoxDecoration(
-                                            border: index < items.length - 1 && showDivider
+                                            border: index < items.length - 1 &&
+                                                    showDivider
                                                 ? Border(
-                                              bottom: BorderSide(
-                                                color: dividerColor ??
-                                                    Colors.white.withValuesOpacity(0.2),
-                                                width: dividerThickness ??
-                                                    config.dividerThickness,
-                                              ),
-                                            )
+                                                    bottom: BorderSide(
+                                                      color: dividerColor ??
+                                                          Colors.white
+                                                              .withValuesOpacity(
+                                                                  0.2),
+                                                      width: dividerThickness ??
+                                                          config
+                                                              .dividerThickness,
+                                                    ),
+                                                  )
                                                 : null,
                                           ),
                                           child: Row(
                                             children: [
                                               if (config.selectionMode ==
-                                                  SelectionMode.multiple ||
+                                                      SelectionMode.multiple ||
                                                   (config.selectionMode ==
-                                                      SelectionMode.single &&
+                                                          SelectionMode
+                                                              .single &&
                                                       config.showCheckmark))
                                                 Padding(
-                                                  padding: const EdgeInsets.only(
+                                                  padding:
+                                                      const EdgeInsets.only(
                                                     right: 12,
                                                   ),
-                                                  child: buildSelectionIndicator(
+                                                  child:
+                                                      buildSelectionIndicator(
                                                     isSelected,
                                                     config,
                                                   ),
@@ -221,9 +231,11 @@ class LiquidMetalMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                                               Expanded(
                                                 child: DefaultTextStyle.merge(
                                                   style: (isSelected
-                                                      ? selectedItemStyle ??
-                                                      config.selectedItemStyle
-                                                      : itemStyle ?? config.itemStyle)
+                                                          ? selectedItemStyle ??
+                                                              config
+                                                                  .selectedItemStyle
+                                                          : itemStyle ??
+                                                              config.itemStyle)
                                                       .copyWith(
                                                     color: Colors.white,
                                                   ),
@@ -258,7 +270,8 @@ class LiquidMetalMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
     );
   }
 
-  Widget _buildRotatingIcon(AnimationController controller, MultiDropDownConfig config) {
+  Widget _buildRotatingIcon(
+      AnimationController controller, MultiDropDownConfig config) {
     return RotationTransition(
       turns: Tween(begin: 0.0, end: 0.5).animate(
         CurvedAnimation(parent: controller, curve: Curves.easeInOutBack),

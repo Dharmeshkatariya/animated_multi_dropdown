@@ -26,7 +26,8 @@ mixin GlassEffectMixin<T> on BaseDropDownStrategy<T> {
 
 /// Mixin for wave animation effects
 mixin WaveEffectMixin<T> on BaseDropDownStrategy<T> {
-  Animation<double> createWaveAnimation(AnimationController controller, MultiDropDownConfig config) {
+  Animation<double> createWaveAnimation(
+      AnimationController controller, MultiDropDownConfig config) {
     return TweenSequence<double>([
       TweenSequenceItem(tween: Tween(begin: 0, end: 1.5), weight: 1),
       TweenSequenceItem(tween: Tween(begin: 1.5, end: 1), weight: 1),
@@ -82,7 +83,8 @@ mixin Bounce3DEffectMixin<T> on BaseDropDownStrategy<T> {
     );
   }
 
-  Animation<double> createDepthAnimation(AnimationController controller, double depth) {
+  Animation<double> createDepthAnimation(
+      AnimationController controller, double depth) {
     return Tween(begin: 0.0, end: depth).animate(
       CurvedAnimation(
         parent: controller,
@@ -101,10 +103,10 @@ mixin Bounce3DEffectMixin<T> on BaseDropDownStrategy<T> {
 /// Mixin for staggered animation
 mixin StaggeredEffectMixin<T> on BaseDropDownStrategy<T> {
   Animation<double> createStaggeredItemAnimation(
-      AnimationController controller,
-      int index,
-      MultiDropDownConfig config,
-      ) {
+    AnimationController controller,
+    int index,
+    MultiDropDownConfig config,
+  ) {
     final start = min(0.1 + (0.1 * index), 0.9);
     final end = min(0.5 + (0.1 * index), 1.0);
     return Tween(begin: 0.0, end: 1.0).animate(
@@ -118,13 +120,15 @@ mixin StaggeredEffectMixin<T> on BaseDropDownStrategy<T> {
 
 /// Mixin for foldable animation
 mixin FoldableEffectMixin<T> on BaseDropDownStrategy<T> {
-  Animation<double> createFoldAnimation(AnimationController controller, MultiDropDownConfig config) {
+  Animation<double> createFoldAnimation(
+      AnimationController controller, MultiDropDownConfig config) {
     return Tween(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: controller, curve: config.curve),
     );
   }
 
-  double calculateVisibleHeight(int itemCount, double animationValue, double itemHeight, double maxHeight) {
+  double calculateVisibleHeight(int itemCount, double animationValue,
+      double itemHeight, double maxHeight) {
     final totalHeight = itemCount * itemHeight;
     final visibleHeight = totalHeight * animationValue;
     return visibleHeight.clamp(0.0, maxHeight);
@@ -139,7 +143,8 @@ mixin CyberpunkEffectMixin<T> on BaseDropDownStrategy<T> {
     );
   }
 
-  Widget applyGlitchPainter(Widget child, Animation<double> animation, Color color1, Color color2) {
+  Widget applyGlitchPainter(
+      Widget child, Animation<double> animation, Color color1, Color color2) {
     return Stack(
       children: [
         Positioned.fill(

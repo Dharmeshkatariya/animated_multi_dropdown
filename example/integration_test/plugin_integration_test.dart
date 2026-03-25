@@ -35,7 +35,6 @@ void main() {
     });
 
     testWidgets('Dropdown opens and closes', (WidgetTester tester) async {
-
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -183,7 +182,8 @@ void main() {
       expect(find.text('Banana'), findsNothing);
     });
 
-    testWidgets('Chip display works in multi-select', (WidgetTester tester) async {
+    testWidgets('Chip display works in multi-select',
+        (WidgetTester tester) async {
       List<String> selectedValues = ['Apple', 'Banana'];
 
       await tester.pumpWidget(
@@ -211,7 +211,8 @@ void main() {
       expect(find.text('Banana'), findsWidgets);
     });
 
-    testWidgets('All animation types render without errors', (WidgetTester tester) async {
+    testWidgets('All animation types render without errors',
+        (WidgetTester tester) async {
       final animationTypes = DropdownAnimationType.values;
 
       for (var type in animationTypes) {
@@ -231,7 +232,8 @@ void main() {
         );
 
         // Verify widget renders
-        expect(find.byType(CustomAnimatedMultiDropDown<String>), findsOneWidget);
+        expect(
+            find.byType(CustomAnimatedMultiDropDown<String>), findsOneWidget);
         expect(find.text('Select fruit - ${type.name}'), findsOneWidget);
 
         // Tap to ensure animation works

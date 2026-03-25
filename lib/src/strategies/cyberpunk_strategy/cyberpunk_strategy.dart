@@ -98,7 +98,8 @@ class CyberpunkMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                 decoration: BoxDecoration(
                   color: Colors.black.withValuesOpacity(0.7),
                   borderRadius: config.borderRadius,
-                  border: Border.all(color: color.withValuesOpacity(0.5), width: 2),
+                  border:
+                      Border.all(color: color.withValuesOpacity(0.5), width: 2),
                   boxShadow: [
                     BoxShadow(
                       color: color.withValuesOpacity(0.3),
@@ -139,7 +140,8 @@ class CyberpunkMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                     child: Container(
                       width: dropdownWidth ?? config.dropdownWidth,
                       constraints: BoxConstraints(
-                        maxHeight: maxDropdownHeight ?? config.maxDropdownHeight,
+                        maxHeight:
+                            maxDropdownHeight ?? config.maxDropdownHeight,
                       ),
                       decoration: BoxDecoration(
                         color: Colors.black.withValuesOpacity(0.5),
@@ -179,8 +181,10 @@ class CyberpunkMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                                   return AnimatedBuilder(
                                     animation: itemAnim,
                                     builder: (context, _) {
-                                      final opacity = itemAnim.value.clamp(0.0, 1.0);
-                                      final glitchOffset = sin(itemAnim.value * 20) * 2;
+                                      final opacity =
+                                          itemAnim.value.clamp(0.0, 1.0);
+                                      final glitchOffset =
+                                          sin(itemAnim.value * 20) * 2;
                                       return Transform(
                                         transform: CustomMatrixUtils.translate(
                                           x: glitchOffset,
@@ -195,45 +199,61 @@ class CyberpunkMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
                                                 onToggle();
                                               }
                                             },
-                                            splashColor: color.withValuesOpacity(0.3),
-                                            highlightColor: neonBlue.withValuesOpacity(0.1),
+                                            splashColor:
+                                                color.withValuesOpacity(0.3),
+                                            highlightColor:
+                                                neonBlue.withValuesOpacity(0.1),
                                             child: Container(
-                                              padding: itemPadding ?? config.itemPadding,
+                                              padding: itemPadding ??
+                                                  config.itemPadding,
                                               decoration: BoxDecoration(
-                                                border: index < items.length - 1 &&
-                                                    showDivider
-                                                    ? Border(
-                                                  bottom: BorderSide(
-                                                    color: neonBlue.withValuesOpacity(0.1),
-                                                  ),
-                                                )
-                                                    : null,
+                                                border:
+                                                    index < items.length - 1 &&
+                                                            showDivider
+                                                        ? Border(
+                                                            bottom: BorderSide(
+                                                              color: neonBlue
+                                                                  .withValuesOpacity(
+                                                                      0.1),
+                                                            ),
+                                                          )
+                                                        : null,
                                               ),
                                               child: Row(
                                                 children: [
                                                   if (config.selectionMode ==
-                                                      SelectionMode.multiple ||
+                                                          SelectionMode
+                                                              .multiple ||
                                                       (config.selectionMode ==
-                                                          SelectionMode.single &&
+                                                              SelectionMode
+                                                                  .single &&
                                                           config.showCheckmark))
                                                     Padding(
-                                                      padding: const EdgeInsets.only(
+                                                      padding:
+                                                          const EdgeInsets.only(
                                                         right: 12,
                                                       ),
-                                                      child: buildSelectionIndicator(
+                                                      child:
+                                                          buildSelectionIndicator(
                                                         isSelected,
                                                         config,
                                                       ),
                                                     ),
                                                   Expanded(
-                                                    child: DefaultTextStyle.merge(
+                                                    child:
+                                                        DefaultTextStyle.merge(
                                                       style: (isSelected
-                                                          ? selectedItemStyle ??
-                                                          config.selectedItemStyle
-                                                          : itemStyle ?? config.itemStyle)
+                                                              ? selectedItemStyle ??
+                                                                  config
+                                                                      .selectedItemStyle
+                                                              : itemStyle ??
+                                                                  config
+                                                                      .itemStyle)
                                                           .copyWith(
                                                         color: Colors.white,
-                                                        shadows: isSelected ? textGlow : null,
+                                                        shadows: isSelected
+                                                            ? textGlow
+                                                            : null,
                                                       ),
                                                       child: itemBuilder(item),
                                                     ),
@@ -264,11 +284,11 @@ class CyberpunkMultiDropdownStrategy<T> extends BaseDropDownStrategy<T> {
   }
 
   Widget _buildRotatingIcon(
-      AnimationController controller,
-      MultiDropDownConfig config,
-      Color color,
-      List<Shadow> textGlow,
-      ) {
+    AnimationController controller,
+    MultiDropDownConfig config,
+    Color color,
+    List<Shadow> textGlow,
+  ) {
     return RotationTransition(
       turns: Tween(begin: 0.0, end: 0.5).animate(
         CurvedAnimation(parent: controller, curve: Curves.easeInOutBack),

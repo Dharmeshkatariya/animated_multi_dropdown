@@ -112,7 +112,9 @@ class ColorUtils {
 
   /// Converts color to hex string using modern API
   static String toHex(Color color, {bool includeAlpha = true}) {
-    final alpha = includeAlpha ? (color.a * 255).toInt().toRadixString(16).padLeft(2, '0') : '';
+    final alpha = includeAlpha
+        ? (color.a * 255).toInt().toRadixString(16).padLeft(2, '0')
+        : '';
     final red = (color.r * 255).toInt().toRadixString(16).padLeft(2, '0');
     final green = (color.g * 255).toInt().toRadixString(16).padLeft(2, '0');
     final blue = (color.b * 255).toInt().toRadixString(16).padLeft(2, '0');

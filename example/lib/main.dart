@@ -57,7 +57,8 @@ class PremiumHomePage extends StatefulWidget {
   State<PremiumHomePage> createState() => _PremiumHomePageState();
 }
 
-class _PremiumHomePageState extends State<PremiumHomePage> with SingleTickerProviderStateMixin {
+class _PremiumHomePageState extends State<PremiumHomePage>
+    with SingleTickerProviderStateMixin {
   // ==================== INDICATOR SELECTIONS ====================
   // Radio selections
   String? selectedClassicRadio;
@@ -174,7 +175,7 @@ class _PremiumHomePageState extends State<PremiumHomePage> with SingleTickerProv
     });
 
     ScaffoldMessenger.of(context).showSnackBar(
-       SnackBar(
+      SnackBar(
         content: Text('✨ All selections reset'),
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -197,7 +198,8 @@ class _PremiumHomePageState extends State<PremiumHomePage> with SingleTickerProv
             child: Row(
               children: [
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [Color(0xFF6366F1), Color(0xFF8B5CF6)],
@@ -224,7 +226,8 @@ class _PremiumHomePageState extends State<PremiumHomePage> with SingleTickerProv
                       color: Colors.grey.shade100,
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: const Icon(Icons.refresh, size: 20, color: Color(0xFF64748B)),
+                    child: const Icon(Icons.refresh,
+                        size: 20, color: Color(0xFF64748B)),
                   ),
                 ),
               ],
@@ -241,13 +244,15 @@ class _PremiumHomePageState extends State<PremiumHomePage> with SingleTickerProv
             const SizedBox(height: 32),
 
             // ==================== INDICATOR TYPES SECTION ====================
-            _buildSectionHeader('Indicator Types', Icons.tune, '16+ Beautiful Indicator Styles'),
+            _buildSectionHeader('Indicator Types', Icons.tune,
+                '16+ Beautiful Indicator Styles'),
             const SizedBox(height: 24),
             _buildIndicatorGrid(),
             const SizedBox(height: 48),
 
             // ==================== ANIMATION STRATEGIES SECTION ====================
-            _buildSectionHeader('Animation Strategies', Icons.animation, '25+ Stunning Animation Effects'),
+            _buildSectionHeader('Animation Strategies', Icons.animation,
+                '25+ Stunning Animation Effects'),
             const SizedBox(height: 24),
             _buildAnimationStrategiesGrid(),
             const SizedBox(height: 48),
@@ -290,7 +295,8 @@ class _PremiumHomePageState extends State<PremiumHomePage> with SingleTickerProv
                   color: Colors.white.withValuesOpacity(0.2),
                   borderRadius: BorderRadius.circular(18),
                 ),
-                child: const Icon(Icons.auto_awesome, color: Colors.white, size: 28),
+                child: const Icon(Icons.auto_awesome,
+                    color: Colors.white, size: 28),
               ),
               const SizedBox(width: 16),
               Expanded(
@@ -334,11 +340,16 @@ class _PremiumHomePageState extends State<PremiumHomePage> with SingleTickerProv
             spacing: 10,
             runSpacing: 10,
             children: [
-              _buildFeatureChip(Icons.radio_button_checked, '4 Radio Styles', Color(0xFFFCD34D)),
-              _buildFeatureChip(Icons.check_box, '4 Checkbox Styles', Color(0xFFA7F3D0)),
-              _buildFeatureChip(Icons.toggle_on, 'Toggle/Switch', Color(0xFFFED7AA)),
-              _buildFeatureChip(Icons.gradient, 'Gradient Styles', Color(0xFFDDD6FE)),
-              _buildFeatureChip(Icons.animation, '25+ Animations', Color(0xFFFBCFE8)),
+              _buildFeatureChip(Icons.radio_button_checked, '4 Radio Styles',
+                  Color(0xFFFCD34D)),
+              _buildFeatureChip(
+                  Icons.check_box, '4 Checkbox Styles', Color(0xFFA7F3D0)),
+              _buildFeatureChip(
+                  Icons.toggle_on, 'Toggle/Switch', Color(0xFFFED7AA)),
+              _buildFeatureChip(
+                  Icons.gradient, 'Gradient Styles', Color(0xFFDDD6FE)),
+              _buildFeatureChip(
+                  Icons.animation, '25+ Animations', Color(0xFFFBCFE8)),
               _buildFeatureChip(Icons.brush, 'Custom Icons', Color(0xFFCFFAFE)),
             ],
           ),
@@ -360,7 +371,11 @@ class _PremiumHomePageState extends State<PremiumHomePage> with SingleTickerProv
         children: [
           Icon(icon, size: 14, color: Colors.white),
           const SizedBox(width: 6),
-          Text(label, style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w500)),
+          Text(label,
+              style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500)),
         ],
       ),
     );
@@ -437,8 +452,10 @@ class _PremiumHomePageState extends State<PremiumHomePage> with SingleTickerProv
               child: SimpleDropdownFactory.radio(
                 items: fruits.map((e) => e.name).toList(),
                 value: selectedClassicRadio,
-                onChanged: (value) => setState(() => selectedClassicRadio = value),
-                itemBuilder: (item) => Text(item, style: const TextStyle(fontSize: 14)),
+                onChanged: (value) =>
+                    setState(() => selectedClassicRadio = value),
+                itemBuilder: (item) =>
+                    Text(item, style: const TextStyle(fontSize: 14)),
                 hintText: 'Select a fruit',
                 activeColor: Color(0xFF6366F1),
               ),
@@ -449,8 +466,10 @@ class _PremiumHomePageState extends State<PremiumHomePage> with SingleTickerProv
               child: SimpleDropdownFactory.single(
                 items: technologies.map((e) => e.name).toList(),
                 value: selectedCheckmarkRadio,
-                onChanged: (value) => setState(() => selectedCheckmarkRadio = value),
-                itemBuilder: (item) => Text(item, style: const TextStyle(fontSize: 14)),
+                onChanged: (value) =>
+                    setState(() => selectedCheckmarkRadio = value),
+                itemBuilder: (item) =>
+                    Text(item, style: const TextStyle(fontSize: 14)),
                 hintText: 'Select tech',
                 highlightColor: Color(0xFF10B981),
                 indicatorType: IndicatorType.radioCheckmark,
@@ -463,7 +482,8 @@ class _PremiumHomePageState extends State<PremiumHomePage> with SingleTickerProv
                 items: languages.map((e) => e.name).toList(),
                 value: selectedDotRadio,
                 onChanged: (value) => setState(() => selectedDotRadio = value),
-                itemBuilder: (item) => Text(item, style: const TextStyle(fontSize: 14)),
+                itemBuilder: (item) =>
+                    Text(item, style: const TextStyle(fontSize: 14)),
                 hintText: 'Select language',
                 highlightColor: Color(0xFFF59E0B),
                 indicatorType: IndicatorType.radioDot,
@@ -475,8 +495,10 @@ class _PremiumHomePageState extends State<PremiumHomePage> with SingleTickerProv
               child: SimpleDropdownFactory.single(
                 items: colors.map((e) => e.name).toList(),
                 value: selectedSquareRadio,
-                onChanged: (value) => setState(() => selectedSquareRadio = value),
-                itemBuilder: (item) => Text(item, style: const TextStyle(fontSize: 14)),
+                onChanged: (value) =>
+                    setState(() => selectedSquareRadio = value),
+                itemBuilder: (item) =>
+                    Text(item, style: const TextStyle(fontSize: 14)),
                 hintText: 'Select color',
                 highlightColor: Color(0xFFEF4444),
                 indicatorType: IndicatorType.radioSquare,
@@ -498,7 +520,8 @@ class _PremiumHomePageState extends State<PremiumHomePage> with SingleTickerProv
                 items: fruits.map((e) => e.name).toList(),
                 value: selectedToggle,
                 onChanged: (value) => setState(() => selectedToggle = value),
-                itemBuilder: (item) => Text(item, style: const TextStyle(fontSize: 14)),
+                itemBuilder: (item) =>
+                    Text(item, style: const TextStyle(fontSize: 14)),
                 hintText: 'Toggle to select',
                 activeColor: Color(0xFF6366F1),
               ),
@@ -510,7 +533,8 @@ class _PremiumHomePageState extends State<PremiumHomePage> with SingleTickerProv
                 items: technologies.map((e) => e.name).toList(),
                 value: selectedSwitch,
                 onChanged: (value) => setState(() => selectedSwitch = value),
-                itemBuilder: (item) => Text(item, style: const TextStyle(fontSize: 14)),
+                itemBuilder: (item) =>
+                    Text(item, style: const TextStyle(fontSize: 14)),
                 hintText: 'Switch to select',
                 activeColor: Color(0xFF10B981),
               ),
@@ -530,8 +554,10 @@ class _PremiumHomePageState extends State<PremiumHomePage> with SingleTickerProv
               child: SimpleDropdownFactory.multiple(
                 items: fruits.map((e) => e.name).toList(),
                 value: selectedClassicCheckbox,
-                onChanged: (values) => setState(() => selectedClassicCheckbox = List<String>.from(values)),
-                itemBuilder: (item) => Text(item, style: const TextStyle(fontSize: 14)),
+                onChanged: (values) => setState(
+                    () => selectedClassicCheckbox = List<String>.from(values)),
+                itemBuilder: (item) =>
+                    Text(item, style: const TextStyle(fontSize: 14)),
                 hintText: 'Select fruits',
                 highlightColor: Color(0xFF6366F1),
                 indicatorType: IndicatorType.classic,
@@ -543,8 +569,10 @@ class _PremiumHomePageState extends State<PremiumHomePage> with SingleTickerProv
               child: SimpleDropdownFactory.multiple(
                 items: technologies.map((e) => e.name).toList(),
                 value: selectedModernCheckbox,
-                onChanged: (values) => setState(() => selectedModernCheckbox = List<String>.from(values)),
-                itemBuilder: (item) => Text(item, style: const TextStyle(fontSize: 14)),
+                onChanged: (values) => setState(
+                    () => selectedModernCheckbox = List<String>.from(values)),
+                itemBuilder: (item) =>
+                    Text(item, style: const TextStyle(fontSize: 14)),
                 hintText: 'Select tech',
                 highlightColor: Color(0xFF10B981),
                 indicatorType: IndicatorType.checkmark,
@@ -556,8 +584,10 @@ class _PremiumHomePageState extends State<PremiumHomePage> with SingleTickerProv
               child: SimpleDropdownFactory.dotCheckbox(
                 items: languages.map((e) => e.name).toList(),
                 value: selectedDotCheckbox,
-                onChanged: (values) => setState(() => selectedDotCheckbox = List<String>.from(values)),
-                itemBuilder: (item) => Text(item, style: const TextStyle(fontSize: 14)),
+                onChanged: (values) => setState(
+                    () => selectedDotCheckbox = List<String>.from(values)),
+                itemBuilder: (item) =>
+                    Text(item, style: const TextStyle(fontSize: 14)),
                 hintText: 'Select languages',
                 activeColor: Color(0xFFF59E0B),
               ),
@@ -568,8 +598,10 @@ class _PremiumHomePageState extends State<PremiumHomePage> with SingleTickerProv
               child: SimpleDropdownFactory.multiple(
                 items: colors.map((e) => e.name).toList(),
                 value: selectedSquareCheckbox,
-                onChanged: (values) => setState(() => selectedSquareCheckbox = List<String>.from(values)),
-                itemBuilder: (item) => Text(item, style: const TextStyle(fontSize: 14)),
+                onChanged: (values) => setState(
+                    () => selectedSquareCheckbox = List<String>.from(values)),
+                itemBuilder: (item) =>
+                    Text(item, style: const TextStyle(fontSize: 14)),
                 hintText: 'Select colors',
                 highlightColor: Color(0xFFEF4444),
                 indicatorType: IndicatorType.square,
@@ -590,8 +622,10 @@ class _PremiumHomePageState extends State<PremiumHomePage> with SingleTickerProv
               child: SimpleDropdownFactory.gradientRadio(
                 items: fruits.map((e) => e.name).toList(),
                 value: selectedGradientRadio,
-                onChanged: (value) => setState(() => selectedGradientRadio = value),
-                itemBuilder: (item) => Text(item, style: const TextStyle(fontSize: 14)),
+                onChanged: (value) =>
+                    setState(() => selectedGradientRadio = value),
+                itemBuilder: (item) =>
+                    Text(item, style: const TextStyle(fontSize: 14)),
                 gradientColors: [Color(0xFF6366F1), Color(0xFF8B5CF6)],
                 hintText: 'Select fruit',
               ),
@@ -602,8 +636,10 @@ class _PremiumHomePageState extends State<PremiumHomePage> with SingleTickerProv
               child: SimpleDropdownFactory.gradientCheckbox(
                 items: technologies.map((e) => e.name).toList(),
                 value: selectedGradientCheckbox,
-                onChanged: (values) => setState(() => selectedGradientCheckbox = List<String>.from(values)),
-                itemBuilder: (item) => Text(item, style: const TextStyle(fontSize: 14)),
+                onChanged: (values) => setState(
+                    () => selectedGradientCheckbox = List<String>.from(values)),
+                itemBuilder: (item) =>
+                    Text(item, style: const TextStyle(fontSize: 14)),
                 gradientColors: [Color(0xFF10B981), Color(0xFF34D399)],
                 hintText: 'Select tech',
               ),
@@ -614,8 +650,10 @@ class _PremiumHomePageState extends State<PremiumHomePage> with SingleTickerProv
               child: SimpleDropdownFactory.single(
                 items: languages.map((e) => e.name).toList(),
                 value: selectedNeumorphicRadio,
-                onChanged: (value) => setState(() => selectedNeumorphicRadio = value),
-                itemBuilder: (item) => Text(item, style: const TextStyle(fontSize: 14)),
+                onChanged: (value) =>
+                    setState(() => selectedNeumorphicRadio = value),
+                itemBuilder: (item) =>
+                    Text(item, style: const TextStyle(fontSize: 14)),
                 hintText: 'Select language',
                 highlightColor: Color(0xFFEC4899),
                 indicatorType: IndicatorType.neumorphic,
@@ -627,8 +665,10 @@ class _PremiumHomePageState extends State<PremiumHomePage> with SingleTickerProv
               child: SimpleDropdownFactory.multiple(
                 items: colors.map((e) => e.name).toList(),
                 value: selectedNeumorphicCheckbox,
-                onChanged: (values) => setState(() => selectedNeumorphicCheckbox = List<String>.from(values)),
-                itemBuilder: (item) => Text(item, style: const TextStyle(fontSize: 14)),
+                onChanged: (values) => setState(() =>
+                    selectedNeumorphicCheckbox = List<String>.from(values)),
+                itemBuilder: (item) =>
+                    Text(item, style: const TextStyle(fontSize: 14)),
                 hintText: 'Select colors',
                 highlightColor: Color(0xFF06B6D4),
                 indicatorType: IndicatorType.neumorphic,
@@ -650,7 +690,8 @@ class _PremiumHomePageState extends State<PremiumHomePage> with SingleTickerProv
                 items: desserts.map((e) => e.name).toList(),
                 value: selectedStar,
                 onChanged: (value) => setState(() => selectedStar = value),
-                itemBuilder: (item) => Text(item, style: const TextStyle(fontSize: 14)),
+                itemBuilder: (item) =>
+                    Text(item, style: const TextStyle(fontSize: 14)),
                 hintText: 'Select dessert',
                 activeColor: Color(0xFFF59E0B),
               ),
@@ -661,8 +702,10 @@ class _PremiumHomePageState extends State<PremiumHomePage> with SingleTickerProv
               child: SimpleDropdownFactory.customHeartMultiple(
                 items: technologies.map((e) => e.name).toList(),
                 value: selectedHeart,
-                onChanged: (values) => setState(() => selectedHeart = List<String>.from(values)),
-                itemBuilder: (item) => Text(item, style: const TextStyle(fontSize: 14)),
+                onChanged: (values) =>
+                    setState(() => selectedHeart = List<String>.from(values)),
+                itemBuilder: (item) =>
+                    Text(item, style: const TextStyle(fontSize: 14)),
                 hintText: 'Select favorites',
                 activeColor: Color(0xFFEF4444),
               ),
@@ -717,12 +760,16 @@ class _PremiumHomePageState extends State<PremiumHomePage> with SingleTickerProv
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [gradientColors[0].withValuesOpacity(0.05), gradientColors[1].withValuesOpacity(0.02)],
+          colors: [
+            gradientColors[0].withValuesOpacity(0.05),
+            gradientColors[1].withValuesOpacity(0.02)
+          ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: gradientColors[0].withValuesOpacity(0.2), width: 1),
+        border: Border.all(
+            color: gradientColors[0].withValuesOpacity(0.2), width: 1),
       ),
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -873,16 +920,21 @@ class _PremiumHomePageState extends State<PremiumHomePage> with SingleTickerProv
         GridView.count(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          crossAxisCount: MediaQuery.of(context).size.width > 1200 ? 4 :
-          MediaQuery.of(context).size.width > 800 ? 3 : 2,
+          crossAxisCount: MediaQuery.of(context).size.width > 1200
+              ? 4
+              : MediaQuery.of(context).size.width > 800
+                  ? 3
+                  : 2,
           childAspectRatio: 1.3,
           crossAxisSpacing: 16,
           mainAxisSpacing: 16,
-          children: strategies.map((strategy) => _buildStrategyCard(
-            title: _getAnimationDisplayName(strategy),
-            strategy: strategy,
-            color: color,
-          )).toList(),
+          children: strategies
+              .map((strategy) => _buildStrategyCard(
+                    title: _getAnimationDisplayName(strategy),
+                    strategy: strategy,
+                    color: color,
+                  ))
+              .toList(),
         ),
       ],
     );
@@ -938,8 +990,10 @@ class _PremiumHomePageState extends State<PremiumHomePage> with SingleTickerProv
             SimpleDropdownFactory.single(
               items: fruits.map((e) => e.name).toList(),
               value: singleStrategySelections[strategy],
-              onChanged: (value) => setState(() => singleStrategySelections[strategy] = value),
-              itemBuilder: (item) => Text(item, style: const TextStyle(fontSize: 13)),
+              onChanged: (value) =>
+                  setState(() => singleStrategySelections[strategy] = value),
+              itemBuilder: (item) =>
+                  Text(item, style: const TextStyle(fontSize: 13)),
               hintText: 'Select',
               highlightColor: color,
               animationType: strategy,
@@ -1012,15 +1066,46 @@ class _PremiumHomePageState extends State<PremiumHomePage> with SingleTickerProv
     List<Map<String, dynamic>> selections = [];
 
     // Count indicator selections
-    if (selectedClassicRadio != null) { totalSelections++; selections.add({'label': 'Classic Radio', 'value': selectedClassicRadio!}); }
-    if (selectedCheckmarkRadio != null) { totalSelections++; selections.add({'label': 'Checkmark Radio', 'value': selectedCheckmarkRadio!}); }
-    if (selectedDotRadio != null) { totalSelections++; selections.add({'label': 'Dot Radio', 'value': selectedDotRadio!}); }
-    if (selectedSquareRadio != null) { totalSelections++; selections.add({'label': 'Square Radio', 'value': selectedSquareRadio!}); }
-    if (selectedToggle != null) { totalSelections++; selections.add({'label': 'Toggle', 'value': selectedToggle!}); }
-    if (selectedSwitch != null) { totalSelections++; selections.add({'label': 'Switch', 'value': selectedSwitch!}); }
-    if (selectedGradientRadio != null) { totalSelections++; selections.add({'label': 'Gradient Radio', 'value': selectedGradientRadio!}); }
-    if (selectedNeumorphicRadio != null) { totalSelections++; selections.add({'label': 'Neumorphic Radio', 'value': selectedNeumorphicRadio!}); }
-    if (selectedStar != null) { totalSelections++; selections.add({'label': 'Star', 'value': selectedStar!}); }
+    if (selectedClassicRadio != null) {
+      totalSelections++;
+      selections
+          .add({'label': 'Classic Radio', 'value': selectedClassicRadio!});
+    }
+    if (selectedCheckmarkRadio != null) {
+      totalSelections++;
+      selections
+          .add({'label': 'Checkmark Radio', 'value': selectedCheckmarkRadio!});
+    }
+    if (selectedDotRadio != null) {
+      totalSelections++;
+      selections.add({'label': 'Dot Radio', 'value': selectedDotRadio!});
+    }
+    if (selectedSquareRadio != null) {
+      totalSelections++;
+      selections.add({'label': 'Square Radio', 'value': selectedSquareRadio!});
+    }
+    if (selectedToggle != null) {
+      totalSelections++;
+      selections.add({'label': 'Toggle', 'value': selectedToggle!});
+    }
+    if (selectedSwitch != null) {
+      totalSelections++;
+      selections.add({'label': 'Switch', 'value': selectedSwitch!});
+    }
+    if (selectedGradientRadio != null) {
+      totalSelections++;
+      selections
+          .add({'label': 'Gradient Radio', 'value': selectedGradientRadio!});
+    }
+    if (selectedNeumorphicRadio != null) {
+      totalSelections++;
+      selections.add(
+          {'label': 'Neumorphic Radio', 'value': selectedNeumorphicRadio!});
+    }
+    if (selectedStar != null) {
+      totalSelections++;
+      selections.add({'label': 'Star', 'value': selectedStar!});
+    }
 
     totalSelections += selectedClassicCheckbox.length;
     totalSelections += selectedModernCheckbox.length;
@@ -1030,26 +1115,65 @@ class _PremiumHomePageState extends State<PremiumHomePage> with SingleTickerProv
     totalSelections += selectedNeumorphicCheckbox.length;
     totalSelections += selectedHeart.length;
 
-    if (selectedClassicCheckbox.isNotEmpty) selections.add({'label': 'Classic Box', 'value': '${selectedClassicCheckbox.length} selected'});
-    if (selectedModernCheckbox.isNotEmpty) selections.add({'label': 'Modern Box', 'value': '${selectedModernCheckbox.length} selected'});
-    if (selectedDotCheckbox.isNotEmpty) selections.add({'label': 'Dot Box', 'value': '${selectedDotCheckbox.length} selected'});
-    if (selectedSquareCheckbox.isNotEmpty) selections.add({'label': 'Square Box', 'value': '${selectedSquareCheckbox.length} selected'});
-    if (selectedGradientCheckbox.isNotEmpty) selections.add({'label': 'Gradient Box', 'value': '${selectedGradientCheckbox.length} selected'});
-    if (selectedNeumorphicCheckbox.isNotEmpty) selections.add({'label': 'Neumorphic Box', 'value': '${selectedNeumorphicCheckbox.length} selected'});
-    if (selectedHeart.isNotEmpty) selections.add({'label': 'Heart', 'value': '${selectedHeart.length} selected'});
+    if (selectedClassicCheckbox.isNotEmpty) {
+      selections.add({
+        'label': 'Classic Box',
+        'value': '${selectedClassicCheckbox.length} selected'
+      });
+    }
+    if (selectedModernCheckbox.isNotEmpty) {
+      selections.add({
+        'label': 'Modern Box',
+        'value': '${selectedModernCheckbox.length} selected'
+      });
+    }
+    if (selectedDotCheckbox.isNotEmpty) {
+      selections.add({
+        'label': 'Dot Box',
+        'value': '${selectedDotCheckbox.length} selected'
+      });
+    }
+    if (selectedSquareCheckbox.isNotEmpty) {
+      selections.add({
+        'label': 'Square Box',
+        'value': '${selectedSquareCheckbox.length} selected'
+      });
+    }
+    if (selectedGradientCheckbox.isNotEmpty) {
+      selections.add({
+        'label': 'Gradient Box',
+        'value': '${selectedGradientCheckbox.length} selected'
+      });
+    }
+    if (selectedNeumorphicCheckbox.isNotEmpty) {
+      selections.add({
+        'label': 'Neumorphic Box',
+        'value': '${selectedNeumorphicCheckbox.length} selected'
+      });
+    }
+    if (selectedHeart.isNotEmpty) {
+      selections
+          .add({'label': 'Heart', 'value': '${selectedHeart.length} selected'});
+    }
 
     // Count strategy selections
     for (var entry in singleStrategySelections.entries) {
       if (entry.value != null) {
         totalSelections++;
-        selections.add({'label': _getAnimationDisplayName(entry.key), 'value': entry.value!});
+        selections.add({
+          'label': _getAnimationDisplayName(entry.key),
+          'value': entry.value!
+        });
       }
     }
 
     for (var entry in multiStrategySelections.entries) {
       if (entry.value.isNotEmpty) {
         totalSelections += entry.value.length;
-        selections.add({'label': _getAnimationDisplayName(entry.key), 'value': '${entry.value.length} selected'});
+        selections.add({
+          'label': _getAnimationDisplayName(entry.key),
+          'value': '${entry.value.length} selected'
+        });
       }
     }
 
@@ -1080,7 +1204,8 @@ class _PremiumHomePageState extends State<PremiumHomePage> with SingleTickerProv
                       ),
                       borderRadius: BorderRadius.circular(14),
                     ),
-                    child: const Icon(Icons.summarize, color: Colors.white, size: 20),
+                    child: const Icon(Icons.summarize,
+                        color: Colors.white, size: 20),
                   ),
                   const SizedBox(width: 12),
                   const Text(
@@ -1094,7 +1219,8 @@ class _PremiumHomePageState extends State<PremiumHomePage> with SingleTickerProv
                 ],
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [Color(0xFF6366F1), Color(0xFF8B5CF6)],
@@ -1139,15 +1265,20 @@ class _PremiumHomePageState extends State<PremiumHomePage> with SingleTickerProv
               runSpacing: 10,
               children: selections.map((selection) {
                 return Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [Color(0xFF6366F1).withValuesOpacity(0.1), Color(0xFF8B5CF6).withValuesOpacity(0.05)],
+                      colors: [
+                        Color(0xFF6366F1).withValuesOpacity(0.1),
+                        Color(0xFF8B5CF6).withValuesOpacity(0.05)
+                      ],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
                     borderRadius: BorderRadius.circular(30),
-                    border: Border.all(color: Color(0xFF6366F1).withValuesOpacity(0.2)),
+                    border: Border.all(
+                        color: Color(0xFF6366F1).withValuesOpacity(0.2)),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
