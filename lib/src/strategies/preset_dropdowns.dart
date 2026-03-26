@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../animated_multi_dropdown.dart';
-import 'simple_dropdown_factory.dart';
 
 /// Pre-configured dropdowns for common use cases
 class PresetDropdowns {

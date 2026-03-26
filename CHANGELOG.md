@@ -1,3 +1,16 @@
+## 1.0.6
+
+### 🐛 Bug Fixes
+- Fixed unnecessary import warning in preset_dropdowns.dart
+- Removed duplicate import of simple_dropdown_factory.dart
+- Improved code analysis score to 50/50
+
+### 🔧 Technical Improvements
+- Cleaned up imports across all strategy files
+- Optimized code for better static analysis
+- Fixed all lint warnings
+
+
 ## 1.0.5
 
 ### 🎉 Major Improvements
