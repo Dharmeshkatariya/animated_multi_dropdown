@@ -1,3 +1,8 @@
+## 1.0.7
+
+### 🔧 Technical Improvements
+- Cleaned up imports across all strategy files
+
 ## 1.0.6
 
 ### 🐛 Bug Fixes
