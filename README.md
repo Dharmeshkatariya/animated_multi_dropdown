@@ -4,255 +4,222 @@
 [![Flutter Platform](https://img.shields.io/badge/Platform-Flutter-02569B?logo=flutter)](https://flutter.dev)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A highly customizable animated multi-dropdown widget with **25+ stunning animations** including glass morphism, liquid effects, neon, cyberpunk, and more.
+A highly customizable animated multi-dropdown widget with **25+ stunning animations** including
+glass morphism, liquid effects, neon, cyberpunk, and more.
 
 ---
 
 ## ✨ Features
 
-| Category | Features |
-|----------|----------|
-| 🎨 **Animations** | 25+ stunning animation strategies |
-| 📱 **Selection** | Single & Multi selection with chips |
-| 🔍 **Search** | Built-in search with filtering |
-| 🎯 **Indicators** | 16+ indicator types |
-| ⚡ **Performance** | Smooth 60 FPS animations |
-| 🎨 **Customization** | 50+ configuration options |
-| 📱 **Platforms** | Android, iOS, Web, Desktop |
-| 🌓 **Dark Mode** | Full dark mode support |
+| Category             | Features                            |
+|----------------------|-------------------------------------|
+| 🎨 **Animations**    | 25+ stunning animation strategies   |
+| 📱 **Selection**     | Single & Multi selection with chips |
+| 🔍 **Search**        | Built-in search with filtering      |
+| 🎯 **Indicators**    | 16+ indicator types                 |
+| ⚡ **Performance**    | Smooth 60 FPS animations            |
+| 🎨 **Customization** | 50+ configuration options           |
+| 📱 **Platforms**     | Android, iOS, Web, Desktop          |
+| 🌓 **Dark Mode**     | Full dark mode support              |
 
 ---
+A highly customizable animated multi-dropdown widget for Flutter with 25+ stunning animations
+including glass morphism, liquid effects, neon, cyberpunk, and more.
 
-## 🚀 Quick Start
-
-### 1. Add Dependency
-
-```yaml
+✨ Features
+🎨 25+ Animation Styles (Glass, Liquid, Neon, 3D, Holographic)
+📱 Single & Multi Selection
+🔍 Built-in Search & Filtering
+🎯 16+ Indicator Types
+⚡ Smooth 60 FPS Performance
+🎨 Highly Customizable (50+ options)
+🌙 Dark Mode Support
+💻 Cross Platform (Android, iOS, Web, Desktop)
+🚀 Quick Start
+1️⃣ Add Dependency
 dependencies:
-  animated_multi_dropdown: ^1.0.4
-
-
-2. Import Package
-
-  import 'package:animated_multi_dropdown/animated_multi_dropdown.dart';
-
-
-3. Basic Usage
-Single Selection:
-
-dart
+animated_multi_dropdown: ^1.0.4
+2️⃣ Import Package
+import 'package:animated_multi_dropdown/animated_multi_dropdown.dart';
+3️⃣ Basic Usage
+🔹 Single Selection
 String? selectedValue;
 
 SimpleDropdownFactory.single(
-  items: ['Apple', 'Banana', 'Orange', 'Mango', 'Grapes'],
-  value: selectedValue,
-  onChanged: (value) => setState(() => selectedValue = value),
-  itemBuilder: (item) => Text(item),
-  hintText: 'Select a fruit',
-  animationType: DropdownAnimationType.glass,
-)
-
-Multiple Selection:
-
-dart
+items: ['Apple', 'Banana', 'Orange', 'Mango', 'Grapes'],
+value: selectedValue,
+onChanged: (value) => setState(() => selectedValue = value),
+itemBuilder: (item) => Text(item),
+hintText: 'Select a fruit',
+animationType: DropdownAnimationType.glass,
+);
+🔹 Multiple Selection
 List<String> selectedValues = [];
 
 SimpleDropdownFactory.multiple(
-  items: ['Flutter', 'React', 'Vue.js', 'Angular', 'Svelte'],
-  value: selectedValues,
-  onChanged: (values) => setState(() => selectedValues = List<String>.from(values)),
-  itemBuilder: (item) => Text(item),
-  hintText: 'Select frameworks',
-  animationType: DropdownAnimationType.liquid,
-)
-
-
-
-
- Animation Types
-Glass & Morphing (6 animations)
-Animation	Description
-glass	Frosted glass effect with blur
-glassMorphism	Advanced glass morphing
-floatingGlass	Floating glass panels
-floatingCard	Card-like floating effect
-morphingGlass	Morphing glass effect
-morphing	Smooth shape morphing
-Liquid & Fluid (6 animations)
-Animation	Description
-liquid	Smooth liquid wave effect
-liquidSmooth	Extra smooth liquid animation
-fluidWave	Flowing wave animation
-liquidMetal	Metallic liquid effect
-liquidSwipe	Swipe-style liquid effect
-gradientWave	Gradient wave animation
-Neon & Cyber (4 animations)
-Animation	Description
-neon	Glowing neon effect
-neonPulse	Pulsing neon glow
-cyberpunk	Cyberpunk grid effect
-cyberNeon	Cyberpunk with neon glow
-3D & Bounce (4 animations)
-Animation	Description
-bouncy3d	3D bounce animation
-gravityWell	Gravity pull effect
-foldable	Folding card effect
-cosmicRipple	Cosmic wave ripple
-Staggered & Holographic (5 animations)
-Animation	Description
-staggered	Staggered item animation
-staggeredVerticalDropItem	Vertical staggered effect
-hologram	Holographic scan lines
-holographicFan	Holographic fan spread
-molecular	Molecular bonding animation
-🎨 Indicator Types
-Radio Indicators
-Type	Code Example
-Classic Radio	SimpleDropdownFactory.radio()
-Radio with Checkmark	IndicatorType.radioCheckmark
-Radio with Dot	IndicatorType.radioDot
-Square Radio	IndicatorType.radioSquare
-
-
-
-// Classic Radio
+items: ['Flutter', 'React', 'Vue.js', 'Angular', 'Svelte'],
+value: selectedValues,
+onChanged: (values) =>
+setState(() => selectedValues = List<String>.from(values)),
+itemBuilder: (item) => Text(item),
+hintText: 'Select frameworks',
+animationType: DropdownAnimationType.liquid,
+);
+🎨 Animation Types
+🧊 Glass & Morphing
+glass – Frosted blur effect
+glassMorphism – Advanced glass UI
+floatingGlass – Floating panels
+floatingCard – Card-like animation
+morphingGlass – Morph transitions
+morphing – Smooth shape shift
+🌊 Liquid & Fluid
+liquid – Wave animation
+liquidSmooth – Smooth fluid motion
+fluidWave – Flowing effect
+liquidMetal – Metallic liquid
+liquidSwipe – Swipe-based effect
+gradientWave – Gradient waves
+💡 Neon & Cyber
+neon – Glow effect
+neonPulse – Pulsing glow
+cyberpunk – Cyber grid style
+cyberNeon – Neon cyber combo
+🎯 3D & Bounce
+bouncy3d – 3D bounce
+gravityWell – Gravity pull
+foldable – Folding UI
+cosmicRipple – Ripple waves
+🧬 Staggered & Holographic
+staggered – Stagger animation
+staggeredVerticalDropItem – Vertical drop
+hologram – Scan lines
+holographicFan – Fan spread
+molecular – Bond-style animation
+🎯 Indicator Types
+🔘 Radio
 SimpleDropdownFactory.radio(
-  items: items,
-  value: selectedValue,
-  onChanged: (value) => setState(() => selectedValue = value),
-  itemBuilder: (item) => Text(item),
-  activeColor: Colors.blue,
+items: items,
+value: selectedValue,
+onChanged: (value) => setState(() => selectedValue = value),
+itemBuilder: (item) => Text(item),
+activeColor: Colors.blue,
 );
 
+Types:
 
-
-Checkbox Indicators
-Type	Code Example
-Classic Checkbox	IndicatorType.classic
-Modern Checkbox	IndicatorType.checkmark
-Dot Checkbox	SimpleDropdownFactory.dotCheckbox()
-Square Checkbox	IndicatorType.square
-
-// Classic Checkbox
+radio
+radioCheckmark
+radioDot
+radioSquare
+☑️ Checkbox
 SimpleDropdownFactory.multiple(
-  items: items,
-  value: selectedValues,
-  onChanged: (values) => setState(() => selectedValues = values),
-  itemBuilder: (item) => Text(item),
-  indicatorType: IndicatorType.classic,
+items: items,
+value: selectedValues,
+onChanged: (values) => setState(() => selectedValues = values),
+itemBuilder: (item) => Text(item),
+indicatorType: IndicatorType.classic,
 );
 
+Types:
 
-
-Toggle & Switch
-Type	Code Example
-Toggle Style	SimpleDropdownFactory.toggle()
-Switch Style	SimpleDropdownFactory.switchStyle()
-
-
-// Toggle Style
+classic
+checkmark
+dotCheckbox
+square
+🔁 Toggle & Switch
 SimpleDropdownFactory.toggle(
-  items: items,
-  value: selectedValue,
-  onChanged: (value) => setState(() => selectedValue = value),
-  itemBuilder: (item) => Text(item),
+items: items,
+value: selectedValue,
+onChanged: (value) => setState(() => selectedValue = value),
+itemBuilder: (item) => Text(item),
 );
-Gradient Indicators
-Type	Code Example
-Gradient Radio	SimpleDropdownFactory.gradientRadio()
-Gradient Checkbox	SimpleDropdownFactory.gradientCheckbox()
-
-
-// Gradient Radio
+🌈 Gradient
 SimpleDropdownFactory.gradientRadio(
-  items: items,
-  value: selectedValue,
-  onChanged: (value) => setState(() => selectedValue = value),
-  itemBuilder: (item) => Text(item),
-  gradientColors: [Colors.blue, Colors.purple],
+items: items,
+value: selectedValue,
+onChanged: (value) => setState(() => selectedValue = value),
+itemBuilder: (item) => Text(item),
+gradientColors: [Colors.blue, Colors.purple],
 );
-
-
-Neumorphic Indicators
-Type	Code Example
-Neumorphic Radio	IndicatorType.neumorphic
-Neumorphic Checkbox	IndicatorType.neumorphic
-Custom Indicators
-Type	Code Example
-Star Icon	SimpleDropdownFactory.customStarSingle()
-Heart Icon	SimpleDropdownFactory.customHeartMultiple()
-dart
-// Custom Star Indicator
+🎨 Custom Indicator
 SimpleDropdownFactory.customStarSingle(
-  items: items,
-  value: selectedValue,
-  onChanged: (value) => setState(() => selectedValue = value),
-  itemBuilder: (item) => Text(item),
-  activeColor: Colors.amber,
+items: items,
+value: selectedValue,
+onChanged: (value) => setState(() => selectedValue = value),
+itemBuilder: (item) => Text(item),
+activeColor: Colors.amber,
 );
-⚙️ Configuration Options
+⚙️ Configuration
 MultiDropDownConfig
-Property	Type	Default	Description
-duration	Duration	400ms	Animation duration
-highlightColor	Color	Colors.blue	Selection highlight color
-backgroundColor	Color	Colors.white	Dropdown background color
-borderRadius	BorderRadius	12px	Border radius
-selectorHeight	double	48px	Selector height
-selectorWidth	double	∞	Selector width
-enableSearch	bool	false	Enable search functionality
-showSelectedItemsAsChips	bool	true	Show chips in multi-select
-chipColor	Color?	Colors.grey[200]	Chip background color
-chipSpacing	double	8px	Spacing between chips
-enableHapticFeedback	bool	false	Haptic feedback on interactions
-🛠️ Advanced Usage
-Custom Styling with SimpleDropdownStyle
-dart
+Property Type Default Description
+duration Duration 400ms Animation duration
+highlightColor Color Blue Selected color
+backgroundColor Color White Background
+borderRadius BorderRadius 12px Radius
+selectorHeight double 48 Height
+enableSearch bool false Enable search
+showSelectedItemsAsChips bool true Show chips
+enableHapticFeedback bool false Haptics
+🛠 Advanced Usage
+🎨 Styled Dropdown
 SimpleDropdownFactory.styledSingle(
-  items: items,
-  value: selectedValue,
-  onChanged: (value) => setState(() => selectedValue = value),
-  itemBuilder: (item) => Text(item),
-  style: SimpleDropdownStyle.glass(
-    highlightColor: Colors.purple,
-    height: 56,
-    width: double.infinity,
-  ),
+items: items,
+value: selectedValue,
+onChanged: (value) => setState(() => selectedValue = value),
+itemBuilder: (item) => Text(item),
+style: SimpleDropdownStyle.glass(
+highlightColor: Colors.purple,
+height: 56,
+width: double.infinity,
+),
 );
-Custom Indicator Builder
-dart
+🧩 Custom Indicator Builder
 SimpleDropdownFactory.single(
-  items: items,
-  value: selectedValue,
-  onChanged: (value) => setState(() => selectedValue = value),
-  itemBuilder: (item) => Text(item),
-  indicatorType: IndicatorType.custom,
-  customIndicatorBuilder: (context, isSelected, color) {
-    return AnimatedContainer(
-      duration: Duration(milliseconds: 200),
-      child: Icon(
-        isSelected ? Icons.favorite : Icons.favorite_border,
-        color: color,
-        size: 24,
-      ),
-    );
-  },
+items: items,
+value: selectedValue,
+onChanged: (value) => setState(() => selectedValue = value),
+itemBuilder: (item) => Text(item),
+indicatorType: IndicatorType.custom,
+customIndicatorBuilder: (context, isSelected, color) {
+return AnimatedContainer(
+duration: Duration(milliseconds: 200),
+child: Icon(
+isSelected ? Icons.favorite : Icons.favorite_border,
+color: color,
+),
 );
-Full Configuration Example
-dart
+},
+);
+🚀 Full Example
 CustomAnimatedMultiDropDown<String>(
-  animationType: DropdownAnimationType.glass,
-  items: items,
-  value: selectedValue,
-  onChanged: (value) => setState(() => selectedValue = value),
-  itemBuilder: (item) => Text(item),
-  config: MultiDropDownConfig(
-    duration: Duration(milliseconds: 500),
-    highlightColor: Colors.teal,
-    backgroundColor: Colors.white,
-    borderRadius: BorderRadius.circular(16),
-    selectorHeight: 56,
-    enableSearch: true,
-    showSelectedItemsAsChips: true,
-    enableHapticFeedback: true,
-  ),
+animationType: DropdownAnimationType.glass,
+items: items,
+value: selectedValue,
+onChanged: (value) => setState(() => selectedValue = value),
+itemBuilder: (item) => Text(item),
+config: MultiDropDownConfig(
+duration: Duration(milliseconds: 500),
+highlightColor: Colors.teal,
+borderRadius: BorderRadius.circular(16),
+selectorHeight: 56,
+enableSearch: true,
+showSelectedItemsAsChips: true,
+enableHapticFeedback: true,
+),
 );
+📦 Installation
+
+👉 https://pub.dev/packages/animated_multi_dropdown
+
+📄 License
+
+MIT License © 2026
+
+💙 Support
+
+If you like this package:
+
+⭐ Star the repo
+🐛 Report issues
+🚀 Contribute
